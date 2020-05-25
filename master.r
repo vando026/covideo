@@ -14,32 +14,12 @@ source(file.path(home, "dofiles/functions.r"))
 # Drop completion codes
 # 2E576104
 
-type <- c("questionnaire-lf5j", "task-lekh", "task-7ce7",  "task-8qrr", "task-aaaf", "task-7o8q")
-cov_en <- mkName("17717-v19", type)
-cov_de <- mkName("17845-v7", type)
-
 ######################################################################
-######################### English ####################################
+######################### Read data ##################################
 ######################################################################
-sourced <- file.path(home, "Data_EN/v19_16May2020") 
-dat_en <- getData(sourced, cov_en)
-rv(dat_en)
+dat_all <- readRDS(file.path(home, "Derived/dat_all.Rda"))
 
 
-sourced <- file.path(home, "Phase1_DE") 
-dat_de <- getData(sourced, cov_de)
-
-
-rbind(dat_en, dat_de)
-
-
-test <- select(ListCtrl, ID, Label)
-test$Dup  <- duplicated(test)
-filter(test, Dup)
-
-test <- ListCtrl %>% 
-  group_by(ID, Label) %>% 
-  filter(n()>1)
 
 ######################################################################
 ######################### Test #######################################

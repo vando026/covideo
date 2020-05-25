@@ -135,3 +135,10 @@ getData <- function(sourced, name=NULL) {
   dat
 }
 
+setKnow <- function(correct) {
+  function(irow) {
+    stopifnot(length(irow[-1])==length(correct))
+    score <- sum(irow[-1]==correct)
+    c(irow$ID, score)
+  }
+}
