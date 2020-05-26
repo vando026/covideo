@@ -17,7 +17,8 @@ clean <- function(name, ctype=col_character) {
       `Participant Private ID` = col_integer(),
       Label = col_character(), 
       Response=ctype())))
-  dat <- rename(dat, ID = `Participant Private ID`)
+  dat <- rename(dat, ID = `Participant Private ID`) %>% 
+    mutate(ID = as.integer(ID))
   dat <- filter(dat, !is.na(Response))
 }
 
@@ -75,8 +76,9 @@ dropDups <- function(dat, dVars=c("ID", "Label")) {
 # Get Kowledge data
 getKnow <- function(name) {
   dat <- clean(name)
-  dat <- mutate(dat, 
-    Response = as.numeric(Response %in% c("True", "Wahr")))
+  dat <- mutate(dat, Response = recode(Response, 
+    Wahr="True", Falsch="False",
+    Verdadero="True", Falso="False"))
   dat <- dropDups(dat)
   dat <- doCast(dat)
   dat
@@ -96,11 +98,17 @@ getBehav <- function(name) {
 getVid <- function(name) {
   dat <- suppressMessages(
     read_csv(file.path(sourced, name), comment='END OF FILE'))
-  dat <- select(dat, ID=`Participant Private ID`, Stamp=`UTC Timestamp`, Label=`Zone Name`)
+  dat <- select(dat, 
+    ID=`Participant Private ID`, 
+    Stamp=`UTC Timestamp`, 
+    Label=`Zone Name`)
   dat <- filter(dat, !is.na(Label))
   dat <- arrange(dat, ID, Stamp)
+  dat <- mutate(dat, ID = as.integer(ID))
   dat <- group_by(dat, ID) %>% 
-    mutate(Lag = lag(Stamp), Time = round((Stamp - Lag)/1000, 2)) %>% 
+    mutate(
+      Lag = lag(Stamp), 
+      Time = round((Stamp - Lag)/1000, 2)) %>% 
     filter(row_number()==n()) %>% 
     select(ID, CtrVidTime=Time)
   dat

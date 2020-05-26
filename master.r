@@ -9,7 +9,6 @@ library(list)
 
 
 home <- file.path(Sys.getenv("HOME"), "Seafile\\Heidelberg\\Projects\\CoVideo\\Data")
-source(file.path(home, "dofiles/functions.r"))
 
 # Drop completion codes
 # 2E576104
@@ -17,15 +16,17 @@ source(file.path(home, "dofiles/functions.r"))
 ######################################################################
 ######################### Read data ##################################
 ######################################################################
+source(file.path(home, "dofiles/functions.r"))
+source(file.path(home, "dofiles/build_data.r"))
 dat_all <- readRDS(file.path(home, "Derived/dat_all.Rda"))
+source(file.path(home, "dofiles/know.r"))
 
-
-
+saveRDS(dat_all, file=file.path(home, "Derived", "dat_all.Rda")) 
 ######################################################################
 ######################### Test #######################################
 ######################################################################
 
-sourced <- file.path(home, "Data_EN/v19_14May2020-old")
+sourced <- file.path(home, "Data_EN/v19")
 Dem <- getDem("data_exp_17717-v19_questionnaire-lf5j.csv")
 ListTrt <- getList("data_exp_17717-v19_task-lekh.csv")
 ListCtrl <- getList("data_exp_17717-v19_task-7ce7.csv")
