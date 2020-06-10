@@ -9,6 +9,27 @@ readProA <- function(name, fpath=file.path(home, "Prolific")) {
   dat 
 }
 
+reviewStatus <- function(File, ln) {
+  endat <- readProA(File)
+
+  endat <- endat[!is.na(endat$completed_date_time), ]
+  endat <- filter(endat, status == "AWAITING REVIEW")
+  message("Total awaiting")
+  print(table(endat$status))
+
+  ddat <- filter(endat, TimeMin <=1)
+  message("\nTo be rejected")
+  print(table(ddat$status))
+  ddat <- select(ddat, participant_id)
+  readr::write_delim(ddat, path=file.path(home, "Prolific", paste0(ln, "_reject.txt")))
+
+  endat <- filter(endat, TimeMin > 1)
+  message("\nTo be paid")
+  print(table(endat$status))
+  pdat <- select(endat, participant_id)
+  readr::write_delim(pdat, path=file.path(home, "Prolific", paste0(ln, "_pay.txt")))
+}
+
 # Read and clean data
 clean <- function(name, ctype=col_character) {
   dat <- suppressMessages(
@@ -48,7 +69,7 @@ getDem <- function(name) {
   dat <- mutate(dat, 
     ID = as.integer(ID),
     Date = as.Date(gsub("\\s+.*", "", Date), format="%d/%m/%Y"),
-    Treat = as.numeric(ListArm=="List Treatment"))
+    TreatList = as.numeric(ListArm=="List Treatment"))
   dat
 }
 

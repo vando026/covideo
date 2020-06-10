@@ -20,8 +20,18 @@ cov_en <- mkName("17717-v21", ename)
 sourced <- file.path(home, "Data_EN/v21") 
 en_v21 <- getData(sourced, cov_en)
 
-dat_en <- rbind(en_v19, en_v20, en_v21)
+cov_en <- mkName("17717-v25", ename)
+sourced <- file.path(home, "Data_EN/v25") 
+en_v25 <- getData(sourced, cov_en)
+
+cov_en <- mkName("17717-v26", ename)
+sourced <- file.path(home, "Data_EN/v26") 
+en_v26 <- getData(sourced, cov_en)
+
+dat_en <- rbind(en_v19, en_v20, en_v21, en_v25, en_v26)
 dat_en <- mutate(dat_en, Language="EN")
+
+
 saveRDS(dat_en, file=file.path(home, "Derived", "dat_en.Rda"))
 
 
@@ -50,18 +60,24 @@ saveRDS(dat_de, file=file.path(home, "Derived", "dat_de.Rda"))
 
 
 
+saveRDS(dat_sp, file=file.path(home, "Derived", "dat_sp.Rda"))
+
 ######################################################################
 ######################### MX #########################################
 ######################################################################
 
 
 
+saveRDS(dat_mx, file=file.path(home, "Derived", "dat_mx.Rda"))
+
 ######################################################################
 ######################### All ########################################
 ######################################################################
 dat_en <- readRDS(file.path(home, "Derived/dat_en.Rda"))
 dat_de <- readRDS(file.path(home, "Derived/dat_de.Rda"))
-dat_all <- bind_rows(dat_en, dat_de)
+dat_mx <- readRDS(file.path(home, "Derived/dat_mx.Rda"))
+dat_sp <- readRDS(file.path(home, "Derived/dat_sp.Rda"))
+dat_all <- bind_rows(dat_en, dat_de, dat_sp, dat_mx)
 
 # recode Age
 dat_all <- mutate(dat_all, 

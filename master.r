@@ -2,6 +2,7 @@
 ## Project:  CoVideo
 ## Author: AV / Created: 13May2020 
 
+rm(list = ls())
 library(tidyverse)
 library(readr)
 library(reshape2)
@@ -16,10 +17,14 @@ home <- file.path(Sys.getenv("HOME"), "Seafile\\Heidelberg\\Projects\\CoVideo\\D
 ######################################################################
 ######################### Read data ##################################
 ######################################################################
+# Read in the functions
 source(file.path(home, "dofiles/functions.r"))
+# Put all the datasets together
 source(file.path(home, "dofiles/build_data.r"))
+# Read in the full dataset
 dat_all <- readRDS(file.path(home, "Derived/dat_all.Rda"))
-source(file.path(home, "dofiles/know.r"))
+# Do data management stuff
+source(file.path(home, "dofiles/main.r"))
 
 saveRDS(dat_all, file=file.path(home, "Derived", "dat_all.Rda")) 
 ######################################################################
@@ -60,6 +65,5 @@ beta=0.20
 ceiling(nA) # 85
 z=(muA-muB)/sqrt(sdA^2+sdB^2/kappa)*sqrt(nA)
 (Power=pnorm(z-qnorm(1-alpha/tau)))
-
 
 
