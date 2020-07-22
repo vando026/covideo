@@ -78,9 +78,10 @@ png(file.path(output, "Know_Clinic.png"),
   units="in", width=5, height=5.0, pointsize=9, 
   res=500, type="cairo")
 plotCI(1:3, y, liw=lis, uiw=uis, main="Knowledge (Clinical)", 
-  bty="n", ylim=c(9.15, 9.39), lwd=2, pch=16, font.lab=2,
-  xlab="Trial arm", ylab="Mean score", xaxt="n")
+  bty="n", ylim=c(9.15, 9.39), lwd=3, pch=16, font.lab=2,
+  xlab="Trial arm", ylab="Mean score", xaxt="n", col=set3)
 axis(1, 1:3, c("Control", "APC", "CoVideo"))
+text(c(1,2,2.8), y, pos=4, labels=formatC(y, format="f", digits=2))
 pbrack(1, 2, 9.29, pval=paste0(difc$ac, ", ", pvals[1, 1]))
 pbrack(2, 3, 9.34, pval=paste0(difc$av, ", ", pvals[2, 2]))
 pbrack(1, 3, 9.38, pval=paste0(difc$cv, ", ", pvals[2, 1]))
@@ -99,9 +100,10 @@ png(file.path(output, "Know_Spread.png"),
   units="in", width=5, height=5.0, pointsize=9, 
   res=500, type="cairo")
 plotCI(1:3, y, liw=lis, uiw=uis, main="Knowledge (Spread)", 
-  bty="n", ylim=c(8.40, 8.55), lwd=2, pch=16, font.lab=2,
-  xlab="Trial arm", ylab="Mean score", xaxt="n")
+  bty="n", ylim=c(8.40, 8.55), lwd=3, pch=16, font.lab=2, 
+  xlab="Trial arm", ylab="Mean score", xaxt="n", col=set3)
 axis(1, 1:3, c("Control", "APC", "CoVideo"))
+text(c(1,2,2.8), y, pos=4, labels=formatC(y, format="f", digits=2))
 pbrack(1, 2, 8.48, h=0.005, pval=paste0(difs$ac, ", ", pvals[1, 1]))
 pbrack(2, 3, 8.51, h=0.005, pval=paste0(difs$av, ", ", pvals[2, 2]))
 pbrack(1, 3, 8.54, h=0.005, pval=paste0(difs$cv, ", ", pvals[2, 1]))
@@ -110,8 +112,6 @@ dev.off()
 ######################################################################
 ######################### Behave Direct ##############################
 ######################################################################
-# Function to wrap statements
-bwrap <- function(y) paste(strwrap(bstate[y], 14), collapse="\n")
 
 # Function to get means and cis
 doReg <- function(LHS) {
@@ -196,22 +196,6 @@ dev.off()
 ######################### Diff and Diff ##############################
 ######################################################################
 ldat <- getListData(dat_all)
-# trtdat <- filter(ldat, VideoArm != "Control")
-# totdat <- filter(ldat, VideoArm != "Placebo")
-
-# mod1 <- lm(as.formula(paste("SocialDist", "~ -1 + VideoArm:TreatList")), data=trtdat)
-# mod1s <- summary(mod1)
-# mod1c <- coef(mod1s)
-# mod2 <- lm(as.formula(paste("SocialDist", "~ VideoArm*TreatList")), data=trtdat)
-# mod2s <- summary(mod2)
-# mod2c <- coef(mod2s)
-# mod3 <- lm(as.formula(paste("SocialDist", "~ VideoArm*TreatList")), data=totdat)
-# mod3s <- summary(mod3)
-# mod3c <- coef(mod3s)
-
-# mod4 <- lm(as.formula(paste("SocialDist", "~ VideoArm*TreatList")), data=ldat)
-# mod4s <- summary(mod4)
-# mod4c <- coef(mod4s)
 
 eqs <- list(
   ctrdif = "1*VideoArmControl:TreatList1 - 1*VideoArmControl:TreatList0 = 0",
@@ -222,43 +206,51 @@ eqs <- list(
   trteq = "1*VideoArmTreatment:TreatList1 - 1*VideoArmTreatment:TreatList0 -
     1*VideoArmPlacebo:TreatList1 + 1*VideoArmPlacebo:TreatList0 = 0")
 
-lincom <- function(EQ) {
+lincom <- function(EQ, mod) {
   lcom <- car::linearHypothesis(mod, EQ)
   t1 <- attributes(lcom)
   tdiff <- t1$value[1]
   tse <- sqrt(t1$vcov[1])
   tpval <- lcom[2, 6]
-  out <- c(diff=tdiff, se=tse, pval=tpval)
-  round(out, 4)
-}
-
-set3 <- RColorBrewer::brewer.pal(3, "Set2") 
-diffPlot <- function(dat, LHS="") {
-  y <- unlist(dat[1, 1:3])
-  bp <- barplot(y, xaxt="n", ylim=c(0, 0.5),
-    main=paste("This week I will", unlist(bstate[LHS])),
-    ylab="Prevalence", font.lab=2, col=set3)
-  text(x = bp, y=-0.01, label=c("Control", "APC", "CoVideo"), xpd=TRUE, 
-       adj=c(0.5, 1), cex=1.1, srt=0)
-  text(x = bp-0.05, y=y+0.01, label=y,
-       adj=c(1, 0), offset=0.5, cex=0.8)
-  plotCI(bp, y, dat[2, 1:3],
-    add=TRUE, lwd=1, pch=16, col="gray30")
-  pbrack(bp[1], bp[3], 0.40, pval=paste0("Diff = ", dat[1, "toteq"], ", pval = ", dat[3, "toteq"]))
-  pbrack(bp[2], bp[3], 0.48, pval=paste0("Diff = ", dat[1, "trteq"], ", pval = ", dat[3, "trteq"]))
+  c(diff=tdiff, se=tse, pval=tpval)
 }
 
 doDiffs <- function(LHS) {
   mod <- lm(as.formula(paste(LHS, "~ -1 + VideoArm:TreatList")), data=ldat)
-  dat <- data.frame(lapply(eqs, lincom))
-  diffPlot(dat, LHS)
-  return(dat)
+  data.frame(lapply(eqs, lincom, mod))
 }
-doDiffs("SocialDist")
 
-car::linearHypothesis(mod4, trtdif, verbose=TRUE)
+diffPlot <- function(dat, LHS="", yLim=NULL, yvals=NULL) {
+  nm <- names(dat); dat <- dat[[1]]
+  y <- unlist(dat[1, 1:3])
+  bp <- barplot(y, xaxt="n", ylim=yLim,
+    main=paste("This week I will", unlist(bstate[nm])),
+    ylab="Prevalence", font.lab=2, col=set3, xpd=FALSE)
+  text(x = bp, y=yLim[1]-0.005, label=c("Control", "APC", "CoVideo"), xpd=TRUE, 
+       adj=c(0.5, 1), cex=1.1, srt=0)
+  text(x = bp-0.05, y=y+0.01, label=formatC(y, format="f", digits=2),
+       adj=c(1, 0), offset=0.5, cex=0.8)
+  plotCI(bp, y, dat[2, 1:3],
+    add=TRUE, lwd=1, pch=16, col="gray30")
+  fmt <- function(x, y) formatC(x, format="f", digits=y)
+  pbrack(bp[1], bp[3], yvals[1], 
+    pval=paste0("Diff = ", fmt(dat[1, "toteq"], 2), ", pval = ", fmt(dat[3, "toteq"], 3)))
+  pbrack(bp[2], bp[3], yvals[2], 
+    pval=paste0("Diff = ", fmt(dat[1, "trteq"], 2), ", pval = ", fmt(dat[3, "trteq"], 3)))
+}
 
+ddat <- lapply(setNames(names(bstate), names(bstate)), doDiffs)
 
-tt = car::linearHypothesis(mod4, 
-  "1*VideoArmTreatment:TreatList1 - 1*VideoArmTreatment:TreatList0 -
-  1*VideoArmControl:TreatList1 + 1*VideoArmControl:TreatList0 = 0")
+mat <- matrix(c(1:6), 3, 2, byrow=TRUE)
+png(file.path(output, "BehavDiffs.png"),
+  units="in", width=7, height=9.5, pointsize=11, 
+  res=72, type="cairo")
+nf <- layout(mat, heights=rep(10, 3))
+par(mai=c(0.4,0.3,0.3,0.1))
+diffPlot(ddat["SocialDist"], yLim=c(0, 0.45), yvals=c(0.35, 0.41))
+diffPlot(ddat["Wash"], yLim=c(0.80, 1.04), yvals=c(0.99, 1.03))
+diffPlot(ddat["StockPile"], yLim=c(0, 0.5), yvals=c(0.42, 0.48))
+diffPlot(ddat["CleanDishes"], yLim=c(0.8, 1.05), yvals=c(0.985, 1.03))
+diffPlot(ddat["CleanSurfaces"], yLim=c(0.6, 0.95), yvals=c(0.85, 0.92))
+diffPlot(ddat["UseMedia"], yLim=c(0, 0.45), yvals=c(0.36, 0.42))
+dev.off()
