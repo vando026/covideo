@@ -99,27 +99,19 @@ dev.off()
 ######################### Behave Direct ##############################
 ######################################################################
 
-# Function to get means and cis
-doReg <- function(LHS) {
-    mod <- lm(as.formula(paste(LHS, " ~ TreatList")), data=bdat)
-    cf <- round(coef(mod)[2]*100, 1)
-    ci <- round(confint(mod)[2, ]*100, 1) 
-    return(c(cf, ci))
-}
-
 # Make the data 
 ldat <- getListData(dat_all)
 bdat <- filter(ldat, VideoArm=="Control") 
-behav = data.frame(t(sapply(names(bstate), doReg)))
+behav = data.frame(t(sapply(names(bstate), doRegDirect, bdat)))
 behav <- arrange(behav, TreatList1)
 names(behav) <- c("Est", "LB", "UB")
 bnames <- lapply(rownames(behav), bwrap)
 
 png(file.path(output, "BehavIntent.png"),
-  units="in", width=6.5, height=5.0, pointsize=9, 
+  units="in", width=6.5, height=5.0, pointsize=10, 
   res=500, type="cairo")
 bp <- barplot(behav$Est, xaxt="n", ylim=c(0, 100),
-  main="This week I will, ...", ylab="Prevalence", font.lab=2,
+  main="This week, I will ...", ylab="Prevalence", font.lab=2,
   col="darkslategray3", border="darkslategray4")
 text(x = bp, y=-1, label=bnames, xpd=TRUE, 
      adj=c(0.5, 1), cex=0.8, srt=0)
@@ -134,18 +126,9 @@ dev.off()
 ######################################################################
 ####################### PLot Behav means #############################
 ######################################################################
-doReg2 <- function(LHS) {
-  mod <- lm(as.formula(paste(LHS, "~ -1 + VideoArm:TreatList")), data=ldat)
-  out <- data.frame(summary(mod)$coefficients[, c(1, 2)])
-  colnames(out) <- c("Mn", "SE")
-  out$Arm  <- gsub("VideoArm|:TreatF", "", rownames(out))
-  out$Mn <- round(out$Mn, 3)
-  out$SE  <- round(out$SE, 3)
-  out[c(1, 4, 2, 5, 3, 6), ]
-}
 
-plotBar <- function(Var) {
-  dat <- doReg2(Var)
+plotBar <- function(Var, Data=ldat) {
+  dat <- doRegIndirect(Var, Data)
   nms <- rep(c("Control", "Treatment"), 3)
   bp <- barplot(dat$Mn, ylim=c(0, max(dat$Mn)*1.1), 
     ylab="Mean score", font.lab=2, main=paste("I will", unlist(bstate[Var])),
@@ -189,37 +172,24 @@ eqs <- list(
   trteq = "1*VideoArmTreatment:TreatList1 - 1*VideoArmTreatment:TreatList0 -
     1*VideoArmPlacebo:TreatList1 + 1*VideoArmPlacebo:TreatList0 = 0")
 
-lincom <- function(EQ, mod) {
-  lcom <- car::linearHypothesis(mod, EQ)
-  t1 <- attributes(lcom)
-  tdiff <- t1$value[1]
-  tse <- sqrt(t1$vcov[1])
-  tpval <- lcom[2, 6]
-  c(diff=tdiff, se=tse, pval=tpval)
-}
-
-doDiffs <- function(LHS) {
-  mod <- lm(as.formula(paste(LHS, "~ -1 + VideoArm:TreatList")), data=ldat)
-  data.frame(lapply(eqs, lincom, mod))
-}
-
 diffPlot <- function(dat, LHS="", yLim, yvals=NULL) {
   nm <- names(dat); dat <- dat[[1]]
   y <- unlist(dat[1, 1:3]) * 100
-  yc <- y - y[1]
   plotCI(1:3, y, dat[2, 1:3]*100, cex.lab=1.2,
     bty="n", ylim=yLim, xaxt="n", xlab="", ylab="Mean ",
     lwd=3, pch=16, col=set3, font.lab=2, cex.axis=1.15)
   title(paste("This week I will", unlist(btitle[nm])), cex.main=1.3)
   axis(1, at=1:3, label=c("Control", "APC", "CoVideo"), cex.axis=1.2, font=2)
   text(x = c(1, 2, 2.77) + 0.025, y=y + 0.5, 
-       label=formatC(y, format="f", digits=1),
-       adj=c(0, 0), cex=1.0)
+    label=formatC(y, format="f", digits=1),
+    adj=c(0, 0), cex=1.0)
   abline(h=y[1], lwd=1, lty=2, col="grey70")
   pbrack(1, 3, yvals[1], h=1, CEX = 1.1,
-    pval=paste0("TotDiff = ", fmt(dat[1, "toteq"], 2), ", pval = ", fmt(dat[3, "toteq"], 3)))
+    pval=paste0("Tot. Diff = ", fmt(dat[1, "toteq"]*100, 1), ", pval = ", 
+    fmt(dat[3, "toteq"], 3)))
   pbrack(2,  3, yvals[2], h=1, CEX = 1.1,
-    pval=paste0("TrtDiff = ", fmt(dat[1, "trteq"], 2), ", pval = ", fmt(dat[3, "trteq"], 3)))
+    pval=paste0("Trt. Diff = ", fmt(dat[1, "trteq"]*100, 1), ", pval = ", 
+    fmt(dat[3, "trteq"], 3)))
 }
 ddat <- lapply(setNames(names(bstate), names(bstate)), doDiffs)
 btitle <- lapply(setNames(names(bstate), names(bstate)), bwrap, 25)
