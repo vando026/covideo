@@ -171,6 +171,7 @@ eqs <- list(
     1*VideoArmControl:TreatList1 + 1*VideoArmControl:TreatList0 = 0",
   trteq = "1*VideoArmTreatment:TreatList1 - 1*VideoArmTreatment:TreatList0 -
     1*VideoArmPlacebo:TreatList1 + 1*VideoArmPlacebo:TreatList0 = 0")
+btitle <- lapply(setNames(names(bstate), names(bstate)), bwrap, 25)
 
 diffPlot <- function(dat, LHS="", yLim, yvals=NULL) {
   nm <- names(dat); dat <- dat[[1]]
@@ -192,7 +193,6 @@ diffPlot <- function(dat, LHS="", yLim, yvals=NULL) {
     fmt(dat[3, "trteq"], 3)))
 }
 ddat <- lapply(setNames(names(bstate), names(bstate)), doDiffs)
-btitle <- lapply(setNames(names(bstate), names(bstate)), bwrap, 25)
 
 mat <- matrix(c(1:6), 3, 2, byrow=TRUE)
 png(file.path(output, "BehavDiffs.png"),
