@@ -41,72 +41,58 @@ ArmsN == (APCN + CtrlN + CoVidN)
 (CtrlN - Ctrl_Lost) == fdat_sum["Control"]
 
 ######################################################################
-###################### Plots #########################################
-######################################################################
-pbrack <- function(x0, x1, y, h=0.01, pval="p < 0.05", ...) {
-  segments(x0, y, x1, y, ...)
-  segments(x0, y-h, x0, y, ...)
-  segments(x1, y-h, x1, y, ...)
-  text((x0 + x1)/2, y + (h*0.8), pval)
-}
-fmt <- function(x) {
-  x <- formatC(x, format="f", digits=3)
-  ifelse(x=="0.000", "p < 0.001", paste0("p = ", x))
-}
-
-dif1 <- function(x) {
-  y <- list(cv = x[3]-x[1], ac = x[2]-x[1], av = x[3]-x[2])
-  lapply(y, function(x) paste0("Diff = ", formatC(x, format="f", digits=3)))
-}
-
-######################################################################
 ######################### KNowledge ##################################
 ######################################################################
-adat <- filter(dat_all, !is.na(ClinicTotal) | !is.na(SpreadTotal)) %>% 
-  select(ClinicTotal, SpreadTotal, VideoArm)
+adat <- filter(dat_all, !is.na(ClinicTotalRC) | !is.na(SpreadTotalRC)) %>% 
+  select(ClinicTotalRC, SpreadTotalRC, VideoArm)
   
-cmod <- lm(ClinicTotal ~ -1 + VideoArm, data=adat)
-cpair <- with(adat, pairwise.t.test(ClinicTotal, VideoArm, p.adj = "none"))
+cmod <- lm(ClinicTotalRC ~ -1 + VideoArm, data=adat)
+cpair <- with(adat, 
+  pairwise.t.test(ClinicTotalRC, VideoArm, p.adj = "none"))
 y <- cmod$coefficients
 cis <- confint(cmod)
 lis <- y - cis[, 1] 
 uis <- cis[, 2] - y
-pvals <- fmt(cpair$p.value)
-difc <- dif1(y)
+pvals <- pfmt(cpair$p.value)
 
 png(file.path(output, "Know_Clinic.png"),
   units="in", width=5, height=5.0, pointsize=9, 
   res=500, type="cairo")
 plotCI(1:3, y, liw=lis, uiw=uis, main="Knowledge (Clinical)", 
-  bty="n", ylim=c(9.15, 9.39), lwd=3, pch=16, font.lab=2,
+  bty="n", ylim=c(8.2, 8.44), lwd=3, pch=16, font.lab=2,
   xlab="Trial arm", ylab="Mean score", xaxt="n", col=set3)
 axis(1, 1:3, c("Control", "APC", "CoVideo"))
 text(c(1,2,2.8), y, pos=4, labels=formatC(y, format="f", digits=2))
-pbrack(1, 2, 9.29, pval=paste0(difc$ac, ", ", pvals[1, 1]))
-pbrack(2, 3, 9.34, pval=paste0(difc$av, ", ", pvals[2, 2]))
-pbrack(1, 3, 9.38, pval=paste0(difc$cv, ", ", pvals[2, 1]))
+pbrack(1, 2, 8.34, 
+  pval=paste0("Att. Diff = ", fmt(y[2] - y[1]), ", ", pvals[1, 1]))
+pbrack(2, 3, 8.38, 
+  pval=paste0("Trt. Diff = ", fmt(y[3] - y[2]), ", ", pvals[2, 2]))
+pbrack(1, 3, 8.42, 
+  pval=paste0("Tot. Diff = ", fmt(y[3] - y[1]), ", ", pvals[2, 1]))
 dev.off()
 
-cmod <- lm(SpreadTotal ~ -1 + VideoArm, data=adat)
-cpair <- with(adat, pairwise.t.test(SpreadTotal, VideoArm, p.adj = "none"))
+cmod <- lm(SpreadTotalRC ~ -1 + VideoArm, data=adat)
+cpair <- with(adat, pairwise.t.test(SpreadTotalRC, VideoArm, p.adj = "none"))
 y <- cmod$coefficients
 cis <- confint(cmod)
 lis <- y - cis[, 1] 
 uis <- cis[, 2] - y
-pvals <- fmt(cpair$p.value)
-difs <- dif1(y)
+pvals <- pfmt(cpair$p.value)
 
 png(file.path(output, "Know_Spread.png"),
   units="in", width=5, height=5.0, pointsize=9, 
   res=500, type="cairo")
 plotCI(1:3, y, liw=lis, uiw=uis, main="Knowledge (Spread)", 
-  bty="n", ylim=c(8.40, 8.55), lwd=3, pch=16, font.lab=2, 
+  bty="n", ylim=c(8.55, 8.71), lwd=3, pch=16, font.lab=2, 
   xlab="Trial arm", ylab="Mean score", xaxt="n", col=set3)
 axis(1, 1:3, c("Control", "APC", "CoVideo"))
 text(c(1,2,2.8), y, pos=4, labels=formatC(y, format="f", digits=2))
-pbrack(1, 2, 8.48, h=0.005, pval=paste0(difs$ac, ", ", pvals[1, 1]))
-pbrack(2, 3, 8.51, h=0.005, pval=paste0(difs$av, ", ", pvals[2, 2]))
-pbrack(1, 3, 8.54, h=0.005, pval=paste0(difs$cv, ", ", pvals[2, 1]))
+pbrack(1, 2, 8.648, h=0.005,
+  pval=paste0("Att. Diff = ", fmt(y[2] - y[1]), ", ", pvals[1, 1]))
+pbrack(2, 3, 8.67, h=0.005, 
+  pval=paste0("Trt. Diff = ", fmt(y[3] - y[2]), ", ", pvals[2, 2]))
+pbrack(1, 3, 8.70, h=0.005, 
+  pval=paste0("Tot. Diff = ", fmt(y[3] - y[1]), ", ", pvals[2, 1]))
 dev.off()
 
 ######################################################################
@@ -158,7 +144,6 @@ doReg2 <- function(LHS) {
   out[c(1, 4, 2, 5, 3, 6), ]
 }
 
-
 plotBar <- function(Var) {
   dat <- doReg2(Var)
   nms <- rep(c("Control", "Treatment"), 3)
@@ -171,9 +156,7 @@ plotBar <- function(Var) {
        cex=0.9, pos=3)
 }
 
-
 mat <- matrix(c(1:6, 7, 7), 4, 2, byrow=TRUE)
-
 png(file.path(output, "BehavMeans.png"),
   units="in", width=7, height=8.5, pointsize=11, 
   res=72, type="cairo")
@@ -220,36 +203,38 @@ doDiffs <- function(LHS) {
   data.frame(lapply(eqs, lincom, mod))
 }
 
-diffPlot <- function(dat, LHS="", yLim=NULL, yvals=NULL) {
+diffPlot <- function(dat, LHS="", yLim, yvals=NULL) {
   nm <- names(dat); dat <- dat[[1]]
-  y <- unlist(dat[1, 1:3])
-  # bp <- barplot(y, xaxt="n", ylim=yLim,
-    # main=paste("This week I will", unlist(bstate[nm])),
-    # ylab="Prevalence", font.lab=2, col=set3, xpd=FALSE)
-  plotCI(1:3, y, dat[2, 1:3], add=TRUE, lwd=1, pch=16, col="gray30")
-  text(1:3, y=yLim[1]-0.005, label=c("Control", "APC", "CoVideo"), xpd=TRUE, 
-       adj=c(0.5, 1), cex=1.1, srt=0)
-  # text(x = 1:3 - 0.05, y=y+0.01, label=formatC(y, format="f", digits=2),
-       # adj=c(1, 0), offset=0.5, cex=0.8)
-  # fmt <- function(x, y) formatC(x, format="f", digits=y)
-  # pbrack(bp[1], bp[3], yvals[1], 
-    # pval=paste0("Diff = ", fmt(dat[1, "toteq"], 2), ", pval = ", fmt(dat[3, "toteq"], 3)))
-  # pbrack(bp[2], bp[3], yvals[2], 
-    # pval=paste0("Diff = ", fmt(dat[1, "trteq"], 2), ", pval = ", fmt(dat[3, "trteq"], 3)))
+  y <- unlist(dat[1, 1:3]) * 100
+  yc <- y - y[1]
+  plotCI(1:3, y, dat[2, 1:3]*100, cex.lab=1.2,
+    bty="n", ylim=yLim, xaxt="n", xlab="", ylab="Mean ",
+    lwd=3, pch=16, col=set3, font.lab=2, cex.axis=1.15)
+  title(paste("This week I will", unlist(btitle[nm])), cex.main=1.3)
+  axis(1, at=1:3, label=c("Control", "APC", "CoVideo"), cex.axis=1.2, font=2)
+  text(x = c(1, 2, 2.77) + 0.025, y=y + 0.5, 
+       label=formatC(y, format="f", digits=1),
+       adj=c(0, 0), cex=1.0)
+  abline(h=y[1], lwd=1, lty=2, col="grey70")
+  pbrack(1, 3, yvals[1], h=1, CEX = 1.1,
+    pval=paste0("TotDiff = ", fmt(dat[1, "toteq"], 2), ", pval = ", fmt(dat[3, "toteq"], 3)))
+  pbrack(2,  3, yvals[2], h=1, CEX = 1.1,
+    pval=paste0("TrtDiff = ", fmt(dat[1, "trteq"], 2), ", pval = ", fmt(dat[3, "trteq"], 3)))
 }
-diffPlot(ddat["SocialDist"], yLim=c(0, 0.45), yvals=c(0.35, 0.41))
-
 ddat <- lapply(setNames(names(bstate), names(bstate)), doDiffs)
+btitle <- lapply(setNames(names(bstate), names(bstate)), bwrap, 25)
 
 mat <- matrix(c(1:6), 3, 2, byrow=TRUE)
 png(file.path(output, "BehavDiffs.png"),
-  units="in", width=7, height=9.5, pointsize=11, 
-  res=72, type="cairo")
+  units="in", width=7, height=9.5, pointsize=12, 
+  res=300, type="cairo")
 nf <- layout(mat, heights=rep(10, 3))
-par(mai=c(0.4,0.3,0.3,0.1))
-diffPlot(ddat["Wash"], yLim=c(0.80, 1.04), yvals=c(0.99, 1.03))
-diffPlot(ddat["StockPile"], yLim=c(0, 0.5), yvals=c(0.42, 0.48))
-diffPlot(ddat["CleanDishes"], yLim=c(0.8, 1.05), yvals=c(0.985, 1.03))
-diffPlot(ddat["CleanSurfaces"], yLim=c(0.6, 0.95), yvals=c(0.85, 0.92))
-diffPlot(ddat["UseMedia"], yLim=c(0, 0.45), yvals=c(0.36, 0.42))
+par(mai=c(0.4,0.6,0.4,0.2))
+diffPlot(ddat["SocialDist"], yLim=c(10, 42), yvals=c(40, 35))
+diffPlot(ddat["Wash"], yLim=c(80, 104), yvals=c(102, 98))
+diffPlot(ddat["StockPile"], yLim=c(20, 46), yvals=c(45, 41))
+diffPlot(ddat["CleanDishes"], yLim=c(80, 104), yvals=c(102, 98))
+diffPlot(ddat["CleanSurfaces"], yLim=c(65, 90), yvals=c(89, 85))
+diffPlot(ddat["UseMedia"], yLim=c(15, 41), yvals=c(40, 36))
 dev.off()
+
