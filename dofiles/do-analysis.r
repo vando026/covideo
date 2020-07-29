@@ -7,8 +7,8 @@
 ######################### Demo   #####################################
 ######################################################################
 getTot <- function(Var) {
-  dat <- group_by(dat_all, VideoArm, TreatList, .data[[Var]]) %>% tally()
-  group_by(dat, VideoArm, TreatList) %>% 
+  dat <- group_by(dat_all, VideoArm, .data[[Var]]) %>% tally()
+  group_by(dat, VideoArm) %>% 
     mutate(Tot = sum(n), Perc=round(n/Tot * 100, 1)) %>% select(-Tot)
 }
 
