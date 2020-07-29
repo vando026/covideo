@@ -31,10 +31,22 @@ kdat <- dat_all[, names(kstate)]
 
 
 getTot1 <- function(x) {
-  x["TimedOut"] <- 
-  table(x)
+  dat <- dat_all[x]
+  correct <- kstate[[x]][2]
+  yy  <- ifelse(correct=="False", "True", "False")
+  dat[[x]][dat[[x]]=="TimedOut"] <- yy
+  xx <- table(dat)
+  xt <- prop.table(xx)
+  c(format(xx[1], big.mark=","), format(xx[2], big.mark=","),
+    formatC(xt[which(names(xt) %in% correct)]*100, 1,
+    format="f"))
 }
-lapply(kdat, getTot1)
+tabk <- t(sapply(names(kstate), getTot1))
+tabk <- tabk[!rownames(tabk) %in% "GoodStockpile", ]
+rownames(tabk) <- sapply(rownames(tabk), function(x) kstate[[x]][1])
+
+save(tab0, tabk, file=file.path(datapath, "Derived", "Tables.Rdata"))
+
 
 ######################################################################
 ######################### Primary outcome ############################
@@ -43,7 +55,6 @@ ldat <- getListData(dat_all)
 varn <- names(ldat)[-c(1,2)]
 tablist <- data.frame(do.call(rbind, 
   lapply(setNames(varn, varn), getMeanSE, ldat)))
-save(tab0, tablist, file=file.path(datapath, "Derived", "Tables.Rdata"))
 
 
 ######################################################################

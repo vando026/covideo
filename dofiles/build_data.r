@@ -126,62 +126,6 @@ dat_all$Educ2 <- factor(dat_all$Educ2,
 ######################################################################
 ######################### Knowledge ##################################
 ######################################################################
-# This is clinic knowledge
-cdat <- select(dat_all, 
-  SpreadHealthy,
-  NoPersonSpread, 
-  SurfaceSurvive,
-  Cough, 
-  Fever, 
-  DropletMouth, 
-  DropletNose,
-  TouchFace, 
-  Antibiotic, 
-  CleanSoap)
-cscore <- c(
-  "True", 
-  "False", 
-  "False", 
-  "True", 
-  "True", 
-  "True", 
-  "True", 
-  "True", 
-  "False", 
-  "True")
-
-# This gets knowledge of spread
-sdat <- select(dat_all, 
-  WashHandSoap, 
-  RinseSalt, 
-  AvoidFaceTouch, 
-  NoShakeHands, 
-  AvoidPlace, 
-  Garlic , 
-  ShareUtensil,
-  GoodStockpile, 
-  FaceMask)
-sscore <- c(
-  "True",
-  "False",
-  "True",
-  "True",
-  "True",
-  "False",
-  "True",
-  "False",
-  "True")
-
-setKnow <- function(irow, correct) {
-  stopifnot(length(irow)==length(correct))
-  sum(irow==correct)
-}
-dat_all$ClinicTotal <- apply(cdat, 1, setKnow, cscore)
-dat_all$SpreadTotal <- apply(sdat, 1, setKnow, sscore)
-
-######################################################################
-######################### Alternative ordering #######################
-######################################################################
 slist <- c("SpreadHealthy", "NoPersonSpread",
   "DropletMouth", "DropletNose", "NoShakeHands",
   "AvoidPlace", "FaceMask", "ShareUtensil", "TouchFace")
@@ -190,9 +134,9 @@ clist <- c("SurfaceSurvive", "Cough", "Fever", "Antibiotic",
   "CleanSoap", "WashHandSoap", "RinseSalt", "AvoidFaceTouch",
   "Garlic")
 
-setKnow2 <- function(irow) {
+setKnow <- function(irow) {
   correct <- sapply(names(irow), function(x) kstate[[x]][2])
   sum(irow==correct)
 }
-dat_all$SpreadTotalRC2 <- apply(dat_all[slist], 1, setKnow2)
-dat_all$ClinicTotalRC2 <- apply(dat_all[clist], 1, setKnow2)
+dat_all$SpreadTotalRC <- apply(dat_all[slist], 1, setKnow)
+dat_all$ClinicTotalRC <- apply(dat_all[clist], 1, setKnow)
