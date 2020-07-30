@@ -27,22 +27,32 @@ tab0 <- lapply(dat1, doStat)
 ######################################################################
 ######################### Knowledge ##################################
 ######################################################################
-getTot1 <- function(x) {
-  dat <- dat_all[x]
-  correct <- kstate[[x]][2]
+getTot1 <- function(x, state) {
+  dat <- dat_all[c("VideoArm", x)]
+  correct <- state[[x]][2]
   yy  <- ifelse(correct=="False", "True", "False")
   dat[[x]][dat[[x]]=="TimedOut"] <- yy
   xx <- table(dat)
-  xt <- prop.table(xx)
-  c(format(xx[1], big.mark=","), format(xx[2], big.mark=","),
-    formatC(xt[which(names(xt) %in% correct)]*100, 1,
-    format="f"))
+  xt <- prop.table(xx, 1)
+  xx <- format(xx, big.mark=",")
+  xt <- xt[, colnames(xt) == correct]
+  xt <- formatC(xt*100, 1, format="f")
+  xx <- data.frame(cbind(xx, pp=xt))
+  xx <- data.frame(xx[1, ], xx[2, ], xx[3, ])
+  xx
 }
-tabk <- t(sapply(names(kstate), getTot1))
-tabk <- tabk[!rownames(tabk) %in% "GoodStockpile", ]
-rownames(tabk) <- sapply(rownames(tabk), function(x) kstate[[x]][1])
+tabclinic <- t(sapply(names(cstate), getTot1, cstate))
+rownames(tabclinic) <- unlist(Map(paste0,
+  c(seq(length(cstate))), c(". "),  
+  sapply(names(cstate), function(x) cstate[[x]][1])))
+tabspread <- t(sapply(names(sstate), getTot1, sstate))
+rownames(tabspread) <- unlist(Map(paste0,
+  c(seq(length(sstate))), c(". "),  
+  sapply(names(sstate), function(x) sstate[[x]][1])))
 
-save(tab0, tabk, file=file.path(datapath, "Derived", "Tables.Rdata"))
+
+save(tab0, tabclinic, tabspread, 
+  file=file.path(datapath, "Derived", "Tables.Rdata"))
 
 
 ######################################################################

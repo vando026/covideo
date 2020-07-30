@@ -17,14 +17,20 @@ flow
 
 fdat <- select(dat_all, ID, VideoArm, TreatList)
 fdat <- data.frame(with(fdat, table(VideoArm, TreatList)))
+
 # Total completed
 sum(fdat$Freq)
 fdat_sum <- tapply(fdat$Freq, fdat$VideoArm, sum)
+fdat_sum
+Final <- length(unique(dat_all$ID))
   
 # Total enrolled
 Total_In <- flow$In
+Total_In
+
 # Lost at Consent
 First_Lost <- flow$Start
+
 # Total going into arms
 ArmsN <- Total_In - First_Lost
 CoVidN <- fdat_sum["Treatment"] + flow$Trt
@@ -32,8 +38,11 @@ APCN <- fdat_sum["Placebo"] + flow$APC
 CtrlN <- ArmsN - CoVidN - APCN
 # Lost at Crtl
 Ctrl_Lost <- CtrlN - fdat_sum["Control"] 
+Ctrl_Lost
+
 # Total enrolled into Arms
 ArmsN == (APCN + CtrlN + CoVidN)
+ArmsN
 
 # Checks 
 (CoVidN - flow$Trt) == fdat_sum["Treatment"]
@@ -44,60 +53,48 @@ ArmsN == (APCN + CtrlN + CoVidN)
 ######################### KNowledge ##################################
 ######################################################################
 # cmod <- lm(ClinicTotalRC ~ VideoArm, data=adat)
-cmod <- lm(ClinicTotalRC ~ -1 + VideoArm, data=dat_all)
-cpair <- with(adat, 
-  pairwise.t.test(ClinicTotalRC, VideoArm, p.adj = "none"))
-y <- cmod$coefficients
-cis <- confint(cmod)
-lis <- y - cis[, 1] 
-uis <- cis[, 2] - y
-pvals <- pfmt(cpair$p.value)
 
-png(file.path(output, "Know_Clinic.png"),
-  units="in", width=5, height=5.0, pointsize=9, 
-  res=500, type="cairo")
-plotCI(1:3, y, liw=lis, uiw=uis, main="Knowledge (Clinical)", 
-  bty="n", ylim=c(8.2, 8.44), lwd=3, pch=16, font.lab=2,
-  xlab="Trial arm", ylab="Mean score", xaxt="n", col=set3)
-axis(1, 1:3, c("Control", "APC", "CoVideo"))
-text(c(1,2,2.8), y, pos=4, labels=formatC(y, format="f", digits=2))
-pbrack(1, 2, 8.34, 
-  pval=paste0("Att. Diff = ", fmt(y[2] - y[1]), ", ", pvals[1, 1]))
-pbrack(2, 3, 8.38, 
-  pval=paste0("Trt. Diff = ", fmt(y[3] - y[2]), ", ", pvals[2, 2]))
-pbrack(1, 3, 8.42, 
-  pval=paste0("Tot. Diff = ", fmt(y[3] - y[1]), ", ", pvals[2, 1]))
-dev.off()
+plotKnow <- function(LHS, Title="", yLim, ppos, H=0.01) {
+  cmod <- lm(as.formula(paste(LHS, " ~ -1 + VideoArm")),
+     data=dat_all)
+  cpair <- pairwise.t.test(dat_all[[LHS]], dat_all[["VideoArm"]],
+     p.adj = "none")
+  y <- cmod$coefficients
+  cis <- confint(cmod)
+  lis <- y - cis[, 1] 
+  uis <- cis[, 2] - y
+  pvals <- pfmt(cpair$p.value)
+  #
+  png(file.path(output, paste0(LHS, ".png")),
+    units="in", width=5, height=5.0, pointsize=9, 
+    res=500, type="cairo")
+  plotCI(1:3, y, liw=lis, uiw=uis, main=Title, 
+    bty="n", ylim=yLim, lwd=3, pch=16, font.lab=2,
+    xlab="Trial arm", ylab="Mean score", xaxt="n", col=set3)
+  axis(1, 1:3, c("Control", "APC", "CoVideo"))
+  text(c(1,2,2.8), y, pos=4, labels=formatC(y, format="f", digits=2))
+  pbrack(1, 2, ppos[1], H,
+    pval=paste0("Att. Diff = ", fmt(y[2] - y[1]), ", ", pvals[1, 1]))
+  pbrack(2, 3, ppos[2], H,
+    pval=paste0("Trt. Diff = ", fmt(y[3] - y[2]), ", ", pvals[2, 2]))
+  pbrack(1, 3, ppos[3], H,
+    pval=paste0("Tot. Diff = ", fmt(y[3] - y[1]), ", ", pvals[2, 1]))
+  dev.off()
+}
 
-cmod <- lm(SpreadTotalRC ~ VideoArm, data=adat)
-cmod <- lm(SpreadTotalRC ~ -1 + VideoArm, data=adat)
-cpair <- with(adat, pairwise.t.test(SpreadTotalRC, VideoArm, p.adj = "none"))
-y <- cmod$coefficients
-cis <- confint(cmod)
-lis <- y - cis[, 1] 
-uis <- cis[, 2] - y
-pvals <- pfmt(cpair$p.value)
+plotKnow("ClinicTotal", "Clinical knowledge of COVID-19 (10 items)", 
+  yLim=c(9.15, 9.39), ppos=c(9.29, 9.338, 9.38))
 
-png(file.path(output, "Know_Spread.png"),
-  units="in", width=5, height=5.0, pointsize=9, 
-  res=500, type="cairo")
-plotCI(1:3, y, liw=lis, uiw=uis, main="Knowledge (Spread)", 
-  bty="n", ylim=c(8.55, 8.71), lwd=3, pch=16, font.lab=2, 
-  xlab="Trial arm", ylab="Mean score", xaxt="n", col=set3)
-axis(1, 1:3, c("Control", "APC", "CoVideo"))
-text(c(1,2,2.8), y, pos=4, labels=formatC(y, format="f", digits=2))
-pbrack(1, 2, 8.648, h=0.005,
-  pval=paste0("Att. Diff = ", fmt(y[2] - y[1]), ", ", pvals[1, 1]))
-pbrack(2, 3, 8.67, h=0.005, 
-  pval=paste0("Trt. Diff = ", fmt(y[3] - y[2]), ", ", pvals[2, 2]))
-pbrack(1, 3, 8.70, h=0.005, 
-  pval=paste0("Tot. Diff = ", fmt(y[3] - y[1]), ", ", pvals[2, 1]))
-dev.off()
+plotKnow("SpreadTotal", "Knowledge of preventing COVID-19 spread (8 items)", 
+  yLim=c(7.62, 7.75), ppos=c(7.715, 7.695, 7.74), H=0.005)
+
+plotKnow("KnowledgeAll", "All knowledge (18 items)", 
+ yLim=c(16.8, 17.05), ppos=c(16.95, 17.005, 17.048))
+
 
 ######################################################################
 ######################### Behave Direct ##############################
 ######################################################################
-
 # Make the data 
 ldat <- getListData(dat_all)
 bdat <- filter(ldat, VideoArm=="Control") 

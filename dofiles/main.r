@@ -51,7 +51,6 @@ dat_all <- dat_all[!dat_all$ID %in% dropID, ]
 ######################### Calc Know ##################################
 ######################################################################
 setKnow <- function(irow, state) {
-  browser()
   irow <- irow[names(state)]
   correct <- sapply(names(irow), function(x) state[[x]][2])
   sum(irow==correct)

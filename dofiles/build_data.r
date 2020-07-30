@@ -31,9 +31,7 @@ en_v26 <- getData(sourced, cov_en)
 dat_en <- rbind(en_v19, en_v20, en_v21, en_v25, en_v26)
 dat_en <- mutate(dat_en, Language="EN")
 
-
 saveRDS(dat_en, file=file.path(datapath, "Derived", "dat_en.Rda"))
-
 
 ######################################################################
 ######################### DE #########################################
