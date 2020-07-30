@@ -123,20 +123,3 @@ dat_all$Educ2 <-
 dat_all$Educ2 <- factor(dat_all$Educ2, 
   levels = c("Primary or less", "Completed High", "College,BA", "MA,PhD"))
 
-######################################################################
-######################### Knowledge ##################################
-######################################################################
-slist <- c("SpreadHealthy", "NoPersonSpread",
-  "DropletMouth", "DropletNose", "NoShakeHands",
-  "AvoidPlace", "FaceMask", "ShareUtensil", "TouchFace")
-
-clist <- c("SurfaceSurvive", "Cough", "Fever", "Antibiotic",
-  "CleanSoap", "WashHandSoap", "RinseSalt", "AvoidFaceTouch",
-  "Garlic")
-
-setKnow <- function(irow) {
-  correct <- sapply(names(irow), function(x) kstate[[x]][2])
-  sum(irow==correct)
-}
-dat_all$SpreadTotalRC <- apply(dat_all[slist], 1, setKnow)
-dat_all$ClinicTotalRC <- apply(dat_all[clist], 1, setKnow)

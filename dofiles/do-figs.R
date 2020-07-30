@@ -43,10 +43,8 @@ ArmsN == (APCN + CtrlN + CoVidN)
 ######################################################################
 ######################### KNowledge ##################################
 ######################################################################
-adat <- filter(dat_all, !is.na(ClinicTotalRC) | !is.na(SpreadTotalRC)) %>% 
-  select(ClinicTotalRC, SpreadTotalRC, VideoArm)
-  
-cmod <- lm(ClinicTotalRC ~ -1 + VideoArm, data=adat)
+# cmod <- lm(ClinicTotalRC ~ VideoArm, data=adat)
+cmod <- lm(ClinicTotalRC ~ -1 + VideoArm, data=dat_all)
 cpair <- with(adat, 
   pairwise.t.test(ClinicTotalRC, VideoArm, p.adj = "none"))
 y <- cmod$coefficients
@@ -71,6 +69,7 @@ pbrack(1, 3, 8.42,
   pval=paste0("Tot. Diff = ", fmt(y[3] - y[1]), ", ", pvals[2, 1]))
 dev.off()
 
+cmod <- lm(SpreadTotalRC ~ VideoArm, data=adat)
 cmod <- lm(SpreadTotalRC ~ -1 + VideoArm, data=adat)
 cpair <- with(adat, pairwise.t.test(SpreadTotalRC, VideoArm, p.adj = "none"))
 y <- cmod$coefficients

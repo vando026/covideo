@@ -28,18 +28,15 @@ source(file.path(home, "dofiles/functions.r"))
 ######################################################################
 ######################### Build Dataset ##############################
 ######################################################################
-if (FALSE) {
+if (TRUE) {
   # Put all the datasets together
   source(file.path(home, "dofiles/build_data.r"))
+  # Additional preprocessing
+  source(file.path(home, "dofiles/main.r"))
   saveRDS(dat_all, file=file.path(datapath, "Derived", "dat_all.Rda")) 
 }
 
-######################################################################
-######################### Misc stuff #################################
-######################################################################
-# Do data management stuff
 dat_all <- readRDS(file=file.path(datapath, "Derived", "dat_all.Rda")) 
-source(file.path(home, "dofiles/main.r"))
 
 
 ######################################################################

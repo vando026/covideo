@@ -14,9 +14,9 @@ getTot <- function(Var) {
 
 doStat <- function(Var) {
   Var$n <- format(Var$n, big.mark=",")
-  out <- pivot_wider(Var, names_from=c(VideoArm, TreatList), 
+  out <- pivot_wider(Var, names_from=VideoArm, 
     values_from=c(n, Perc))
-  data.frame(out[, c(1, unlist(Map(c, 2:7, 8:13)))])
+  data.frame(out[, c(1, unlist(Map(c, 2:4, 5:7)))])
 }
 
 dat1 <- lapply(c("Age", "Gender", "Country", "Educ2", "Language"), 
@@ -27,9 +27,6 @@ tab0 <- lapply(dat1, doStat)
 ######################################################################
 ######################### Knowledge ##################################
 ######################################################################
-kdat <- dat_all[, names(kstate)]
-
-
 getTot1 <- function(x) {
   dat <- dat_all[x]
   correct <- kstate[[x]][2]
