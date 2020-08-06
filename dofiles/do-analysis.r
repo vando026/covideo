@@ -75,23 +75,20 @@ getTot1 <- function(x, state) {
   xx <- data.frame(xx[1, ], xx[2, ], xx[3, ])
   xx
 }
-tabclinic <- data.frame(t(sapply(names(cstate), getTot1, cstate)))
-tabclinic$Label <- names(cstate)
-rownames(tabclinic) <- unlist(Map(paste0,
+tabc <- data.frame(t(sapply(names(cstate), getTot1, cstate)))
+tabc$Label <- names(cstate)
+rownames(tabc) <- unlist(Map(paste0,
   c(seq(length(cstate))), c(". "),  
   sapply(names(cstate), function(x) cstate[[x]][1])))
-tabspread <- data.frame(t(sapply(names(sstate), getTot1, sstate)))
-tabspread$Label <- names(sstate)
-rownames(tabspread) <- unlist(Map(paste0,
+tabs <- data.frame(t(sapply(names(sstate), getTot1, sstate)))
+tabs$Label <- names(sstate)
+rownames(tabs) <- unlist(Map(paste0,
   c(seq(length(sstate))), c(". "),  
   sapply(names(sstate), function(x) sstate[[x]][1])))
 
-# save(tab0, tabclinic, tabspread, 
-#   file=file.path(datapath, "Derived", "Tables.Rdata"))
-
-res_know <- plotKnow("ClinicTotal", plt=FALSE)
-res_spr <- plotKnow("SpreadTotal", plt=FALSE)
-res_all <- plotKnow("KnowledgeAll", plt=FALSE)
+res_know <- plotKnow("KnowledgeAll", plt=FALSE)
+# res_spr <- plotKnow("SpreadTotal", plt=FALSE)
+# res_all <- plotKnow("KnowledgeAll", plt=FALSE)
 
 ######################################################################
 ######################### Get behav in Ctrl ##########################
