@@ -128,7 +128,8 @@ getVid <- function(name) {
   dat <- select(dat, 
     ID=`Participant Public ID`, 
     Stamp=`UTC Timestamp`, 
-    Label=`Zone Name`)
+    Label=`Zone Name`,
+    Time=`Reaction Time`)
   dat <- filter(dat, !is.na(Label))
   dat <- arrange(dat, ID, Stamp)
   dat <- group_by(dat, ID) %>% 
@@ -307,6 +308,45 @@ doRegIndirect <- function(LHS, dat) {
   out$Mn <- round(out$Mn, 3)
   out$SE  <- round(out$SE, 3)
   out[c(1, 4, 2, 5, 3, 6), ]
+}
+
+getCTR <- function(LHS, dat) {
+  xx <- doRegIndirect(LHS, dat)
+  xx <- cbind(xx[1, 1:2], xx[2, 1:2])
+  colnames(xx) <- c("Ctr_Mn", "Ctr_SE", "Trt_Mn", "Trt_SE")
+  xx
+}
+
+plotKnow <- function(LHS, Title="", yLim, ppos, H=0.01, plt=TRUE) {
+  cmod <- lm(as.formula(paste(LHS, " ~ -1 + VideoArm")),
+     data=dat_all)
+  cpair <- pairwise.t.test(dat_all[[LHS]], dat_all[["VideoArm"]],
+     p.adj = "none")
+  y <- cmod$coefficients
+  cis <- confint(cmod)
+  lis <- y - cis[, 1] 
+  uis <- cis[, 2] - y
+  se <- summary(cmod)$coefficients[, "Std. Error"]
+  pvals <- pfmt(cpair$p.value)
+  #
+  if (plt) {
+    png(file.path(output, paste0(LHS, ".png")),
+      units="in", width=5, height=5.0, pointsize=9, 
+      res=500, type="cairo")
+    plotCI(1:3, y, liw=lis, uiw=uis, main=Title, 
+      bty="n", ylim=yLim, lwd=3, pch=16, font.lab=2,
+      xlab="Trial arm", ylab="Mean score", xaxt="n", col=set3)
+    axis(1, 1:3, c("Control", "APC", "CoVideo"))
+    text(c(1,2,2.8), y, pos=4, labels=formatC(y, format="f", digits=2))
+    pbrack(1, 2, ppos[1], H,
+      pval=paste0("Att. Diff = ", fmt(y[2] - y[1]), ", ", pvals[1, 1]))
+    pbrack(2, 3, ppos[2], H,
+      pval=paste0("Trt. Diff = ", fmt(y[3] - y[2]), ", ", pvals[2, 2]))
+    pbrack(1, 3, ppos[3], H,
+      pval=paste0("Tot. Diff = ", fmt(y[3] - y[1]), ", ", pvals[2, 1]))
+    dev.off()
+  }
+  return(list(means=y, se=se, cis=cis, pvals=pvals))
 }
 
 ######################################################################

@@ -2,86 +2,10 @@
 ## Project: CoVideo
 ## Author: AV / Created: 18Jul2020 
 
-######################################################################
-######################### CONSORT ####################################
-######################################################################
-cdat <- readr::read_csv(file.path(datapath, "Derived", "CONSORT.csv"))
-
-getStats <- function(x) {
-  dat <- cdat[grepl(x, cdat$Var), -1]
-  sum(apply(dat, 1, function(x) sum(x, na.rm=TRUE)))
-}
-nms <- c("In", "Start", "Trt", "APC", "End")
-flow <- lapply(setNames(nms, nms), getStats)
-flow
-
-fdat <- select(dat_all, ID, VideoArm, TreatList)
-fdat <- data.frame(with(fdat, table(VideoArm, TreatList)))
-
-# Total completed
-sum(fdat$Freq)
-fdat_sum <- tapply(fdat$Freq, fdat$VideoArm, sum)
-fdat_sum
-Final <- length(unique(dat_all$ID))
-  
-# Total enrolled
-Total_In <- flow$In
-Total_In
-
-# Lost at Consent
-First_Lost <- flow$Start
-
-# Total going into arms
-ArmsN <- Total_In - First_Lost
-CoVidN <- fdat_sum["Treatment"] + flow$Trt
-APCN <- fdat_sum["Placebo"] + flow$APC
-CtrlN <- ArmsN - CoVidN - APCN
-# Lost at Crtl
-Ctrl_Lost <- CtrlN - fdat_sum["Control"] 
-Ctrl_Lost
-
-# Total enrolled into Arms
-ArmsN == (APCN + CtrlN + CoVidN)
-ArmsN
-
-# Checks 
-(CoVidN - flow$Trt) == fdat_sum["Treatment"]
-(APCN - flow$APC) == fdat_sum["Placebo"]
-(CtrlN - Ctrl_Lost) == fdat_sum["Control"]
 
 ######################################################################
 ######################### KNowledge ##################################
 ######################################################################
-# cmod <- lm(ClinicTotalRC ~ VideoArm, data=adat)
-
-plotKnow <- function(LHS, Title="", yLim, ppos, H=0.01) {
-  cmod <- lm(as.formula(paste(LHS, " ~ -1 + VideoArm")),
-     data=dat_all)
-  cpair <- pairwise.t.test(dat_all[[LHS]], dat_all[["VideoArm"]],
-     p.adj = "none")
-  y <- cmod$coefficients
-  cis <- confint(cmod)
-  lis <- y - cis[, 1] 
-  uis <- cis[, 2] - y
-  pvals <- pfmt(cpair$p.value)
-  #
-  png(file.path(output, paste0(LHS, ".png")),
-    units="in", width=5, height=5.0, pointsize=9, 
-    res=500, type="cairo")
-  plotCI(1:3, y, liw=lis, uiw=uis, main=Title, 
-    bty="n", ylim=yLim, lwd=3, pch=16, font.lab=2,
-    xlab="Trial arm", ylab="Mean score", xaxt="n", col=set3)
-  axis(1, 1:3, c("Control", "APC", "CoVideo"))
-  text(c(1,2,2.8), y, pos=4, labels=formatC(y, format="f", digits=2))
-  pbrack(1, 2, ppos[1], H,
-    pval=paste0("Att. Diff = ", fmt(y[2] - y[1]), ", ", pvals[1, 1]))
-  pbrack(2, 3, ppos[2], H,
-    pval=paste0("Trt. Diff = ", fmt(y[3] - y[2]), ", ", pvals[2, 2]))
-  pbrack(1, 3, ppos[3], H,
-    pval=paste0("Tot. Diff = ", fmt(y[3] - y[1]), ", ", pvals[2, 1]))
-  dev.off()
-}
-
 plotKnow("ClinicTotal", "Clinical knowledge of COVID-19 (10 items)", 
   yLim=c(9.15, 9.39), ppos=c(9.29, 9.338, 9.38))
 
@@ -119,10 +43,10 @@ plotCI(bp, behav$Est, li=behav$LB, ui=behav$UB,
   xlab="Trial arm", xaxt="n", col="gray30")
 dev.off()
 
+
 ######################################################################
 ####################### PLot Behav means #############################
 ######################################################################
-
 plotBar <- function(Var, Data=ldat) {
   dat <- doRegIndirect(Var, Data)
   nms <- rep(c("Control", "Treatment"), 3)
@@ -159,14 +83,6 @@ dev.off()
 ######################################################################
 ldat <- getListData(dat_all)
 
-eqs <- list(
-  ctrdif = "1*VideoArmControl:TreatList1 - 1*VideoArmControl:TreatList0 = 0",
-  apcdif = "1*VideoArmPlacebo:TreatList1 - 1*VideoArmPlacebo:TreatList0 = 0",
-  trtdif = "1*VideoArmTreatment:TreatList1 - 1*VideoArmTreatment:TreatList0 = 0",
-  toteq = "1*VideoArmTreatment:TreatList1 - 1*VideoArmTreatment:TreatList0 -
-    1*VideoArmControl:TreatList1 + 1*VideoArmControl:TreatList0 = 0",
-  trteq = "1*VideoArmTreatment:TreatList1 - 1*VideoArmTreatment:TreatList0 -
-    1*VideoArmPlacebo:TreatList1 + 1*VideoArmPlacebo:TreatList0 = 0")
 btitle <- lapply(setNames(names(bstate), names(bstate)), bwrap, 25)
 
 diffPlot <- function(dat, LHS="", yLim, yvals=NULL) {

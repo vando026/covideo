@@ -2,6 +2,34 @@
 ## Project: COVID-19
 ## Author: AV / Created: 20May2020 
 
+######################################################################
+######################### CONSORT ####################################
+######################################################################
+# Total sompleted by arms
+cdat <- readr::read_csv(file.path(datapath, "Derived", "CONSORT.csv"))
+fdat <- select(dat_all, ID, VideoArm, TreatList)
+fdat <- data.frame(with(fdat, table(VideoArm, TreatList)))
+fdat_sum <- tapply(fdat$Freq, fdat$VideoArm, sum)
+fdat_sum
+
+getStats <- function(x) {
+  dat <- cdat[grepl(x, cdat$Var), -1]
+  sum(apply(dat, 1, function(x) sum(x, na.rm=TRUE)))
+}
+nms <- c("In", "Start", "Trt", "APC", "End")
+flow <- lapply(setNames(nms, nms), getStats)
+flow
+
+# Total completed
+flow$FinalN <- sum(fdat_sum)
+
+# Total going into arms
+flow$ArmsN <- flow$In - flow$Start
+flow$CoVidN <- fdat_sum["Treatment"] + flow$Trt
+flow$APCN <- fdat_sum["Placebo"] + flow$APC
+flow$CtrlN <- flow$In - flow$Start  - flow$CoVidN - flow$APCN - 17 #dropped because of missing 
+flow$Ctrl <- flow$CtrlN - fdat_sum["Control"]
+
 
 ######################################################################
 ######################### Demo   #####################################
@@ -23,6 +51,12 @@ dat1 <- lapply(c("Age", "Gender", "Country", "Educ2", "Language"),
   getTot)
 tab0 <- lapply(dat1, doStat)
 
+res <- list()
+res$dates <- format(c(min(dat_all$Date), max(dat_all$Date)), "%d %B %Y")
+dtab <- function(x) round(prop.table(table(x))*100,1)
+res$lan <- dtab(dat_all$Language)
+res$ctry <- dtab(dat_all$Country)
+res$educ <- dtab(dat_all$Educ2)
 
 ######################################################################
 ######################### Knowledge ##################################
@@ -41,18 +75,33 @@ getTot1 <- function(x, state) {
   xx <- data.frame(xx[1, ], xx[2, ], xx[3, ])
   xx
 }
-tabclinic <- t(sapply(names(cstate), getTot1, cstate))
+tabclinic <- data.frame(t(sapply(names(cstate), getTot1, cstate)))
+tabclinic$Label <- names(cstate)
 rownames(tabclinic) <- unlist(Map(paste0,
   c(seq(length(cstate))), c(". "),  
   sapply(names(cstate), function(x) cstate[[x]][1])))
-tabspread <- t(sapply(names(sstate), getTot1, sstate))
+tabspread <- data.frame(t(sapply(names(sstate), getTot1, sstate)))
+tabspread$Label <- names(sstate)
 rownames(tabspread) <- unlist(Map(paste0,
   c(seq(length(sstate))), c(". "),  
   sapply(names(sstate), function(x) sstate[[x]][1])))
 
+# save(tab0, tabclinic, tabspread, 
+#   file=file.path(datapath, "Derived", "Tables.Rdata"))
 
-save(tab0, tabclinic, tabspread, 
-  file=file.path(datapath, "Derived", "Tables.Rdata"))
+res_know <- plotKnow("ClinicTotal", plt=FALSE)
+res_spr <- plotKnow("SpreadTotal", plt=FALSE)
+res_all <- plotKnow("KnowledgeAll", plt=FALSE)
+
+######################################################################
+######################### Get behav in Ctrl ##########################
+######################################################################
+bstate2  <- bstate
+bstate2["UseMedia"] <- 
+  "This week I wil seek health information from animated videos made by health experts"
+ldat <- getListData(dat_all)
+behav = data.frame(t(sapply(names(bstate), getCTR, ldat)))
+rownames(behav) <- sapply(rownames(behav), function(x) bstate2[[x]])
 
 
 ######################################################################
@@ -62,6 +111,7 @@ ldat <- getListData(dat_all)
 varn <- names(ldat)[-c(1,2)]
 tablist <- data.frame(do.call(rbind, 
   lapply(setNames(varn, varn), getMeanSE, ldat)))
+
 
 
 ######################################################################
@@ -86,9 +136,6 @@ diffTab <- function(dat) {
   c(r1, difp)
 }
 difftable <- do.call(rbind, lapply(ddat, diffTab))
-
-
-
 
 
 ######################################################################

@@ -11,7 +11,7 @@ bstate <- list(
   StockPile = "stock up on household supplies for a month",
   CleanDishes = "clean my dishes after use",
   CleanSurfaces = "clean kitchen counters after use",
-  UseMedia = "seek online, animated, expert, health videos")
+  UseMedia = "seek expert info. from animated health videos")
 
 
 ######################################################################
@@ -58,3 +58,16 @@ setKnow <- function(irow, state) {
 dat_all$SpreadTotal <- apply(dat_all, 1, setKnow, sstate)
 dat_all$ClinicTotal <- apply(dat_all, 1, setKnow, cstate)
 dat_all$KnowledgeAll <- apply(dat_all, 1, setKnow, c(sstate, cstate))
+
+
+######################################################################
+######################### Diffs ######################################
+######################################################################
+eqs <- list(
+  ctrdif = "1*VideoArmControl:TreatList1 - 1*VideoArmControl:TreatList0 = 0",
+  apcdif = "1*VideoArmPlacebo:TreatList1 - 1*VideoArmPlacebo:TreatList0 = 0",
+  trtdif = "1*VideoArmTreatment:TreatList1 - 1*VideoArmTreatment:TreatList0 = 0",
+  toteq = "1*VideoArmTreatment:TreatList1 - 1*VideoArmTreatment:TreatList0 -
+    1*VideoArmControl:TreatList1 + 1*VideoArmControl:TreatList0 = 0",
+  trteq = "1*VideoArmTreatment:TreatList1 - 1*VideoArmTreatment:TreatList0 -
+    1*VideoArmPlacebo:TreatList1 + 1*VideoArmPlacebo:TreatList0 = 0")
