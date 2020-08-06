@@ -1,0 +1,56 @@
+% For LaTeX-Box: root = master.tex
+% !Rnw root = master.Rnw
+\Sexpr{knitr::set_parent('master.Rnw')}
+
+
+\subsection*{Figures}
+\label{sub:Figures}
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[scale=0.6]{DataFlow1.png}
+\caption{CONSORT flow diagram}
+\label{fig:dataflow}
+\end{figure} 
+
+
+\clearpage
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[scale=0.75]{ClinicTotal.png}
+\caption{Test}
+\end{figure} 
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[scale=0.75]{SpreadTotal.png}
+\caption{Test}
+\end{figure} 
+
+\clearpage
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[scale=0.75]{KnowledgeAll.png}
+\caption{Knowledge, all items}
+\end{figure} 
+
+\clearpage
+
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[scale=0.73]{BehavIntent.png}
+\caption{Behavioral intent in Control arm with social desirability removed}
+\end{figure} 
+
+
+\clearpage
+
+% \begin{figure}[!ht]
+% \centering
+% \includegraphics[scale=0.73]{BehavDiffs.png}
+% \caption{Test}
+% \end{figure} 
+% \clearpage

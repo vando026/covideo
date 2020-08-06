@@ -1,0 +1,158 @@
+% For LaTeX-Box: root = master.tex
+% !Rnw root = master.Rnw
+\Sexpr{knitr::set_parent('master.Rnw')}
+
+\clearpage
+
+\subsection*{Tables}
+\label{sub:Tables}
+
+\newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
+\setlength{\tabcolsep}{5pt}
+\renewcommand{\arraystretch}{1.0}% Tighter
+
+
+\begin{table}[h!]
+\centering
+\begin{threeparttable}
+
+\caption{Shows the age, gender, country of residence, and education status, and first language of
+participants in each trial arm.} 
+
+\label{tab:tab0}
+\footnotesize
+\begin{tabular}{l *{6}{C{0.8cm}}}
+  \toprule
+  & \multicolumn{2}{c}{\textbf{Control}} &
+  \multicolumn{2}{c}{\textbf{APC}}  &
+  \multicolumn{2}{c}{\textbf{CoVideo}} \\ 
+  \cmidrule(r){2-3}  \cmidrule(r){4-5} \cmidrule(r){6-7} 
+  & \textbf{N} & \textbf{\%} 
+  & \textbf{N} & \textbf{\%} 
+  & \textbf{N} & \textbf{\%} \\
+  \midrule
+  \multicolumn{2}{l}{\textit{Age}} \\
+<<echo=FALSE, results='asis'>>=
+hs <- "\\hspace{0.5em}"
+age <- tab0[[1]]
+rownames(age)  <- paste(hs, age$Age)
+print(xtable(age[, -1], digits=1),
+      include.rownames=TRUE,
+      include.colnames=FALSE,
+      sanitize.rownames.function=function(x) x,
+      hline.after=NULL,
+      only.contents=TRUE)
+@
+\multicolumn{2}{l}{\textit{Gender}} \\
+<<echo=FALSE, results='asis'>>=
+sex <- tab0[[2]]
+rownames(sex)  <- paste(hs, sex$Gender)
+print(xtable(sex[, -1], digits=1),
+      include.rownames=TRUE,
+      include.colnames=FALSE,
+      sanitize.rownames.function=function(x) x,
+      hline.after=NULL,
+      only.contents=TRUE)
+@
+\multicolumn{2}{l}{\textit{Country of residence}} \\
+<<echo=FALSE, results='asis'>>=
+ctry <- tab0[[3]]
+rownames(ctry) <- paste(hs, c("Germany", "Mexico", "Spain", "UK", "US"))
+print(xtable(ctry[, -1], digits=1),
+      include.rownames=TRUE,
+      include.colnames=FALSE,
+      sanitize.rownames.function=function(x) x,
+      hline.after=NULL,
+      only.contents=TRUE)
+@
+\multicolumn{2}{l}{\textit{Education status}} \\
+<<echo=FALSE, results='asis'>>=
+educ <- tab0[[4]]
+educ$Educ2  <- factor(educ$Educ2, 
+  levels=c("Primary or less", "Completed High", "College, BA", "MA,PhD"))
+rownames(educ) <- paste(hs, c("Primary school", "High school", "BA, Some college", "MA/PhD"))
+print(xtable(educ[, -1], digits=1),
+      include.rownames=TRUE,
+      include.colnames=FALSE,
+      sanitize.rownames.function=function(x) x,
+      hline.after=NULL,
+      only.contents=TRUE)
+@
+\multicolumn{2}{l}{\textit{First language}} \\
+<<echo=FALSE, results='asis'>>=
+Lang <- tab0[[5]]
+rownames(Lang) <- paste(hs, c("German", "English", "Spanish (Mexico)", "Spanish"))
+print(xtable(Lang[, -1], digits=1),
+      include.rownames=TRUE,
+      include.colnames=FALSE,
+      sanitize.rownames.function=function(x) x,
+      hline.after=NULL,
+      only.contents=TRUE)
+@
+\bottomrule
+\end{tabular}
+\begin{tablenotes} 
+\scriptsize  
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+
+\clearpage
+
+\renewcommand{\arraystretch}{1.0}% Tighter
+\setlength{\tabcolsep}{5pt}
+
+\begin{table}[h!]
+\centering
+\begin{threeparttable}
+
+\caption{Knowledge item scores by arms.} 
+
+\label{tab:tabk}
+\footnotesize
+
+\begin{tabular}{p{7.0cm} *{9}{C{0.75cm}}}
+  \toprule
+  & \multicolumn{3}{c}{\textbf{Control}} &
+  \multicolumn{3}{c}{\textbf{APC}}  &
+  \multicolumn{3}{c}{\textbf{CoVideo}} \\ 
+  \cmidrule(r){2-4}  \cmidrule(r){5-7} \cmidrule(r){8-10} 
+  & {\textbf{False}} &
+   {\textbf{True}} &
+   {\textbf{\%C}} 
+  & {\textbf{False}} &
+   {\textbf{True}} &
+   {\textbf{\%C}} 
+  & {\textbf{False}} &
+   {\textbf{True}} &
+   {\textbf{\%C}} \\
+  \midrule
+\multicolumn{2}{l}{\textit{Clinical knowledge of COVID-19 spread}} \\
+<<echo=FALSE, results='asis'>>=
+print(xtable(tabc[, 1:9]),
+      include.rownames=TRUE,
+      include.colnames=FALSE,
+      sanitize.rownames.function=function(x) x,
+      hline.after=NULL,
+      only.contents=TRUE)
+@
+\hline 
+\multicolumn{2}{l}{\textit{Knowledge of preventing COVID-19 spread}} \\
+<<echo=FALSE, results='asis'>>=
+print(xtable(tabs[, c(1:9)]),
+      include.rownames=TRUE,
+      include.colnames=FALSE,
+      sanitize.rownames.function=function(x) x,
+      hline.after=NULL,
+      only.contents=TRUE)
+@
+\bottomrule
+\end{tabular}
+\begin{tablenotes} 
+\scriptsize  
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+\clearpage
