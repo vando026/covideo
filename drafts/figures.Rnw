@@ -20,12 +20,14 @@
 \centering
 \includegraphics[scale=0.75]{ClinicTotal.png}
 \caption{Test}
+\label{fig:clinic}
 \end{figure} 
 
 \begin{figure}[!ht]
 \centering
 \includegraphics[scale=0.75]{SpreadTotal.png}
 \caption{Test}
+\label{fig:spread}
 \end{figure} 
 
 \clearpage
@@ -34,6 +36,7 @@
 \centering
 \includegraphics[scale=0.75]{KnowledgeAll.png}
 \caption{Knowledge, all items}
+\label{fig:knowall}
 \end{figure} 
 
 \clearpage

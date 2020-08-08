@@ -35,59 +35,167 @@
 \renewcommand{\arraystretch}{1.0} % Tighter
 \setlength{\tabcolsep}{4pt}
 
+% \begin{table}[h!]
+% \centering
+% \begin{threeparttable}
+
+% \caption{Mean estimates and standard errors of  the six list experiment items.} 
+
+% \label{tab:tablist}
+% \footnotesize
+% \begin{tabular}{l *{12}{C{0.6cm}}}
+%   \toprule
+%   & \multicolumn{4}{c}{\textbf{Control}} &
+%   \multicolumn{4}{c}{\textbf{APC}*}  &
+%   \multicolumn{4}{c}{\textbf{CoVideo}} \\ 
+%   \cmidrule(r){2-5}  \cmidrule(r){6-9} \cmidrule(r){10-13} 
+%   & \multicolumn{2}{c}{\textbf{Control}} & \multicolumn{2}{c}{\textbf{Treatment}}
+%   & \multicolumn{2}{c}{\textbf{Control}} & \multicolumn{2}{c}{\textbf{Treatment}}
+%   & \multicolumn{2}{c}{\textbf{Control}} & \multicolumn{2}{c}{\textbf{Treatment}} \\
+%   \cmidrule(r){2-3}  \cmidrule(r){4-5} \cmidrule(r){6-7} 
+%   \cmidrule(r){8-9} \cmidrule(r){10-11} \cmidrule(r){12-13}
+%   & \textbf{Mean} & \textbf{SE} 
+%   & \textbf{Mean} & \textbf{SE} 
+%   & \textbf{Mean} & \textbf{SE} 
+%   & \textbf{Mean} & \textbf{SE} 
+%   & \textbf{Mean} & \textbf{SE} 
+%   & \textbf{Mean} & \textbf{SE} \\
+%   \midrule
+%   \multicolumn{3}{l}{\textit{In the next week, I will...}$^\dagger$} \\
+% <<echo=FALSE, results='asis'>>=
+% rownames(tablist) <- sapply(bstate, function(x) x[1])
+% print(xtable(tablist, digits=c(1, rep(c(2, 2), 6))),
+%       include.rownames=TRUE,
+%       include.colnames=FALSE,
+%       sanitize.rownames.function=function(x) x,
+%       hline.after=NULL,
+%       only.contents=TRUE)
+% @
+% \bottomrule
+% \end{tabular}
+% \begin{tablenotes} 
+% \scriptsize
+% \item[*] Attention placebo control. 
+% \item[$^\dagger$] The exact english wording of the items: This week, I will$\dots$
+% Go out with my friends; Wash my hands frequently; Stock up on household supplies for a
+% month; Clean kitchen counters after use; Clean my dishes after use; Watch animated videos made
+% by health experts.
+% \end{tablenotes}
+% \end{threeparttable}
+% \end{table}
+
+% \clearpage
+
+
+
+
+\setlength{\tabcolsep}{5pt}
+
 \begin{table}[h!]
 \centering
 \begin{threeparttable}
 
-\caption{Mean estimates and standard errors of  the six list experiment items.} 
+\caption{Regression estimates of clinic knowledge of COVID-19 in the Control arm} 
 
-\label{tab:tablist}
+\label{tab:modc}
 \footnotesize
-\begin{tabular}{l *{12}{C{0.7cm}}}
-  \toprule
-  & \multicolumn{4}{c}{\textbf{Control}} &
-  \multicolumn{4}{c}{\textbf{APC}*}  &
-  \multicolumn{4}{c}{\textbf{CoVideo}} \\ 
-  \cmidrule(r){2-5}  \cmidrule(r){6-9} \cmidrule(r){10-13} 
-  & \multicolumn{2}{c}{\textbf{Control}} & \multicolumn{2}{c}{\textbf{Treatment}}
-  & \multicolumn{2}{c}{\textbf{Control}} & \multicolumn{2}{c}{\textbf{Treatment}}
-  & \multicolumn{2}{c}{\textbf{Control}} & \multicolumn{2}{c}{\textbf{Treatment}} \\
-  \cmidrule(r){2-3}  \cmidrule(r){4-5} \cmidrule(r){6-7} 
-  \cmidrule(r){8-9} \cmidrule(r){10-11} \cmidrule(r){12-13}
-  & \textbf{Mean} & \textbf{SE} 
-  & \textbf{Mean} & \textbf{SE} 
-  & \textbf{Mean} & \textbf{SE} 
-  & \textbf{Mean} & \textbf{SE} 
-  & \textbf{Mean} & \textbf{SE} 
-  & \textbf{Mean} & \textbf{SE} \\
-  \midrule
-  \multicolumn{3}{l}{\textit{In the next week, I will...}$^\dagger$} \\
+\begin{tabular}{l *{4}{C{1.3cm}}}
+\toprule
+& Estimate & SE  & t-value & p-value \\
+\hline
 <<echo=FALSE, results='asis'>>=
-bstate <- c("Go out with my friends",
-"Wash my hands frequently",
-"Stock up on household supplies",
-"Clean  kitchen counters",
-"Clean my  dishes after use",
-"Seek online health information")
-rownames(tablist) <- bstate
-print(xtable(tablist, digits=c(1, rep(c(2, 3), 6))),
-      include.rownames=TRUE,
-      include.colnames=FALSE,
-      sanitize.rownames.function=function(x) x,
-      hline.after=NULL,
-      only.contents=TRUE)
+print(xtable(reg_clinic),
+  include.colnames=FALSE,
+  include.rownames=TRUE,
+  hline.after=NULL,
+  only.contents=TRUE)
 @
 \bottomrule
 \end{tabular}
 \begin{tablenotes} 
-\scriptsize
-\item[*] Attention placebo control. 
-\item[$^\dagger$] The exact english wording of the items: This week, I will$\dots$
-Go out with my friends; Wash my hands frequently; Stock up on household supplies for a
-month; Clean kitchen counters after use; Clean my dishes after use; Watch animated videos made
-by health experts.
+\scriptsize text
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+\begin{table}[h!]
+\centering
+\begin{threeparttable}
+
+\caption{Regression estimates of spread knowledge of COVID-19 in the Control Arm} 
+
+\label{tab:modc}
+\footnotesize
+\begin{tabular}{l *{4}{C{1.3cm}}}
+\toprule
+& Estimate & SE  & t-value & p-value \\
+\hline
+<<echo=FALSE, results='asis'>>=
+print(xtable(reg_spread),
+  include.colnames=FALSE,
+  include.rownames=TRUE,
+  hline.after=NULL,
+  only.contents=TRUE)
+@
+\bottomrule
+\end{tabular}
+\begin{tablenotes} 
+\scriptsize text
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+\begin{table}[h!]
+\centering
+\begin{threeparttable}
+
+\caption{Regression estimates of clinic knowledge of COVID-19 in the CoVideo arm} 
+
+\label{tab:modc}
+\footnotesize
+\begin{tabular}{l *{4}{C{1.3cm}}}
+\toprule
+& Estimate & SE  & t-value & p-value \\
+\hline
+<<echo=FALSE, results='asis'>>=
+print(xtable(reg_clinic_trt),
+  include.colnames=FALSE,
+  include.rownames=TRUE,
+  hline.after=NULL,
+  only.contents=TRUE)
+@
+\bottomrule
+\end{tabular}
+\begin{tablenotes} 
+\scriptsize text
 \end{tablenotes}
 \end{threeparttable}
 \end{table}
 
 
+\begin{table}[h!]
+\centering
+\begin{threeparttable}
+
+\caption{Regression estimates of spread knowledge of COVID-19 in the CoVideo arm} 
+
+\label{tab:modc}
+\footnotesize
+\begin{tabular}{l *{4}{C{1.3cm}}}
+\toprule
+& Estimate & SE  & t-value & p-value \\
+\hline
+<<echo=FALSE, results='asis'>>=
+print(xtable(reg_spread_trt),
+  include.colnames=FALSE,
+  include.rownames=TRUE,
+  hline.after=NULL,
+  only.contents=TRUE)
+@
+\bottomrule
+\end{tabular}
+\begin{tablenotes} 
+\scriptsize text
+\end{tablenotes}
+\end{threeparttable}
+\end{table}

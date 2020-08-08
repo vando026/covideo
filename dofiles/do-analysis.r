@@ -86,9 +86,33 @@ rownames(tabs) <- unlist(Map(paste0,
   c(seq(length(sstate))), c(". "),  
   sapply(names(sstate), function(x) sstate[[x]][1])))
 
-res_know <- plotKnow("KnowledgeAll", plt=FALSE)
-# res_spr <- plotKnow("SpreadTotal", plt=FALSE)
-# res_all <- plotKnow("KnowledgeAll", plt=FALSE)
+res_know <- plotKnow("ClinicTotal", plt=FALSE)
+res_spr <- plotKnow("SpreadTotal", plt=FALSE)
+res_all <- plotKnow("KnowledgeAll", plt=FALSE)
+
+# Regressions
+doReg <- function(RHS, dat) {
+  fmtp <- function(x) 
+    ifelse(x <0.001, "<0.001", formatC(x, digits=3, format="f"))
+  nms <- c("Intercept", "Age 25-43 yrs", "Age 35-44 yrs", "Age 45-54 yrs", "Age 55-59 yrs", 
+    "Male", "Other", "English", "Spanish (MX)", "Spanish", "Completed High School",
+    "Some college, BA", "MA, PhD")
+  modc <- lm(as.formula(paste(RHS, "~ Age + Gender + Language + Educ2")),
+    data=dat)
+  modc <- summary(modc)$coefficients
+  modc <- as.data.frame(modc)
+  modc[4] <- sapply(modc[4], function(x) fmtp(x))
+  rownames(modc) <- nms
+  modc
+}
+
+dat_ctrl <- filter(dat_all, VideoArm=="Control")
+dat_trt <- filter(dat_all, VideoArm=="Treatment")
+reg_clinic <- doReg("ClinicTotal", dat_ctrl)
+reg_clinic_trt <- doReg("ClinicTotal", dat_trt)
+reg_spread <- doReg("SpreadTotal", dat_ctrl)
+reg_spread_trt <- doReg("SpreadTotal", dat_trt)
+
 
 ######################################################################
 ######################### Get behav in Ctrl ##########################
@@ -108,8 +132,6 @@ ldat <- getListData(dat_all)
 varn <- names(ldat)[-c(1,2)]
 tablist <- data.frame(do.call(rbind, 
   lapply(setNames(varn, varn), getMeanSE, ldat)))
-
-
 
 ######################################################################
 ######################### Diff #######################################
