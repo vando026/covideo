@@ -2,6 +2,7 @@
 ## Project: CoVideo
 ## Author: AV / Created: 18Jul2020 
 
+load(file.path(output, "Results.RData"))
 
 ######################################################################
 ######################### KNowledge ##################################
@@ -19,14 +20,6 @@ plotKnow("KnowledgeAll", "All knowledge (18 items)",
 ######################################################################
 ######################### Behave Direct ##############################
 ######################################################################
-# Make the data 
-ldat <- getListData(dat_all)
-bdat <- filter(ldat, VideoArm=="Control") 
-behav = data.frame(t(sapply(names(bstate), doRegDirect, bdat)))
-behav <- arrange(behav, TreatList1)
-names(behav) <- c("Est", "LB", "UB")
-bnames <- lapply(rownames(behav), bwrap)
-
 png(file.path(output, "BehavIntent.png"),
   units="in", width=6.5, height=5.0, pointsize=10, 
   res=500, type="cairo")
@@ -47,6 +40,7 @@ dev.off()
 ######################################################################
 ####################### PLot Behav means #############################
 ######################################################################
+ldat <- getListData(dat_all)
 plotBar <- function(Var, Data=ldat) {
   dat <- doRegIndirect(Var, Data)
   nms <- rep(c("Control", "Treatment"), 3)
@@ -81,8 +75,6 @@ dev.off()
 ######################################################################
 ######################### Diff and Diff ##############################
 ######################################################################
-ldat <- getListData(dat_all)
-
 btitle <- lapply(setNames(names(bstate), names(bstate)), bwrap, 25)
 
 diffPlot <- function(dat, LHS="", yLim, yvals=NULL) {

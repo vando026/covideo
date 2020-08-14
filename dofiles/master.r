@@ -33,11 +33,10 @@ if (FALSE) {
   source(file.path(home, "dofiles/build_data.r"))
   saveRDS(dat_all, file=file.path(datapath, "Derived", "dat_all.Rda")) 
 }
+
 # Additional preprocessing
 dat_all <- readRDS(file=file.path(datapath, "Derived", "dat_all.Rda")) 
-source(file.path(home, "dofiles/main.r"))
-
-
-######################################################################
-######################### Do Figures #################################
-######################################################################
+source(file.path(home, "dofiles/main.R"))
+# Run results and figures
+# source(file.path(home, "dofiles/do-analysis.R"))
+# source(file.path(home, "dofiles/do-figs.R"))

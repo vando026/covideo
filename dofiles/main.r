@@ -11,7 +11,7 @@ bstate <- list(
   StockPile = "stock up on household supplies for a month",
   CleanDishes = "clean my dishes after use",
   CleanSurfaces = "clean kitchen counters after use",
-  UseMedia = "seek expert info. from animated health videos")
+  UseMedia = "seek health information from animated videos made by health experts")
 
 
 ######################################################################

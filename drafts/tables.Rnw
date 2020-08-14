@@ -107,7 +107,9 @@ print(xtable(Lang[, -1], digits=1),
 \centering
 \begin{threeparttable}
 
-\caption{Knowledge item scores by arms.} 
+\caption{Frequency of item responses for knowledge of  COVID-19 by CoVideo, Attention
+Placebo Control (APC), and Control arms. The percentage of correct answers is also give
+($N = $ \Sexpr{fmt(flow$FinalN)}).}
 
 \label{tab:tabk}
 \footnotesize
@@ -120,13 +122,13 @@ print(xtable(Lang[, -1], digits=1),
   \cmidrule(r){2-4}  \cmidrule(r){5-7} \cmidrule(r){8-10} 
   & {\textbf{False}} &
    {\textbf{True}} &
-   {\textbf{\%C}} 
+   {\textbf{\%\tnote{$*$}}} 
   & {\textbf{False}} &
    {\textbf{True}} &
-   {\textbf{\%C}} 
+   {\textbf{\%\tnote{$*$}}} 
   & {\textbf{False}} &
    {\textbf{True}} &
-   {\textbf{\%C}} \\
+   {\textbf{\%\tnote{$*$}}} \\
   \midrule
 \multicolumn{2}{l}{\textit{Clinical knowledge of COVID-19 spread}} \\
 <<echo=FALSE, results='asis'>>=
@@ -150,7 +152,7 @@ print(xtable(tabs[, c(1:9)]),
 \bottomrule
 \end{tabular}
 \begin{tablenotes} 
-\scriptsize  
+\scriptsize  * Represents the percentage of items correctly answered.
 \end{tablenotes}
 \end{threeparttable}
 \end{table}

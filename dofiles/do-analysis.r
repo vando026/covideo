@@ -31,14 +31,14 @@ flow$CtrlN <- flow$In - flow$Start  - flow$CoVidN - flow$APCN - 17 #dropped beca
 flow$Ctrl <- flow$CtrlN - fdat_sum["Control"]
 
 
-######################################################################
-######################### Demo   #####################################
-######################################################################
-getTot <- function(Var) {
-  dat <- group_by(dat_all, VideoArm, .data[[Var]]) %>% tally()
-  group_by(dat, VideoArm) %>% 
-    mutate(Tot = sum(n), Perc=round(n/Tot * 100, 1)) %>% select(-Tot)
-}
+#####################################################################
+######################## Demo   #####################################
+#####################################################################
+ getTot <- function(Var) {
+   dat <- group_by(dat_all, VideoArm, .data[[Var]]) %>% tally()
+   group_by(dat, VideoArm) %>% 
+     mutate(Tot = sum(n), Perc=round(n/Tot * 100, 1)) %>% select(-Tot)
+ }
 
 doStat <- function(Var) {
   Var$n <- format(Var$n, big.mark=",")
@@ -90,40 +90,33 @@ res_know <- plotKnow("ClinicTotal", plt=FALSE)
 res_spr <- plotKnow("SpreadTotal", plt=FALSE)
 res_all <- plotKnow("KnowledgeAll", plt=FALSE)
 
-# Regressions
-doReg <- function(RHS, dat) {
-  fmtp <- function(x) 
-    ifelse(x <0.001, "<0.001", formatC(x, digits=3, format="f"))
-  nms <- c("Intercept", "Age 25-43 yrs", "Age 35-44 yrs", "Age 45-54 yrs", "Age 55-59 yrs", 
-    "Male", "Other", "English", "Spanish (MX)", "Spanish", "Completed High School",
-    "Some college, BA", "MA, PhD")
-  modc <- lm(as.formula(paste(RHS, "~ Age + Gender + Language + Educ2")),
-    data=dat)
-  modc <- summary(modc)$coefficients
-  modc <- as.data.frame(modc)
-  modc[4] <- sapply(modc[4], function(x) fmtp(x))
-  rownames(modc) <- nms
-  modc
-}
-
 dat_ctrl <- filter(dat_all, VideoArm=="Control")
 dat_trt <- filter(dat_all, VideoArm=="Treatment")
-reg_clinic <- doReg("ClinicTotal", dat_ctrl)
-reg_clinic_trt <- doReg("ClinicTotal", dat_trt)
-reg_spread <- doReg("SpreadTotal", dat_ctrl)
-reg_spread_trt <- doReg("SpreadTotal", dat_trt)
+dat_tot <- filter(dat_all, VideoArm!="Placebo")
+reg_clinic <- doRegKnow("ClinicTotal", dat_ctrl)
+reg_clinic_trt <- doRegKnow("ClinicTotal", dat_trt)
+reg_spread <- doRegKnow("SpreadTotal", dat_ctrl)
+reg_spread_trt <- doRegKnow("SpreadTotal", dat_trt)
 
+
+# group_by(dat_ctrl, Country) %>% summarize(NN = mean(ClinicTotal))
+# group_by(dat_trt, Country) %>% summarize(NN = mean(ClinicTotal))
+# lm(ClinicTotal ~ -1 + Country, data=dat_ctrl)
 
 ######################################################################
 ######################### Get behav in Ctrl ##########################
 ######################################################################
-bstate2  <- bstate
-bstate2["UseMedia"] <- 
-  "This week I wil seek health information from animated videos made by health experts"
+# Get baseline measure of behav intent, remove social desire
 ldat <- getListData(dat_all)
-behav = data.frame(t(sapply(names(bstate), getCTR, ldat)))
-rownames(behav) <- sapply(rownames(behav), function(x) bstate2[[x]])
+bdat <- filter(ldat, VideoArm=="Control") 
+behav = data.frame(t(sapply(names(bstate), doRegDirect, bdat)))
+behav <- arrange(behav, TreatList1)
+names(behav) <- c("Est", "LB", "UB")
+bnames <- lapply(rownames(behav), bwrap)
 
+# ldat <- getListData(dat_all)
+# behav = data.frame(t(sapply(names(bstate), getCTR, ldat)))
+# rownames(behav) <- sapply(rownames(behav), function(x) bstate2[[x]])
 
 ######################################################################
 ######################### Primary outcome ############################
@@ -136,25 +129,48 @@ tablist <- data.frame(do.call(rbind,
 ######################################################################
 ######################### Diff #######################################
 ######################################################################
-ldat <- getListData(dat_all)
-ddat <- lapply(setNames(names(bstate), names(bstate)), doDiffs, ldat)
+# ldat <- getListData(dat_all)
+# ddat <- lapply(setNames(names(bstate), names(bstate)), doDiffs, ldat)
 
-pstar <- function(x)  {
-  if (x < 0.01) return("*")
-  if (x < 0.05) return("**")
-  if (x < 0.001) return("***")
-}
+# pstar <- function(x)  {
+#   if (x < 0.01) return("*")
+#   if (x < 0.05) return("**")
+#   if (x < 0.001) return("***")
+# }
 
-diffTab <- function(dat) {
-  est <- sapply(dat[1, 1:5], 
-    function(x) formatC(x*100, 2, format="f"))
-  se <- sapply(dat[2, 1:3], 
-    function(x) paste0("(", formatC(x*100, 2, format="f"), ")"))
-  r1 <- c(paste(est[1], se[1]), paste(est[2], se[2]), paste(est[3], se[3]))
-  difp <- c(paste0(est[4], pstar(dat[3, 4])), paste0(est[5], pstar(dat[3, 5])))
-  c(r1, difp)
-}
-difftable <- do.call(rbind, lapply(ddat, diffTab))
+# diffTab <- function(dat) {
+#   browser()
+#   est <- sapply(dat[1, 1:5], 
+#     function(x) formatC(x*100, 2, format="f"))
+#   se <- sapply(dat[2, 1:3], 
+#     function(x) paste0("(", formatC(x*100, 2, format="f"), ")"))
+#   r1 <- c(paste(est[1], se[1]), paste(est[2], se[2]), paste(est[3], se[3]))
+#   difp <- c(paste0(est[4], pstar(dat[3, 4])), paste0(est[5], pstar(dat[3, 5])))
+#   c(r1, difp)
+# }
+# difftable <- do.call(rbind, lapply(ddat, diffTab))
+
+
+modc <- lm(ClinicTotal ~ - 1 + Age:VideoArm, data=dat_tot)
+mods <- lm(SpreadTotal ~ - 1 + Age:VideoArm, data=dat_tot)
+c1824 = "1*Age18-24 years:VideoArmTreatment - 1*Age18-24 years:VideoArmControl = 0"
+c2534 = "1*Age25-34 years:VideoArmTreatment - 1*Age25-34 years:VideoArmControl = 0"
+c3544 = "1*Age35-44 years:VideoArmTreatment - 1*Age35-44 years:VideoArmControl = 0"
+c4554 = "1*Age45-54 years:VideoArmTreatment - 1*Age45-54 years:VideoArmControl = 0"
+c5559 = "1*Age55-59 years:VideoArmTreatment - 1*Age55-59 years:VideoArmControl = 0"
+cnm <- ls(pattern="^c[1-9]") 
+agediff <- data.frame(
+  sapply(setNames(c(c1824, c2534, c3544, c4554, c5559), cnm), lincom, modc))
+agediffs <- data.frame(
+  sapply(setNames(c(c1824, c2534, c3544, c4554, c5559), cnm), lincom, mods))
+
+save(tab0, flow, res, tabc, tabs, res_know, res_spr, res_all,
+  reg_clinic, reg_clinic_trt, reg_spread, reg_spread_trt, behav,
+  cstate, sstate, bstate, agediff, agediffs,
+  file=file.path(output, "Results.RData"))
+
+
+
 
 
 ######################################################################

@@ -87,21 +87,21 @@ dat_all <- bind_rows(dat_en, dat_de, dat_sp, dat_mx)
 dat_all$Age[dat_all$Age==6] <- 5
 dat_all <- mutate(dat_all, 
   Age = recode(Age, 
-    `1`="18-24 yrs", 
-    `2`="25-34 yrs", 
-    `3`="35-44 yrs",
-    `4`="45-54 yrs", 
-    `5`="55-59 yrs"),
+    `1`="18-24 years", 
+    `2`="25-34 years", 
+    `3`="35-44 years",
+    `4`="45-54 years", 
+    `5`="55-59 years"),
   Gender = recode(Gender, 
     `1`="Male", 
     `2`="Female", 
     `3`="Other"),
   Country = recode(Country, 
-    `1`="US", 
-    `2`="UK", 
-    `3`="DE", 
-    `4`="SP", 
-    `5`="MX"),
+    `1`="United States", 
+    `2`="United Kingdom", 
+    `3`="Germany", 
+    `4`="Spain", 
+    `5`="Mexico"),
   Educ = recode(Educ, 
     `1`="No Primary", 
     `2`="Some Primary", 
@@ -116,8 +116,8 @@ dat_all <- mutate(dat_all,
 
 dat_all$Educ2 <- 
   ifelse(grepl("Primary|Some High", dat_all$Educ), "Primary or less", 
-  ifelse(dat_all$Educ %in% c("High school"), "Completed High",
-  ifelse(dat_all$Educ %in% c("Some college", "Bachelors"), "College,BA", "MA,PhD")))
+  ifelse(dat_all$Educ %in% c("High school"), "Completed High School",
+  ifelse(dat_all$Educ %in% c("Some college", "Bachelors"), "Some College, BA", "MA, PhD")))
 dat_all$Educ2 <- factor(dat_all$Educ2, 
-  levels = c("Primary or less", "Completed High", "College,BA", "MA,PhD"))
+  levels = c("Primary or less", "Completed High School", "Some College, BA", "MA, PhD"))
 

@@ -349,16 +349,34 @@ plotKnow <- function(LHS, Title="", yLim, ppos, H=0.01, plt=TRUE) {
   return(list(means=y, se=se, cis=cis, pvals=pvals))
 }
 
+
+# Regressions for knowledge
+doRegKnow <- function(RHS, dat) {
+  fmtp <- function(x) 
+    ifelse(x <0.001, "<0.001", formatC(x, digits=3, format="f"))
+  modc <- lm(as.formula(paste(RHS, "~ Age + Gender + Country + Educ2")),
+    data=dat)
+  modc <- summary(modc)$coefficients
+  modc <- as.data.frame(modc)
+  modc[4] <- sapply(modc[4], function(x) fmtp(x))
+  rownames(modc) <- gsub("Age", "Age: ", rownames(modc))
+  rownames(modc) <- gsub("Gender", "Gender: ", rownames(modc))
+  rownames(modc) <- gsub("Country", "Residence: ", rownames(modc))
+  rownames(modc) <- gsub("Educ2", "Education: ", rownames(modc))
+  modc
+}
+
+
 ######################################################################
 ######################### Diff and Diff ##############################
 ######################################################################
-lincom <- function(EQ, mod) {
+lincom <- function(EQ, mod, dig=2) {
   lcom <- car::linearHypothesis(mod, EQ)
   t1 <- attributes(lcom)
   tdiff <- t1$value[1]
   tse <- sqrt(t1$vcov[1])
   tpval <- lcom[2, 6]
-  c(diff=tdiff, se=tse, pval=tpval)
+  c(diff=fmt(tdiff, dig), se=fmt(tse, dig), pval=pfmt(tpval))
 }
 
 doDiffs <- function(LHS, dat=ldat) {

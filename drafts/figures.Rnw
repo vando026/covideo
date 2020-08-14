@@ -9,7 +9,7 @@
 \begin{figure}[!ht]
 \centering
 \includegraphics[scale=0.6]{DataFlow1.png}
-\caption{CONSORT flow diagram}
+\caption{Trial design}
 \label{fig:dataflow}
 \end{figure} 
 
@@ -19,14 +19,26 @@
 \begin{figure}[!ht]
 \centering
 \includegraphics[scale=0.75]{ClinicTotal.png}
-\caption{Test}
+
+\caption{Mean score by trial arm for knowledge of the clinical characteristics of COVID-19
+(e.g., The current coronavirus spreads from person to person through small droplets from
+the mouth: True/False; Antibiotics can be used to treat COVID-19 infection: True/False).
+Mean differences between the trial arms reported with p-values ($N=
+$ \Sexpr{fmt(flow$FinalN)}).}
+
 \label{fig:clinic}
 \end{figure} 
+
 
 \begin{figure}[!ht]
 \centering
 \includegraphics[scale=0.75]{SpreadTotal.png}
-\caption{Test}
+
+\caption{Mean score by trial arm for knowledge of COVID-19 spread (e.g., the following is
+an effective way to prevent the spread of COVID-19: eat garlic with each meal:
+True/False).  Mean differences between the trial arms reported with p-values ($N=
+$\Sexpr{fmt(flow$FinalN)}).}
+
 \label{fig:spread}
 \end{figure} 
 
@@ -35,7 +47,7 @@
 \begin{figure}[!ht]
 \centering
 \includegraphics[scale=0.75]{KnowledgeAll.png}
-\caption{Knowledge, all items}
+\caption{Knowledge, all items combined. Possible alternative. }
 \label{fig:knowall}
 \end{figure} 
 
@@ -45,7 +57,10 @@
 \begin{figure}[!ht]
 \centering
 \includegraphics[scale=0.73]{BehavIntent.png}
-\caption{Behavioral intent in Control arm with social desirability removed}
+\caption{Behavioral intent to practice COVID-19 hygiene. Results from the Control arm
+using list randomization to remove social desirability bias ($n = $ \Sexpr{fmt(flow$CtrlN -
+flow$Ctrl)}).}
+\label{fig:behav}
 \end{figure} 
 
 
