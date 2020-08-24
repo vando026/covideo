@@ -13,9 +13,15 @@ plotKnow("ClinicTotal", "Clinical knowledge of COVID-19 (10 items)",
 plotKnow("SpreadTotal", "Knowledge of preventing COVID-19 spread (8 items)", 
   yLim=c(7.62, 7.75), ppos=c(7.715, 7.695, 7.74), H=0.005)
 
-plotKnow("KnowledgeAll", "All knowledge (18 items)", 
- yLim=c(16.8, 17.05), ppos=c(16.95, 17.005, 17.048))
 
+png(file.path(output, paste0("KnowledgeAll", ".png")),
+  units="in", width=5, height=5.0, pointsize=9, 
+  res=500, type="cairo")
+plotKnow("KnowledgeAll", "Knowledge (18 items)", 
+ yLim=c(16.8, 17.10), ppos=c(16.95, 17.005, 17.06), write=FALSE, 
+ yaxt="n")
+axis(2, at=seq(16.80, 17.10, by=0.10), las=1)
+dev.off()
 
 ######################################################################
 ######################### Behave Direct ##############################

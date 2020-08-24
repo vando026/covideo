@@ -127,18 +127,33 @@ getVid <- function(name) {
     read_csv(file.path(sourced, name), comment='END OF FILE'))
   dat <- select(dat, 
     ID=`Participant Public ID`, 
-    Stamp=`UTC Timestamp`, 
-    Label=`Zone Name`,
-    Time=`Reaction Time`)
-  dat <- filter(dat, !is.na(Label))
-  dat <- arrange(dat, ID, Stamp)
-  dat <- group_by(dat, ID) %>% 
-    mutate(
-      Lag = lag(Stamp), 
-      Time = round((Stamp - Lag)/1000, 2)) %>% 
-    filter(row_number()==n()) %>% 
-    select(ID, CtrVidTime=Time)
-  dat
+    UTC_Timestamp=`UTC Timestamp`, 
+    UTC_Date=`UTC Date`,
+    Arm=`randomiser-alpe`,
+    TrialNumber=`Trial Number`,
+    ZoneName=`Zone Name`,
+    ZoneType=`Zone Type`,
+    Response=Response)
+  dat <- group_by(dat, ID) %>% mutate(DiffTime = 
+    round((UTC_Timestamp - lag(UTC_Timestamp))/1000, 2))
+  idat <- split(dat, dat$ID)
+  getTime <- function(irow) {
+    ClickFinish = as.numeric(!is.na(any(irow$ZoneName == "FinishTime")))
+    VideoSum = cumsum(as.numeric(irow$ZoneName=="Video" & !is.na(irow$ZoneName)))
+    VideoMax = max(VideoSum)
+    Error = any(grepl("ERROR|MEDIA_ERR", irow$Response))
+    # cat(irow$ID[1], ClickFinish, VideoMax, Error)
+    Time <- if(ClickFinish==1 & VideoMax>=1 & Error==0) {
+      unlist(subset(irow, ZoneName=="FinishTime", DiffTime))
+    } else if (ClickFinish==0 & VideoMax >= 1 & Error==0) {
+      irow$DiffTime[(VideoSum==VideoMax)][1] 
+    } else {
+      NA
+    }
+    data.frame(ID=irow$ID[1], VideoTime=Time) 
+  }
+  ddat <- do.call(rbind, lapply(idat, getTime))
+  left_join(dat, ddat)
 }
 
 # Make file names easier
@@ -160,8 +175,8 @@ getData <- function(sourced, name=NULL) {
   List <- doCast(List )
   Know <- getKnow(name$Know)
   Behav <- getBehav(name$Behav)
-  Vid <- getVid(name$Vid)
-  dat <- suppressMessages(Reduce(left_join, list(Dem, List, Behav, Know, Vid)))
+  # Vid <- getVid(name$Vid)
+  dat <- suppressMessages(Reduce(left_join, list(Dem, List, Behav, Know)))
   if ("NA" %in% colnames(dat)) {
     message(sprintf(" Dropping NA column %s", which((colnames(dat)=="NA"))))
     dat <- select(dat, -(`NA`))
@@ -211,8 +226,6 @@ getListData <- function(dat=dat_all) {
   mutate(ldat, 
     VideoArm = as.factor(VideoArm), TreatList = as.factor(TreatList))
 }
-
-
 
 lmMN <- mkMod(RHS = " ~ -1 + VideoArm:TreatList")
 glmMN <- mkMod(model=glm, RHS = " ~ -1 + VideoArm:TreatList", 
@@ -317,7 +330,7 @@ getCTR <- function(LHS, dat) {
   xx
 }
 
-plotKnow <- function(LHS, Title="", yLim, ppos, H=0.01, plt=TRUE) {
+plotKnow <- function(LHS, Title="", yLim, ppos, H=0.01, plt=TRUE, write=TRUE, ...) {
   cmod <- lm(as.formula(paste(LHS, " ~ -1 + VideoArm")),
      data=dat_all)
   cpair <- pairwise.t.test(dat_all[[LHS]], dat_all[["VideoArm"]],
@@ -330,21 +343,23 @@ plotKnow <- function(LHS, Title="", yLim, ppos, H=0.01, plt=TRUE) {
   pvals <- pfmt(cpair$p.value)
   #
   if (plt) {
-    png(file.path(output, paste0(LHS, ".png")),
-      units="in", width=5, height=5.0, pointsize=9, 
-      res=500, type="cairo")
+    if (write) {
+      png(file.path(output, paste0(LHS, ".png")),
+        units="in", width=5, height=5.0, pointsize=9, 
+        res=500, type="cairo")
+    }
     plotCI(1:3, y, liw=lis, uiw=uis, main=Title, 
       bty="n", ylim=yLim, lwd=3, pch=16, font.lab=2,
-      xlab="Trial arm", ylab="Mean score", xaxt="n", col=set3)
+      xlab="Trial arm", ylab="Mean score", xaxt="n", col=set3, ...)
     axis(1, 1:3, c("Control", "APC", "CoVideo"))
-    text(c(1,2,2.8), y, pos=4, labels=formatC(y, format="f", digits=2))
+    text(c(1,2,2.75), y, pos=4, labels=formatC(y, format="f", digits=2))
     pbrack(1, 2, ppos[1], H,
       pval=paste0("Att. Diff = ", fmt(y[2] - y[1]), ", ", pvals[1, 1]))
     pbrack(2, 3, ppos[2], H,
       pval=paste0("Trt. Diff = ", fmt(y[3] - y[2]), ", ", pvals[2, 2]))
     pbrack(1, 3, ppos[3], H,
       pval=paste0("Tot. Diff = ", fmt(y[3] - y[1]), ", ", pvals[2, 1]))
-    dev.off()
+    if (write) dev.off()
   }
   return(list(means=y, se=se, cis=cis, pvals=pvals))
 }

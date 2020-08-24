@@ -93,6 +93,7 @@ res_all <- plotKnow("KnowledgeAll", plt=FALSE)
 dat_ctrl <- filter(dat_all, VideoArm=="Control")
 dat_trt <- filter(dat_all, VideoArm=="Treatment")
 dat_tot <- filter(dat_all, VideoArm!="Placebo")
+dat_apc <- filter(dat_all, VideoArm!="Control")
 reg_clinic <- doRegKnow("ClinicTotal", dat_ctrl)
 reg_clinic_trt <- doRegKnow("ClinicTotal", dat_trt)
 reg_spread <- doRegKnow("SpreadTotal", dat_ctrl)
@@ -153,6 +154,7 @@ tablist <- data.frame(do.call(rbind,
 
 modc <- lm(ClinicTotal ~ - 1 + Age:VideoArm, data=dat_tot)
 mods <- lm(SpreadTotal ~ - 1 + Age:VideoArm, data=dat_tot)
+
 c1824 = "1*Age18-24 years:VideoArmTreatment - 1*Age18-24 years:VideoArmControl = 0"
 c2534 = "1*Age25-34 years:VideoArmTreatment - 1*Age25-34 years:VideoArmControl = 0"
 c3544 = "1*Age35-44 years:VideoArmTreatment - 1*Age35-44 years:VideoArmControl = 0"
@@ -164,14 +166,79 @@ agediff <- data.frame(
 agediffs <- data.frame(
   sapply(setNames(c(c1824, c2534, c3544, c4554, c5559), cnm), lincom, mods))
 
+modc <- lm(ClinicTotal ~ - 1 + Age:VideoArm, data=dat_apc)
+mods <- lm(SpreadTotal ~ - 1 + Age:VideoArm, data=dat_apc)
+c1824 = "1*Age18-24 years:VideoArmTreatment - 1*Age18-24 years:VideoArmPlacebo = 0"
+c2534 = "1*Age25-34 years:VideoArmTreatment - 1*Age25-34 years:VideoArmPlacebo = 0"
+c3544 = "1*Age35-44 years:VideoArmTreatment - 1*Age35-44 years:VideoArmPlacebo = 0"
+c4554 = "1*Age45-54 years:VideoArmTreatment - 1*Age45-54 years:VideoArmPlacebo = 0"
+c5559 = "1*Age55-59 years:VideoArmTreatment - 1*Age55-59 years:VideoArmPlacebo = 0"
+cnm <- ls(pattern="^c[1-9]") 
+agediff_apc <- data.frame(
+  sapply(setNames(c(c1824, c2534, c3544, c4554, c5559), cnm), lincom, modc))
+agediffs_apc <- data.frame(
+  sapply(setNames(c(c1824, c2534, c3544, c4554, c5559), cnm), lincom, mods))
+
+
 save(tab0, flow, res, tabc, tabs, res_know, res_spr, res_all,
   reg_clinic, reg_clinic_trt, reg_spread, reg_spread_trt, behav,
   cstate, sstate, bstate, agediff, agediffs,
   file=file.path(output, "Results.RData"))
 
 
+######################################################################
+######################### List Intent ################################
+######################################################################
+
+plotList <- function(LHS, yLim=c(0, 1.0), dat=dat_all) {
+
+  dat_ctrl <- filter(dat_all, VideoArm=="Control")
+  dat_ctrl <- mutate(dat_ctrl, 
+    Treat  = as.numeric(dat_ctrl$ListArm=="List Treatment"),
+    EducNum = as.numeric(as.factor(Educ2)))
+  fdat <- filter(dat_ctrl, Gender=="Female")
+  mdat <- filter(dat_ctrl, Gender=="Male")
 
 
+  fmod <- ictreg(as.formula(paste(LHS, "~ -1 + Age")), data=data.frame(fdat),
+    treat = "Treat", J=5, method= "lm")
+  mmod <- ictreg(as.formula(paste(LHS, "~ -1 + Age")), data=data.frame(mdat),
+    treat = "Treat", J=5, method= "lm")
+
+  fres <- summary(fmod)
+  fcoefs <- fres$par.treat
+  fcoef_age <- fcoefs[grepl("Age", names(fcoefs))] 
+  print(fres)
+
+  # ndat <- data.frame(Age = sort(unique(dat_all$Age)), EducNum=3)
+  # predict(fmod, ndat)
+
+  mres <- summary(mmod)
+  print(mres)
+  mcoefs <- mres$par.treat
+  mcoef_age <- mcoefs[grepl("Age", names(mcoefs))] 
+  x <- seq(length(fcoefs))
+
+  plot(x, fcoef_age, ylim=yLim, bty="l", type="n", ylab="Estimated proportion",
+       xlab="Age ", main=paste("This week I will ", bwrap(LHS, 30)), font.lab=2, xaxt="n")
+  lines(ksmooth(x, mcoef_age, "normal", bandwidth=2, n.points=200), lwd=2.0, lty=1, col=set3[3])
+  lines(ksmooth(x, fcoef_age, "normal", bandwidth=2, n.points=200), lwd=2.0, lty=2, col=set3[2])
+  axis(1, x,  gsub("(Age)", "", names(mcoef_age)))
+  legend("bottom", legend=c("Men", "Women"), lty=c(1, 2), col=c(set3[3], set3[2]), 
+         ncol=2, bty="n", lwd=3 )
+}
+
+png(file.path(output, paste0("List_", "1", ".png")),
+  units="in", width=7, height=8, pointsize=10, 
+  res=500, type="cairo")
+par(mfrow=c(3, 2))
+plotList("SocialDist")
+plotList("StockPile")
+plotList("UseMedia")
+plotList("CleanDishes")
+plotList("CleanSurfaces")
+plotList("Wash")
+dev.off()
 
 ######################################################################
 ######################### ############################################
