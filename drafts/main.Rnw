@@ -6,13 +6,25 @@
 fmt <- function(x, d=0) formatC(x, format="f", digits=d, big.mark=",")
 @
 
+
+
 <<echo=FALSE>>=
 kdiff <- res_all$means["VideoArmTreatment"] - res_all$means['VideoArmControl']
 kdiff2 <- res_all$means["VideoArmTreatment"] - res_all$means['VideoArmPlacebo']
 kn <- length(c(sstate, cstate))
 kmax <- kn - res_all$means["VideoArmControl"]
 kmax2 <- kn - res_all$means["VideoArmPlacebo"]
-corrects <- res_all$means["VideoArmControl"]/kn*100
+correcta <- res_all$means["VideoArmControl"]/kn*100
+@
+
+
+<<echo=FALSE>>=
+kdiff <- res_know$means["VideoArmTreatment"] - res_know$means['VideoArmControl']
+kdiff2 <- res_know$means["VideoArmTreatment"] - res_know$means['VideoArmPlacebo']
+kn <- length(cstate)
+kmax <- kn - res_know$means["VideoArmControl"]
+kmax2 <- kn - res_know$means["VideoArmPlacebo"]
+corrects <- res_know$means["VideoArmControl"]/kn*100
 @
 
 <<echo=FALSE>>=
@@ -54,26 +66,27 @@ United Kingdom, Germany, Spain, and Mexico.
 
 
 \textbf{Results:} Between \Sexpr{res$dates[1]} and \Sexpr{res$dates[2]}, we recruited
-\Sexpr{fmt(flow$In)} participants. The final analysis included \Sexpr{fmt(flow$In -
+\Sexpr{fmt(flow$In)} participants; the final analysis included \Sexpr{fmt(flow$In -
 flow$Start)} participants randomly assigned to the Control (\Sexpr{fmt(flow$CtrlN)}) APC
-(\Sexpr{fmt(flow$APCN)}), and CoVideo (\Sexpr{fmt(flow$CoVidN)}) arms.  Baseline knowledge
-levels were high: participants in the Control arm correctly answered \Sexpr{fmt(corrects,
-1)}\%  of the COVID-19 knowledge questions. The CoVideo increased knowledge in the CoVideo arm, with greater
-knowledge gains in older participants (45--59 years).  Adjusting for demographic factors,
-knowledge scores were higher among women, more educated participants, and German speaking
-residents. After removing social desirability bias, \Sexpr{fmtCI("SocialDist")$mn} of
-participants intended to go out with their friends despite lockdown restrictions and
-\Sexpr{fmtCI("StockPile")$mn} intended to stock up on households supplies for a month.
-More positively,  \Sexpr{fmtCI("Wash")$mn} of participants  in the Control arm intended to
-wash their hands frequently. Behavioral intentions differed by age and gender. 
+(\Sexpr{fmt(flow$APCN)}), and CoVideo (\Sexpr{fmt(flow$CoVidN)}) arms.  Knowledge in the
+Control arm was high: participants correctly answered \Sexpr{fmt(corrects, 1)}\%  of the
+clinical knowledge questions, \Sexpr{fmt(correctc, 1)}\% of the knowledge spread
+questions, and \Sexpr{fmt(correcta, 1)}\% of the combined questions. Overall knowledge was
+higher in the CoVideo arm, with greater clinical knowledge gains in older participants
+(45--59 years).  Adjusting for demographic factors, the knowledge scores were higher among
+women, more educated participants, and German speaking residents. After removing social
+desirability bias, \Sexpr{fmtCI("SocialDist")$mn} of participants intended to go out with
+their friends despite lockdown restrictions and \Sexpr{fmtCI("StockPile")$mn} intended to
+stock up on households supplies for a month.  More positively,  \Sexpr{fmtCI("Wash")$mn}
+of participants  in the Control arm intended to wash their hands frequently. Behavioral
+intentions differed by age and gender. 
 
 
 \textbf{Conclusion:} In a large, online randomized trial, we found high levels  of
 COVID-19 knowledge. Even with high baseline levels, the CoVideo was effective in
-increasing knowledge about the clinical characteristics of COVID-19. Using list
-randomization to remove social desirability, we found that 1 in 5 participants were
-willing to go out with friends and 1 in 3 participants were willing to stockpile household
-supplies,  despite social restrictions on these behaviors. 
+increasing COVID-19 knowledge. Our results support the use of E-E media on social media
+platforms to distribute COVID-19 information to many people on a rapid scale without
+requiring physical contact. 
 
 \clearpage
 
@@ -209,20 +222,23 @@ of practices to prevent the spread of COVID-19. These items were prefaced by the
 `An effective way to prevent COVID-19 spead'. All items required True/False responses
 and all participants received the 18 knowledge items. For the secondary outcome, we used a
 list experiment  to quantify the proportion of participants that agreed with five
-behavioral statements about COVID-19 (Control arm only).
+behavioral statements about COVID-19.
 
 
 \paragraph{Statistical analysis}
 
 We obtained means and standard deviations of the participant's age, gender, primary
-language, country of residence, and education status. Using a linear regression model, we
-quantified the difference in mean clinical knowledge and knowledge spread scores between
-the CoVideo, APC, and Control arms. We define the difference between the CoVideo and
-Control arm as the total effect, and the difference between the CoVideo and the APC as the
-treatment effect. For participants in the Control arm, we used a linear regression model
-to quantify the effects of the demographic characteristics on the baseline knowledge
-scores.  For each list experiment, we used linear regression to obtain the difference in
-means for the experiment list and the control list (Control arm only).
+language, country of residence, and education status. Using linear regression, we
+quantified the difference in mean scores for the clinical knowledge (10 items), knowledge
+spread (8 items), and combined knowledge scores (18 items) between the CoVideo, APC, and
+Control arms. We calculated the difference between the CoVideo and Control arms as the
+Total Effect, the difference between the APC and Control arms as the Attention Effect, and
+the difference between the CoVideo and APC arms as the Treatment Effect. For participants
+in the Control arm, we used a linear regression model to quantify the effects of the
+demographic characteristics on the clinical knowledge, knowledge spread, and overall
+knowledge scores.  For each list experiment, we used linear regression to obtain the
+difference in means for the experiment list and the control list in the Control arm only.
+Statistical analyses were performed with R software version 4.2.
 
 
 
@@ -248,9 +264,40 @@ having some college education or higher (BA, MA equivalent or PhD).  Table
 residence, educational status, and first language. 
 
 
-For the primary aim, we report that clinical knowledge was higher among participants that
-watched the CoVideo when compared with participants assigned to the Control arm (Figure
-\ref{fig:clinic}). In the Control arm, the average items correctly answered was
+
+<<echo=FALSE, eval=TRUE>>=
+akdiff <- res_all$means["VideoArmTreatment"] - res_all$means['VideoArmControl']
+akdiff2 <- res_all$means["VideoArmTreatment"] - res_all$means['VideoArmPlacebo']
+akn <- length(c(cstate, sstate))
+akmax <- akn - res_all$means["VideoArmControl"]
+akmax2 <- akn - res_all$means["VideoArmPlacebo"]
+@
+
+
+For the primary aim, the CoVideo arm had a higher overall knowledge score when compared
+with the Control and APC arms (Figure \ref{fig:knowall}). In the Control arm,
+\Sexpr{fmt(res_all$means["VideoArmControl"], 1)} out of \Sexpr{akn} items
+(\Sexpr{fmt(res_all$means["VideoArmControl"]/akn*100, 1)}\%) were correctly answered.
+With this high baseline score, the CoVideo could
+therefore only increase knowledge by a maximum of \Sexpr{fmt(akmax, 1)} points.  
+Relative to the Control arm, the CoVideo increased the average response by
+\Sexpr{fmt(akdiff, 1)} points (\Sexpr{(res_all$pvals[2, 1])}), which represents a
+\Sexpr{fmt(akdiff, 1)}/\Sexpr{fmt(akmax, 1)} $=$ \Sexpr{fmt(akdiff/akmax*100, 1)}
+percentage point increase in knowledge. The average score for the APC arm was
+\Sexpr{fmt(res_all$means["VideoArmPlacebo"],1)} (a correct response rate of
+\Sexpr{fmt(res_all$means["VideoArmPlacebo"]/akn*100, 1)}\%).  When we removed the
+attention affect of the video medium, the CoVideo increased knowledge by
+\Sexpr{fmt(akdiff2, 1)} points (\Sexpr{res_all$pvals[2,2]}), which represents a
+\Sexpr{fmt(akdiff2, 1)}/\Sexpr{fmt(akmax2, 1)} $=$ \Sexpr{fmt(akdiff2/akmax2*100, 1)}
+percentage point increase in overall knowledge. 
+
+
+
+
+
+We report that clinical knowledge was higher among participants that watched the CoVideo
+when compared with participants assigned to the Control arm (Figure \ref{fig:clinic}). In
+the Control arm, the average items correctly answered was
 \Sexpr{fmt(res_know$means["VideoArmControl"], 2)} out of \Sexpr{kn} (a correct response
 rate of \Sexpr{fmt(corrects, 1)}\%).  With this high baseline score, the CoVideo could
 therefore only increase knowledge by a maximum of \Sexpr{fmt(kmax, 2)} points.  Relative
@@ -262,42 +309,13 @@ knowledge. The mean knowledge score for the APC arm was
 affect of the video medium, the CoVideo increased the average response by
 \Sexpr{fmt(kdiff2, 2)} (\Sexpr{res_know$pvals[2,2]}), which represents a
 \Sexpr{fmt(kdiff2, 2)}/\Sexpr{fmt(kmax2, 2)} $=$ \Sexpr{fmt(kdiff2/kmax2*100, 1)}
-percentage point increase in clinical knowledge.  
+percentage point increase in clinical knowledge.  We report that there was no difference
+in knowledge spread among the arms (Figure \ref{fig:spread}). In the Control arm, the
+average items correctly answered was \Sexpr{fmt(res_spr$means["VideoArmControl"], 2)} out
+of \Sexpr{kns}, a high correct response rate of \Sexpr{fmt(correctc, 1)}\%.
 
 
-We report that there was no difference in knowledge spread among the arms (Figure
-\ref{fig:spread}). In the Control arm, the average items correctly answered was
-\Sexpr{fmt(res_spr$means["VideoArmControl"], 2)} out of \Sexpr{kns}, a correct response
-rate of \Sexpr{fmt(correctc, 1)}\%. It is likely that the CoVideo could not improve upon
-this already high baseline level of knowledge. (***We could also combine the knowledge
-items, see Figure \ref{fig:knowall}**).
 
-
-<<echo=FALSE, eval=TRUE>>=
-akdiff <- res_all$means["VideoArmTreatment"] - res_all$means['VideoArmControl']
-akdiff2 <- res_all$means["VideoArmTreatment"] - res_all$means['VideoArmPlacebo']
-akn <- length(c(cstate, sstate))
-akmax <- akn - res_all$means["VideoArmControl"]
-akmax2 <- akn - res_all$means["VideoArmPlacebo"]
-@
-
-
-<<echo=FALSE, eval=FALSE>>=
-# For all \Sexpr{akn} knowledge items, participants who watched the CoVideo has a higher
-# overall knowledge score compared with participants in the Control and APC arms. In the
-# Control arm, \Sexpr{fmt(res_all$means["VideoArmControl"], 1)} out of \Sexpr{akn} items were
-# correctly answered (\Sexpr{fmt(res_all$means["VideoArmControl"]/akn*100, 1)}\%).  Relative
-# to the Control arm, the CoVideo increased the average response by \Sexpr{fmt(akdiff, 1)}
-# points (\Sexpr{(res_all$pvals[2, 1])}), which represents a \Sexpr{fmt(akdiff,
-# 1)}/\Sexpr{fmt(akmax, 1)} $=$ \Sexpr{fmt(akdiff/akmax*100, 1)} percentage point increase in
-# knowledge. The average score for the APC arm was
-# \Sexpr{fmt(res_all$means["VideoArmPlacebo"],1)} (a correct response rate of
-# \Sexpr{fmt(res_all$means["VideoArmPlacebo"]/akn*100, 1)}\%).  When we removed the attention
-# affect of the video medium, the CoVideo increased knowledge by \Sexpr{fmt(akdiff2, 1)}
-# points (\Sexpr{res_all$pvals[2,2]}), which represents a \Sexpr{fmt(akdiff2,
-# 1)}/\Sexpr{fmt(akmax2, 1)} $=$ \Sexpr{fmt(akdiff2/akmax2*100, 1)} percentage point increase
-# in knowledge. 
-@
 
 <<echo=FALSE>>=
 getMin <- function(x, Lab) {
@@ -355,10 +373,10 @@ a month (\Sexpr{fmtCI("StockPile")$ci}) and \Sexpr{fmtCI("SocialDist")$mn} said 
 go out with friends even though lockdown restrictions were likely in place
 (\Sexpr{fmtCI("SocialDist")$ci}). 
 
-(Figure \ref{fig:soc}) shows the differences in behaviora intent by age and gender for
+Figure \ref{fig:soc}  shows the differences in behavioral intent by age and gender for
 each of the five statements. For the social distancing statement, younger men (aged 18-24
 years) and older men (aged 45-59 years) were more likely than their female counterparts to
-go out with friends . With the exception of the 45--54 year age group, more men intended
+go out with friends. With the exception of the 45--54 year age group, more men intended
 to stockpile household supplies for the next month when compared with women.  Older
 men and women were more likely to clean their dishes after use to prevent the spread of
 COVID-19. Most participants agreed that they will wash their hands frequently in the next
@@ -445,5 +463,5 @@ concepts.
 We expect that our study will make important contributions to the E-E literature.
 Importantly, lessons learned can help us to improve the design of E-E videos to
 disseminate public health information for future pandemics.  Our results will also guide
-future E-E strategies to support the long-term COVID-19 response, as countries are easing
+future E-E strategies to support the long-term COVID-19 response as countries ease
 lock-down restrictions.
