@@ -9,12 +9,30 @@
 \begin{figure}[!ht]
 \centering
 \includegraphics[scale=0.6]{DataFlow1.png}
-\caption{Trial design}
+\caption{Trial design.}
 \label{fig:dataflow}
 \end{figure} 
 
 
 \clearpage
+
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[scale=0.80]{KnowledgeAll.png}
+
+\caption{Mean score by trial arm for knowledge of preventative COVID-19 practices (e.g.,
+the following is an effective way to prevent the spread of COVID-19: eat garlic with each
+meal: True/False).  Mean differences between the CoVideo, Attention Placebo Control (APC),
+and Control (no video) reported with p-values ($N= $\Sexpr{fmt(flow$FinalN)}).
+Tot.~Diff.~represents the total difference in means between the CoVideo and the Control;
+Att.~Diff.~represents the attention difference in means between the APC and Control; and
+Trt.~Diff.~represents the treatment difference in means between the CoVideo and the APC.
+}
+
+\label{fig:knowall}
+\end{figure} 
+
 
 \begin{figure}[!ht]
 \centering
@@ -29,6 +47,7 @@ $ \Sexpr{fmt(flow$FinalN)}).}
 \label{fig:clinic}
 \end{figure} 
 
+\clearpage
 
 \begin{figure}[!ht]
 \centering
@@ -44,24 +63,16 @@ $\Sexpr{fmt(flow$FinalN)}).}
 
 \clearpage
 
-\begin{figure}[!ht]
-\centering
-\includegraphics[scale=0.75]{KnowledgeAll.png}
-\caption{Knowledge, all items combined. Possible alternative. }
-\label{fig:knowall}
-\end{figure} 
-
-\clearpage
 
 
 \begin{figure}[!ht]
 \centering
 \includegraphics[scale=0.73]{BehavIntent.png}
 
-\caption{Shows the percentage of participants that agreed with statements about 
-COVID-19 behaviors.  Results were obtained from  list randomization expriment in
-the Control arm to remove social desirability bias ($n = $ \Sexpr{fmt(flow$CtrlN -
-flow$Ctrl)}).}
+\caption{Shows the percentage of participants in the Control arm that agreed with
+statements about COVID-19 behaviors ($n = $ \Sexpr{fmt(flow$CtrlN - flow$Ctrl)}).  Results
+were obtained from  list randomization expriment, which was used to remove social
+desirability bias.}
 
 \label{fig:behav}
 \end{figure} 

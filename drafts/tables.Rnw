@@ -107,7 +107,7 @@ print(xtable(Lang[, -1], digits=1),
 \centering
 \begin{threeparttable}
 
-\caption{Frequency of item responses for knowledge of  COVID-19 by CoVideo, Attention
+\caption{Frequency of item responses for COVID-19 knowledge by CoVideo, Attention
 Placebo Control (APC), and Control arms. The percentage of correct answers is also give
 ($N = $ \Sexpr{fmt(flow$FinalN)}).}
 

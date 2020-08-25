@@ -354,11 +354,11 @@ plotKnow <- function(LHS, Title="", yLim, ppos, H=0.01, plt=TRUE, write=TRUE, ..
     axis(1, 1:3, c("Control", "APC", "CoVideo"))
     text(c(1,2,2.75), y, pos=4, labels=formatC(y, format="f", digits=2))
     pbrack(1, 2, ppos[1], H,
-      pval=paste0("Att. Diff = ", fmt(y[2] - y[1]), ", ", pvals[1, 1]))
+      pval=paste0("Att. Diff. = ", fmt(y[2] - y[1]), ", ", pvals[1, 1]))
     pbrack(2, 3, ppos[2], H,
-      pval=paste0("Trt. Diff = ", fmt(y[3] - y[2]), ", ", pvals[2, 2]))
+      pval=paste0("Trt. Diff. = ", fmt(y[3] - y[2]), ", ", pvals[2, 2]))
     pbrack(1, 3, ppos[3], H,
-      pval=paste0("Tot. Diff = ", fmt(y[3] - y[1]), ", ", pvals[2, 1]))
+      pval=paste0("Tot. Diff. = ", fmt(y[3] - y[1]), ", ", pvals[2, 1]))
     if (write) dev.off()
   }
   return(list(means=y, se=se, cis=cis, pvals=pvals))

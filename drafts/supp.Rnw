@@ -95,7 +95,7 @@
 \centering
 \begin{threeparttable}
 
-\caption{Regression estimates of clinic knowledge of COVID-19 in the Control arm.} 
+\caption{Regression estimates of COVID-19 knowledge in the Control arm.} 
 
 \label{tab:modc}
 \footnotesize
@@ -104,7 +104,7 @@
 & Estimate & SE  & t-value & p-value \\
 \hline
 <<echo=FALSE, results='asis'>>=
-print(xtable(reg_clinic),
+print(xtable(reg_all),
   include.colnames=FALSE,
   include.rownames=TRUE,
   hline.after=NULL,
@@ -118,38 +118,12 @@ print(xtable(reg_clinic),
 \end{threeparttable}
 \end{table}
 
-\begin{table}[h!]
-\centering
-\begin{threeparttable}
-
-\caption{Regression estimates of spread knowledge of COVID-19 in the Control arm.} 
-
-\label{tab:mods}
-\footnotesize
-\begin{tabular}{l *{4}{C{1.3cm}}}
-\toprule
-& Estimate & SE  & t-value & p-value \\
-\hline
-<<echo=FALSE, results='asis'>>=
-print(xtable(reg_spread),
-  include.colnames=FALSE,
-  include.rownames=TRUE,
-  hline.after=NULL,
-  only.contents=TRUE)
-@
-\bottomrule
-\end{tabular}
-\begin{tablenotes} 
-\scriptsize 
-\end{tablenotes}
-\end{threeparttable}
-\end{table}
 
 \begin{table}[h!]
 \centering
 \begin{threeparttable}
 
-\caption{Regression estimates of clinic knowledge of COVID-19 in the CoVideo arm.} 
+\caption{Regression estimates of COVID-19 knowledge in the CoVideo arm.} 
 
 \label{tab:modc_trt}
 \footnotesize
@@ -158,7 +132,7 @@ print(xtable(reg_spread),
 & Estimate & SE  & t-value & p-value \\
 \hline
 <<echo=FALSE, results='asis'>>=
-print(xtable(reg_clinic_trt),
+print(xtable(reg_all_trt),
   include.colnames=FALSE,
   include.rownames=TRUE,
   hline.after=NULL,
@@ -173,29 +147,3 @@ print(xtable(reg_clinic_trt),
 \end{table}
 
 
-\begin{table}[h!]
-\centering
-\begin{threeparttable}
-
-\caption{Regression estimates of spread knowledge of COVID-19 in the CoVideo arm.} 
-
-\label{tab:mods_trt}
-\footnotesize
-\begin{tabular}{l *{4}{C{1.3cm}}}
-\toprule
-& Estimate & SE  & t-value & p-value \\
-\hline
-<<echo=FALSE, results='asis'>>=
-print(xtable(reg_spread_trt),
-  include.colnames=FALSE,
-  include.rownames=TRUE,
-  hline.after=NULL,
-  only.contents=TRUE)
-@
-\bottomrule
-\end{tabular}
-\begin{tablenotes} 
-\scriptsize 
-\end{tablenotes}
-\end{threeparttable}
-\end{table}

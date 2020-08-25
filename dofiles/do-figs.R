@@ -17,7 +17,7 @@ plotKnow("SpreadTotal", "Knowledge of preventing COVID-19 spread (8 items)",
 png(file.path(output, paste0("KnowledgeAll", ".png")),
   units="in", width=5, height=5.0, pointsize=9, 
   res=500, type="cairo")
-plotKnow("KnowledgeAll", "Knowledge (18 items)", 
+plotKnow("KnowledgeAll", "COVID-19 Knowledge (18 items)", 
  yLim=c(16.8, 17.10), ppos=c(16.95, 17.005, 17.06), write=FALSE, 
  yaxt="n")
 axis(2, at=seq(16.80, 17.10, by=0.10), las=1)
@@ -30,8 +30,9 @@ png(file.path(output, "BehavIntent.png"),
   units="in", width=6.5, height=5.0, pointsize=10, 
   res=500, type="cairo")
 bp <- barplot(behav$Est, xaxt="n", ylim=c(0, 100),
-  main="This week, I will ...", ylab="Prevalence", font.lab=2,
+  main="This week, I will ...", ylab="Percentage", font.lab=2,
   col="darkslategray3", border="darkslategray4")
+bnames <- lapply(rownames(behav), bwrap)
 text(x = bp, y=-1, label=bnames, xpd=TRUE, 
      adj=c(0.5, 1), cex=0.8, srt=0)
 text(x = bp-0.05, y=behav$Est+1, label=behav$Est,

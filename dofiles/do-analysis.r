@@ -83,7 +83,7 @@ rownames(tabc) <- unlist(Map(paste0,
 tabs <- data.frame(t(sapply(names(sstate), getTot1, sstate)))
 tabs$Label <- names(sstate)
 rownames(tabs) <- unlist(Map(paste0,
-  c(seq(length(sstate))), c(". "),  
+  c(seq(length(cstate) + 1, length(c(cstate, sstate)))), c(". "),  
   sapply(names(sstate), function(x) sstate[[x]][1])))
 
 res_know <- plotKnow("ClinicTotal", plt=FALSE)
@@ -94,11 +94,13 @@ dat_ctrl <- filter(dat_all, VideoArm=="Control")
 dat_trt <- filter(dat_all, VideoArm=="Treatment")
 dat_tot <- filter(dat_all, VideoArm!="Placebo")
 dat_apc <- filter(dat_all, VideoArm!="Control")
+
 reg_clinic <- doRegKnow("ClinicTotal", dat_ctrl)
 reg_clinic_trt <- doRegKnow("ClinicTotal", dat_trt)
 reg_spread <- doRegKnow("SpreadTotal", dat_ctrl)
 reg_spread_trt <- doRegKnow("SpreadTotal", dat_trt)
-
+reg_all <- doRegKnow("KnowledgeAll", dat_ctrl)
+reg_all_trt <- doRegKnow("KnowledgeAll", dat_trt)
 
 # group_by(dat_ctrl, Country) %>% summarize(NN = mean(ClinicTotal))
 # group_by(dat_trt, Country) %>% summarize(NN = mean(ClinicTotal))
@@ -154,6 +156,7 @@ tablist <- data.frame(do.call(rbind,
 
 modc <- lm(ClinicTotal ~ - 1 + Age:VideoArm, data=dat_tot)
 mods <- lm(SpreadTotal ~ - 1 + Age:VideoArm, data=dat_tot)
+moda <- lm(KnowledgeAll ~ - 1 + Age:VideoArm, data=dat_tot)
 
 c1824 = "1*Age18-24 years:VideoArmTreatment - 1*Age18-24 years:VideoArmControl = 0"
 c2534 = "1*Age25-34 years:VideoArmTreatment - 1*Age25-34 years:VideoArmControl = 0"
@@ -165,9 +168,12 @@ agediff <- data.frame(
   sapply(setNames(c(c1824, c2534, c3544, c4554, c5559), cnm), lincom, modc))
 agediffs <- data.frame(
   sapply(setNames(c(c1824, c2534, c3544, c4554, c5559), cnm), lincom, mods))
+agediffa <- data.frame(
+  sapply(setNames(c(c1824, c2534, c3544, c4554, c5559), cnm), lincom, moda))
 
 modc <- lm(ClinicTotal ~ - 1 + Age:VideoArm, data=dat_apc)
 mods <- lm(SpreadTotal ~ - 1 + Age:VideoArm, data=dat_apc)
+moda <- lm(KnowledgeAll ~ - 1 + Age:VideoArm, data=dat_apc)
 c1824 = "1*Age18-24 years:VideoArmTreatment - 1*Age18-24 years:VideoArmPlacebo = 0"
 c2534 = "1*Age25-34 years:VideoArmTreatment - 1*Age25-34 years:VideoArmPlacebo = 0"
 c3544 = "1*Age35-44 years:VideoArmTreatment - 1*Age35-44 years:VideoArmPlacebo = 0"
@@ -178,18 +184,20 @@ agediff_apc <- data.frame(
   sapply(setNames(c(c1824, c2534, c3544, c4554, c5559), cnm), lincom, modc))
 agediffs_apc <- data.frame(
   sapply(setNames(c(c1824, c2534, c3544, c4554, c5559), cnm), lincom, mods))
+agediffa_apc <- data.frame(
+  sapply(setNames(c(c1824, c2534, c3544, c4554, c5559), cnm), lincom, moda))
 
 
 save(tab0, flow, res, tabc, tabs, res_know, res_spr, res_all,
-  reg_clinic, reg_clinic_trt, reg_spread, reg_spread_trt, behav,
-  cstate, sstate, bstate, agediff, agediffs,
+  reg_clinic, reg_clinic_trt, reg_spread, reg_spread_trt, 
+  reg_all, reg_all_trt, behav, 
+  cstate, sstate, bstate, agediff, agediffs, agediffa, 
   file=file.path(output, "Results.RData"))
 
 
 ######################################################################
 ######################### List Intent ################################
 ######################################################################
-
 plotList <- function(LHS, yLim=c(0, 1.0), dat=dat_all) {
 
   dat_ctrl <- filter(dat_all, VideoArm=="Control")
@@ -239,6 +247,17 @@ plotList("CleanDishes")
 plotList("CleanSurfaces")
 plotList("Wash")
 dev.off()
+
+
+######################################################################
+######################### Get Video ##################################
+######################################################################
+dat <- readr::read_csv(file=file.path(datapath, "Derived/VideoTime.csv"))
+dat <- filter(dat, ID=="5e652009b1074229c1815729")
+
+
+
+
 
 ######################################################################
 ######################### ############################################

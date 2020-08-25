@@ -28,7 +28,7 @@ source(file.path(home, "dofiles/functions.r"))
 ######################################################################
 ######################### Build Dataset ##############################
 ######################################################################
-if (TRUE) {
+if (FALSE) {
   # Put all the datasets together
   source(file.path(home, "dofiles/build_data.r"))
   all.equal(nrow(dat_all), 14499) 
