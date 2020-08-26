@@ -92,6 +92,7 @@ flow$Ctrl)}).}
 \label{fig:soc}
 \end{figure} 
 
+\clearpage
 
 % \begin{figure}[!ht]
 % \centering

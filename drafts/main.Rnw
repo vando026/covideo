@@ -47,8 +47,8 @@ fmtCI <- function(x) {
 \subsection*{Abstract}
 
 
-\textbf{Background:} Entertainment-education (E-E) media can improve knowledge of, and
-behavioral intent toward, health-related practices. In the era of COVID-19, millions of
+\textbf{Background:} Entertainment-education (E-E) media can improve knowledge and
+behavioral intent toward health-related practices. In the era of COVID-19, millions of
 people can be reached by E-E media without requiring any physical contact. We have
 designed a short, wordless, animated video about protective COVID-19 practices---such as
 social distancing and frequent hand washing---that can be rapidly distributed through
@@ -59,10 +59,10 @@ remains unclear.
 comparing the effectiveness of an E-E video on COVID-19 (CoVideo) against  an attention
 placebo control (APC) video and  no video (Control). In each arm,  we measured knowledge
 about the clinical aspects of COVID-19 (clinical knowledge)  and knowledge of behaviors
-that prevent COVID-19 spread (knowledge spread). Using list randomization to
-remove social desirability bias, we also measured behavioral intent to prevent COVID-19
-spread.  We recruited online participants aged 18--59 years from the United States, the
-United Kingdom, Germany, Spain, and Mexico. 
+that prevent COVID-19 spread (knowledge spread). Using a list randomization approach to
+remove social desirability bias, we also measured behavioral intent to prevent the spread
+of COVID-19. We recruited online participants aged 18--59 years from the United States,
+the United Kingdom, Germany, Spain, and Mexico. 
 
 
 \textbf{Results:} Between \Sexpr{res$dates[1]} and \Sexpr{res$dates[2]}, we recruited
@@ -73,7 +73,7 @@ Control arm was high: participants correctly answered \Sexpr{fmt(corrects, 1)}\%
 clinical knowledge questions, \Sexpr{fmt(correctc, 1)}\% of the knowledge spread
 questions, and \Sexpr{fmt(correcta, 1)}\% of the combined questions. Overall knowledge was
 higher in the CoVideo arm, with greater clinical knowledge gains in older participants
-(45--59 years).  Adjusting for demographic factors, the knowledge scores were higher among
+(45--59 years).  Adjusting for demographic factors, knowledge scores were higher among
 women, more educated participants, and German speaking residents. After removing social
 desirability bias, \Sexpr{fmtCI("SocialDist")$mn} of participants intended to go out with
 their friends despite lockdown restrictions and \Sexpr{fmtCI("StockPile")$mn} intended to
@@ -83,10 +83,10 @@ intentions differed by age and gender.
 
 
 \textbf{Conclusion:} In a large, online randomized trial, we found high levels  of
-COVID-19 knowledge. Even with high baseline levels, the CoVideo was effective in
-increasing COVID-19 knowledge. Our results support the use of E-E media on social media
-platforms to distribute COVID-19 information to many people on a rapid scale without
-requiring physical contact. 
+COVID-19 knowledge. Even with high baseline levels, the CoVideo intervention was effective
+in increasing basic clinical knowledge of COVID-19 and knowledge of behaviors to prevent COVID-19
+spread. Our results support the use of E-E media on social media platforms to distribute
+COVID-19 information to many people on a rapid scale without requiring physical contact. 
 
 \clearpage
 
@@ -102,7 +102,7 @@ can prevent or reduce the spread of COVID-19.
 
 Arguably, one possible limitation of mainstream mass media is that it has been perceived
 as politicized and culturally localized, thus limiting the persuasiveness of health
-messages about COVID-19 prevention.\autocite{Garfin2020a, Garrett2020} It is also likely
+messages about COVID-19.\autocite{Garfin2020a, Garrett2020} It is also likely
 that traditional mass media channels (e.g., local or national television networks) have
 missed key segments of the population, such as young people (18--35 years) who are
 disproportionately more likely to transmit the virus to older people ($\geq$ 50
@@ -118,18 +118,18 @@ CoVideo contains no speech and minimizes cultural signifiers to increase univers
 appeal. The CoVideo was released on Stanford Medicine’s YouTube channel on March 21,
 2020, and went viral within 24 hours.  After ten days, it had reached 332,000 views on
 YouTube, 220,000 views on Instagram, 294,000 views on Facebook, and 402,000 views on
-Twitter, with a cumulative count of 1.2 million views.\autocite{Adam2020} However, the
-effectiveness of the CoVideo to improve knowledge and behavioral intent toward
-preventative COVID-19 practices is unclear. 
+Twitter, with a cumulative count of 1.2 million views.\autocite{Adam2020} However, it is
+unclear if the CoVideo can improve knowledge and intent toward preventative
+COVID-19 behaviors.
 
 We used a randomized controlled trial to compare the  effectiveness of the CoVideo against
-an attention placebo control (APC) video and no video (Control).  For our primary aim, we
-measured knowledge about the clinical aspects of COVID-19 and knowledge about behaviors
-that can prevent the spread of COVID-19. For our secondary aim, we used a list experiment
-to reduce social desirability bias and accurately measure behavioral intent toward
-preventative COVID-19 practices in the Control arm.  The study results can inform the
-design of future E-E videos to disseminate evidence-based health recommendations related
-to COVID-19 as well as other public health emergencies.   
+an attention placebo control (APC) video and no video (Control) in an online setting.  For
+our primary aim, we measured knowledge about the clinical aspects of COVID-19 and
+knowledge about behaviors that can prevent the spread of COVID-19. For our secondary aim,
+we used a list experiment to reduce social desirability bias and accurately measure intent
+toward preventative COVID-19 behaviors.  The study results will inform the design of future
+E-E videos to disseminate evidence-based health recommendations related to COVID-19 as
+well as other public health emergencies.   
 
 
 \subsection*{Methods}
@@ -137,25 +137,25 @@ to COVID-19 as well as other public health emergencies.
 \paragraph{Study design and participants} 
 
 This was a multi-site, parallel group, randomized controlled trial  comparing the
-effectiveness of E-E video about COVID-19 (CoVideo) against an APC video and no
-video.\autocite{Vandormael2020b} Each trial arm consisted of three components: 1) a video
-intervention (the CoVideo, APC video, or no video), 2) a list experiment, and 3) survey
-questions about COVID-19 knowledge and media use.  We used an online platform called
-Prolific Academic (ProA: \url{https://www.prolific.co}) to recruit participants from the
-United States, the United Kingdom, Germany, Spain, and Mexico. ProA recruited on a ``first
-come, first served'' basis and participants had to be 18 to 59 years of age (male, female,
-or other) and have current residence in the United States, the United Kingdom, Germany,
-Spain, Mexico, or France.  Participants were excluded from the study if they could not
-speak English, German, or Spanish. The trial was hosted and deployed on Gorilla™
-(\url{www.gorilla.sc}), which is a cloud platform that provides versatile tools to
-undertake online, experimental, and behavioral research.\autocite{Anwyl-Irvine2020}  
+effectiveness of the CoVideo (the Intervention arm) against an APC video (the Placebo arm)
+and no video (the Control arm).\autocite{Vandormael2020b} Each trial arm consisted of
+three components: 1) a video intervention (the CoVideo, APC video, or no video), 2) a list
+experiment, and 3) survey questions about COVID-19 knowledge.  We used an
+online platform called Prolific Academic (ProA: \url{https://www.prolific.co}) to recruit
+participants from the United States, the United Kingdom, Germany, Spain, and Mexico. ProA
+recruited on a ``first come, first served'' basis and participants had to be 18 to 59
+years of age (male, female, or other) and have current residence in the United States, the
+United Kingdom, Germany, Spain, Mexico, or France.  Participants were excluded from the
+study if they could not speak English, German, or Spanish. The trial was hosted and
+deployed on Gorilla™ (\url{www.gorilla.sc}), which is a cloud platform that provides
+versatile tools to undertake online, experimental, and behavioral
+research.\autocite{Anwyl-Irvine2020}  
 
 \paragraph{Randomization and masking}
 
 Randomization was at a 1:1:1 ratio for the three arms of the trial.  Nested within each
 arm of the trial was a list experiment. Participants were randomized at a 1:1 ratio to a
-control or treatment list. The control list  conisted of five items and the treatment list
-consisted of the same five items plus a sensitive item.  Because ProA handled the
+control or treatment list. Because ProA handled the
 interaction between the study investigators and participants, the participants were
 completely anonymous to the study investigators. Only the participant's unique,
 anonymized ID were used to manage the linking between the ProA and Gorilla platforms. The
@@ -165,63 +165,66 @@ those involved in the data analyses and statistics were blinded to the group all
 
 \paragraph{Procedures}
 
-The CoVideo is an animated video with sound effects, and has no words, speech, or text.
-It shows how the novel coronavirus is spread (airborne, physical contact) and
-recommends best practices to prevent or reduce the spread of COVID-19 (staying at home, not
-congregating in public spaces, and sanitizing hands/surfaces). The CoVideo also covers the
-mass media coverage of the outbreak and the public's response to this media coverage,
-which includes a subplot on the stockpiling of essential goods, and the impact thereof on
-health-care services and resources (e.g., doctors being unable to access protective
-equipment). The CoVideo, which can be viewed at
-\url{https://www.youtube.com/watch?v=rAj38E7vrS8}, was designed for universal reach and
-optimized for release on social media channels. 
+The study design is shown in Figure \ref{fig:design}.
+Participants began the online study by answering basic demographic questions about their
+age, sex, primary language, country of residence, and highest education completed.
+
+Participants were then randomized to the Intervention, Placebo, or Control arms.
+Participants in the Intervention arm received the CoVideo. The CoVideo is an animated
+video with sound effects, and has no words, speech, or text.  It shows how the novel
+coronavirus is spread (airborne, physical contact) and recommends best practices to
+prevent or reduce the spread of COVID-19 (staying at home, not congregating in public
+spaces, and sanitizing hands/surfaces). The CoVideo also covers the mass media coverage of
+the outbreak and the public's response to this media coverage, which includes a subplot on
+the stockpiling of essential goods, and the impact thereof on health-care services and
+resources (e.g., doctors being unable to access protective equipment). The CoVideo, which
+can be viewed at \url{https://www.youtube.com/watch?v=rAj38E7vrS8}, was designed for
+universal reach and optimized for release on social media channels. 
 
 
-We compared the effectiveness of the CoVideo  with an APC video  or no video. The APC
-video is similar in style to the CoVideo; it is also animated with a duration of 2.30
-minutes, has sound effects but no words, speech, or text. The video message is about how
-small choices become actions, which become habits, which become a way of life
+Participants in the Placebo arm received the APC. The APC video is similar in style to the
+CoVideo; it is also animated with a duration of 2.30 minutes, has sound effects but no
+words, speech, or text. The video message is about how small choices become actions, which
+become habits, which become a way of life
 (\url{https://www.youtube.com/watch?v=_HEnohs6yYw}).  We included an APC to account for
 attention effects. APC conditions should mimic the ``inactive'' components of an
 intervention—the effect of watching the video---while not containing any of the
 ``active'' intervention components---the message delivered by the
 video.\autocite{Freedland2011} We did not make the assumption that the CoVideo is better
 than nothing (i.e., no video). It is possible that the CoVideo could motivate reactance to
-the CoVideo message.\autocite{Dillard2005,Miller2007, Richards2015} 
+the CoVideo message.\autocite{Dillard2005,Miller2007, Richards2015} Participants in the
+Control arm received no video. 
 
+Participants in each arm participated in a list experiment. There were five
+list experiments in each arm. Each list experiment had a control list of five statements
+about intent toward behaviors unrelated to COVID-19 (Table \ref{tab:items}). Each list
+experiment also included  a treatment list, which included the same five control items
+plus a statement about behavioral intent toward preventative COVID-19 practices.  The five
+list experiments covered the topics of social distancing, washing hands, cleaning
+surfaces, sharing utensils, and stockpiling essential goods. Items in each list were
+randomly ordered and the five list experiments were presented in random order to avoid
+order effects. For each list, the minimum score is zero and the maximum score for the
+control list is five and six for the treatment list (there are five items in the control
+list and six items in the treatment list). We designed the items to minimize ceiling and
+floor effects.\autocite{Corstange2009} We used the list experiment to reduce response bias
+associated with socially desirable answers to COVID-19 questions.   
 
-In each arm, we implemented five list experiments. We used the list experiment to reduce
-response bias associated with socially desirable answers to COVID-19 questions.  Each list
-experiment contains a control list of five statements about the participant's intention to
-do activities not related to COVID-19. Each list experiment also included  a treatment
-list, which included the same five control items plus a statement about behavioral intent
-toward preventative COVID-19 practices.  The five list experiments covered the topics of
-social distancing, washing hands, cleaning surfaces, sharing utensils, and stockpiling
-essential goods. Items in each list were  randomly ordered and the five list experiments
-were presented in random order to avoid order effects. For each list, the minimum score is
-zero and the maximum score for the control list is five and six for the treatment list
-(there are five items in the control list and six items in the treatment list). We
-designed the items to minimize ceiling and floor effects.\autocite{Corstange2009}
+After the list experiment, participants answered two types of COVID-19 knowledge
+questions.  \textit{Clinical knowledge} of COVID-19, which included 10 items to evaluate
+the participants' basic knowledge of the clinical characteristics of COVID-19 (Table
+\ref{tab:know}). \textit{Knowledge spread}, which included 8 items to evaluate the
+particpants' knowledge of practices to prevent the spread of COVID-19. These items were
+prefaced by the phrase: `An effective way to prevent COVID-19 spead'. All items required
+True/False responses and all participants received the 18 knowledge items. 
 
-
-Participants began the online study by answering basic demographic questions about their
-age, sex, primary language, country of residence, and highest education completed.  After
-completing the list experiment and questionnaire survey, participants in the APC and
-Control arm received the CoVideo to ensure post-trial access to
-treatment.\autocite{Doval2015}
+Participants in the APC and Control arms received the CoVideo to ensure post-trial access
+to treatment.\autocite{Doval2015}
 
 
 \paragraph{Outcomes}
 
-The primary outcomes were the mean scores of two sets of  COVID-19 knowledge items:
-\textit{Clinical knowledge} of COVID-19, which included 10 items to evaluate the
-participants' knowledge of the clinical characteristics of COVID-19. These items tested
-knowledge on symptoms, means of spread, treatment, and killing the virus.
-\textit{Knowledge spread}, which included 8 items to evaluate the particpants' knowledge
-of practices to prevent the spread of COVID-19. These items were prefaced by the phrase:
-`An effective way to prevent COVID-19 spead'. All items required True/False responses
-and all participants received the 18 knowledge items. For the secondary outcome, we used a
-list experiment  to quantify the proportion of participants that agreed with five
+The primary outcomes were the mean scores of two sets of  COVID-19 knowledge items.
+The  secondary outcome was the proportion of participants that agreed with five
 behavioral statements about COVID-19.
 
 
@@ -351,10 +354,10 @@ items, education level was also associated with higher knowledge (Table \ref{tab
 
 
 When compared with the Control arm, the CoVideo increased clinical knowledge 
-most in the 45--54 year age group (Mean Diff. = \Sexpr{agediff$c4554[1]},
-\Sexpr{agediff$c4554[3]}) and 55-59 year age group (Mean Diff. = \Sexpr{agediff$c5559[1]},
+most in the 45--54 year age group (Mean Diff.=\Sexpr{agediff$c4554[1]},
+\Sexpr{agediff$c4554[3]}) and 55-59 year age group (Mean Diff.$=$\Sexpr{agediff$c5559[1]},
 \Sexpr{agediff$c5559[3]}). The third largest increase was in the 18--24 year age group
-(Mean Diff. = \Sexpr{agediff$c1824[1]}, \Sexpr{agediff$c1824[3]}). There was no
+(Mean Diff.=\Sexpr{agediff$c1824[1]}, \Sexpr{agediff$c1824[3]}). There was no
 statistically significant difference in knowledge spread of COVID-19 among the Control and
 CoVideo arms by age group. 
 
