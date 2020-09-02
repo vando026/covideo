@@ -48,22 +48,19 @@ fmtCI <- function(x) {
 \subsection*{Abstract}
 
 
-\textbf{Background:} Entertainment-education (E-E) media can improve knowledge and
-behavioral intent toward health-related practices. In the era of COVID-19, millions of
-people can be reached by E-E media without requiring any physical contact. We have
-designed a short, wordless, animated video about protective COVID-19 practices---such as
-social distancing and frequent hand washing---that can be rapidly distributed through
-social media channels to a global audience. The E-E video's effectiveness, however,
-remains unclear.  
+\textbf{Background:} Entertainment-education (E-E) media can improve knowledge of
+behaviors that protect health. In the era of COVID-19, millions of people can be reached
+by E-E media without requiring any physical contact. We have designed a short, wordless,
+animated video about protective COVID-19 behaviors---such as social distancing and
+frequent hand washing---that can be rapidly distributed through social media channels to a
+global audience. The E-E video's effectiveness, however, remains unclear.  
 
 \textbf{Methods:} This is a multi-site, parallel group, randomized controlled trial
 comparing the effectiveness of an E-E video on COVID-19 (CoVideo) against  an attention
 placebo control (APC) video and  no video (Control). In each arm,  we measured knowledge
-about the clinical aspects of COVID-19 (clinical knowledge)  and knowledge of behaviors
-that prevent COVID-19 spread (knowledge spread). Using a list randomization approach to
-remove social desirability bias, we also measured behavioral intent to prevent the spread
-of COVID-19. We recruited online participants aged 18--59 years from the United States,
-the United Kingdom, Germany, Spain, and Mexico. 
+about the basic clinical aspects of COVID-19 (clinical knowledge)  and knowledge of behaviors
+that prevent COVID-19 spread (knowledge spread). We recruited online participants aged
+18--59 years from the United States, the United Kingdom, Germany, Spain, and Mexico. 
 
 
 \textbf{Findings:} Between \Sexpr{res$dates[1]} and \Sexpr{res$dates[2]}, we recruited

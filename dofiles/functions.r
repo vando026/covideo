@@ -121,7 +121,7 @@ getBehav <- function(name) {
 }
 
 # Get video end data
-getVid <- function(name) {
+getVid <- function(sourced=sourced, name) {
   message(sprintf("==> Reading %s ", name))
   dat <- suppressMessages(
     read_csv(file.path(sourced, name), comment='END OF FILE'))
@@ -147,10 +147,10 @@ getVid <- function(name) {
       unlist(subset(irow, ZoneName=="FinishTime", DiffTime))
     } else if (ClickFinish==0 & VideoMax >= 1 & Error==0) {
       irow$DiffTime[(VideoSum==VideoMax)][1] 
-    } else if (Error==1) {
-      NA
-    } else {
+    } else if (ClickFinish==1 & VideoMax==0) {
       0
+    } else {
+      NA
     }
     data.frame(ID=irow$ID[1], VideoTime=Time) 
   }

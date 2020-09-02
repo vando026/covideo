@@ -28,12 +28,25 @@ source(file.path(home, "dofiles/functions.r"))
 ######################################################################
 ######################### Build Dataset ##############################
 ######################################################################
-if (FALSE) {
+# Option to make standalone Video dataset
+doVideo = FALSE
+
+if (TRUE) {
+  # Rewrite getData function
+  if (doVideo) {
+    getData <- function(sourced, ename) {
+      getVid(sourced,  ename$Vid)
+    } 
+  }
   # Put all the datasets together
   source(file.path(home, "dofiles/build_data.r"))
-  all.equal(nrow(dat_all), 14499) 
-  all.equal(floor(mean(dat_all$TreatList)*1000), 500) 
-  saveRDS(dat_all, file=file.path(datapath, "Derived", "dat_all.Rda")) 
+  if (!doVideo) {
+    all.equal(nrow(dat_all), 14499) 
+    all.equal(floor(mean(dat_all$TreatList)*1000), 500) 
+    saveRDS(dat_all, file=file.path(datapath, "Derived", "dat_all.Rda")) 
+  } else  {
+    readr::write_csv(dat_all, path=file.path(datapath, "Derived", "VideoTime.csv")) 
+  }
 }
 
 # Additional preprocessing
