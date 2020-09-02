@@ -92,8 +92,15 @@ load(file.path(output, "Results.RData"), envir=.GlobalEnv)
 <<tabs, child='figures.Rnw', eval=TRUE>>=
 @
 
+\subsection*{References}
+\sloppy
+
+\printbibliography[heading=none]
+
 <<tabs, child='supp.Rnw', eval=TRUE>>=
 @
+
+
 
 
 \end{document}

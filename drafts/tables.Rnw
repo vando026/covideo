@@ -16,8 +16,8 @@
 \centering
 \begin{threeparttable}
 
-\caption{Shows the age, gender, country of residence, and education status, and first language of
-participants in each trial arm.} 
+\caption{Shows the age, gender, country of residence, and education status, and primary language of
+participants by trial arm.} 
 
 \label{tab:tab0}
 \footnotesize
@@ -107,9 +107,9 @@ print(xtable(Lang[, -1], digits=1),
 \centering
 \begin{threeparttable}
 
-\caption{Frequency of item responses for COVID-19 knowledge by CoVideo, Attention
-Placebo Control (APC), and Control arms. The percentage of correct answers is also give
-($N = $ \Sexpr{fmt(flow$FinalN)}).}
+\caption{Correct response rates for clinical knowledge of COVID-19 and knowledge of
+behaviors to prevent  COVID-19 spread by CoVideo, Attention
+Placebo Control (APC), and Control arms  ($N = $ \Sexpr{fmt(flow$FinalN)}).}
 
 \label{tab:tabk}
 \footnotesize

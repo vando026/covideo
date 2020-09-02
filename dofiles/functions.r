@@ -147,8 +147,10 @@ getVid <- function(name) {
       unlist(subset(irow, ZoneName=="FinishTime", DiffTime))
     } else if (ClickFinish==0 & VideoMax >= 1 & Error==0) {
       irow$DiffTime[(VideoSum==VideoMax)][1] 
-    } else {
+    } else if (Error==1) {
       NA
+    } else {
+      0
     }
     data.frame(ID=irow$ID[1], VideoTime=Time) 
   }

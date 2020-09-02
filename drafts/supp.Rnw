@@ -2,6 +2,7 @@
 % !Rnw root = master.Rnw
 \Sexpr{knitr::set_parent('master.Rnw')}
 
+\clearpage
 \subsection*{Supplementary Figures}
 \label{sub:SupFigures}
 \setcounter{figure}{0}
@@ -29,9 +30,12 @@
 \begin{figure}[h]
 \begin{center}
 \captionsetup{width=0.9\linewidth}
-\caption{Shows the trial design, which consists or three arms. Participants will be randomly assigned (at a 1:1:1 ratio) to the CoVideo (Arm 1), an APC video (Arm 2), or no video (Arm 3). Each arm has a list experiment, with participants split (at a 1:1 ratio) into a control or treatment group. }
+\caption{Shows the study design with the three arms. Participants were 
+randomly assigned (at a 1:1:1 ratio) to the CoVideo (Intervention), an APC video
+(Placebo), or no video (Control). Each arm had a list experiment, with participants
+randomized (at a 1:1 ratio) into a control or treatment group. }
 \label{fig:design}
-\includegraphics[scale=0.8]{CoVideoRCT.jpg}
+\includegraphics[scale=0.13]{CoVideoRCT.jpg}
 \end{center}
 \end{figure}
 
@@ -50,16 +54,14 @@
 \centering
 \begin{threeparttable}
 
-\caption{In each trial arm, participants will be randomized (at a 1:1 ratio) to a control
-or treatment group. Both groups will receive five lists. For each list, the control group
-will get the first five items only; the treatment group will receive the five items and
-the sixth sensitive item, indicated by an asterisk (*). Each list experiment will be
+\caption{In each trial arm, participants were randomized (at a 1:1 ratio) to a control
+or treatment group. Both groups  received five lists. For each list, the control group
+received the first five items only; the treatment group  received the five items and
+the sixth sensitive item, indicated by an asterisk (*). Each list experiment was 
 preceded by the question: ``How many of the five/six statements do you agree with? We
 don't want to know which ones, just answer how many. This week I will...'' To avoid order
-effects, the items in each list will be randomized as well as the presentation order of
-the lists. After the list experiments, the five sensitive items will be directly asked,
-and preceded by the statement: ``Do you Agree or Disagree with the following statement:
-This week I will...'' } 
+effects, the items in each list were randomized as well as the presentation order of
+the lists.  } 
 
 \label{tab:items}
 \footnotesize
@@ -83,13 +85,13 @@ List 3: Clean surfaces & 	List 4: Share utensils \\
 5. Catch up on last week's work & 	5. Smoke cigarettes \\
 6. Clean kitchen counters after use*	& 6. Clean my dishes after use* \\
 \hline
-List 5: Stockpiling &	Direct questions list \\
+List 5: Stockpiling &	\\
 \hline
-1. Spend time chatting with my friends online	& 1. Go out with my friends \\
-2. Try new cooking recipes 	& 2. Wash my hands frequently \\
-3. Watch a pornographic movie	& 3. Clean kitchen counters after use \\
-4. Clean all floor surfaces 	& 4. Clean my dishes after us \\
-5. Visit the World Health Organization (WHO) website	& 5. Stock up on household supplies for a month \\
+1. Spend time chatting with my friends online	& \\
+2. Try new cooking recipes 	& \\
+3. Watch a pornographic movie	& \\
+4. Clean all floor surfaces 	& \\
+5. Visit the World Health Organization (WHO) website	& \\
 6. Stock up on household supplies for a month*	& \\
 
 
@@ -108,7 +110,7 @@ List 5: Stockpiling &	Direct questions list \\
 \begin{threeparttable}
 
 \caption{Shows the items for basic clinical knowledge of COVID-19 spread and the knowledge of
-behaviors to prevent the spread of COVID-19. All responses  require True/False responses. } 
+behaviors to prevent the spread of COVID-19. All responses  required True/False responses. } 
 
 \label{tab:know}
 \footnotesize
