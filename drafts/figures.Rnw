@@ -56,39 +56,3 @@ the treatment difference in means between the CoVideo and the APC.  }
 \clearpage
 
 
-
-\begin{figure}[!ht]
-\centering
-\includegraphics[scale=0.73]{BehavIntent.png}
-
-\caption{Shows the percentage of participants in the Control arm that agreed with
-statements about COVID-19 behaviors ($n = $ \Sexpr{fmt(flow$CtrlN - flow$Ctrl)}).  Results
-were obtained from  list randomization expriment, which was used to remove social
-desirability bias.}
-
-\label{fig:behav}
-\end{figure} 
-
-
-\clearpage
-
-\begin{figure}[!ht]
-\centering
-\includegraphics[scale=0.73]{List_1.png}
-
-\caption{Shows the proportion of participants by age and gender that agreed with
-statements about COVID-19 behaviors. The proportion represents the difference between the mean
-scores in the control list and treatment list of the Control arm ($n = $ \Sexpr{fmt(flow$CtrlN -
-flow$Ctrl)}).}
-
-\label{fig:soc}
-\end{figure} 
-
-\clearpage
-
-% \begin{figure}[!ht]
-% \centering
-% \includegraphics[scale=0.73]{BehavDiffs.png}
-% \caption{Test}
-% \end{figure} 
-% \clearpage
