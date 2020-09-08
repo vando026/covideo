@@ -1,0 +1,442 @@
+\documentclass[11pt]{article}
+\usepackage[footskip=0.3in,margin=1in]{geometry} 
+
+\begin{document}
+\pagenumbering{arabic}
+\linespread{1.2}
+\setlength{\parskip}{0.5\baselineskip plus 2pt minus 2pt}
+\setlength{\parindent}{0pt}% 
+
+<<echo=FALSE>>=
+knitr::opts_chunk$set(
+  fig.width=5, fig.height=5,
+  tidy.opts=list(blank = FALSE, width.cutoff = 60), 
+  tidy = FALSE,
+  out.width=' 9cm', out.height=' 9cm')
+home <- file.path(Sys.getenv("HOME"), "Seafile\\Heidelberg\\Projects\\CoVideo\\Data")
+dat_all <- readRDS(file.path(home, "Derived", "dat_all.Rda"))
+@
+
+\begin{center}
+\Large
+\textbf{Preliminary analyses: CoVideo Trial} \\
+\textbf{AVandormael, MAdam, MGrueul, JGates, TB\"arnighuasen} \\
+\today
+\end{center}
+
+
+\section*{Results (draft)}
+
+Figure ZZ shows the number of trial participants that  enrolled () in the trial and XX completed. Of these participants, 
+
+
+
+
+\section*{Executive Summary}
+
+I provide a quick summary here. 
+
+1. We did not recruit as many participants from Mexico, Spain, and Germany as hoped. This
+ended up being $<$750 from each country. I decided not to collect data from France.  I
+decided to stop the study at  \Sexpr{nrow(dat_all)} participants as COVID-19 lockdown was starting to
+end in these countries and some items were no longer relevant (ie go out with friends is a
+normal behavior as lockdown ends).
+
+2. Knowledge was already high at baseline. It was therefore difficult to pick up
+improvements in knowledge through the CoVideo. Knowledge was higher in CoVideo arm but
+only slightly. 
+
+3. For behavioral intent in the Control Arm (direct question), most people say they will go out with their
+friends, despite lockdown.  Around 1/3 of these respondents said they will
+stockpile goods.  Around 1/4 of respondents said  they will seek health information from
+animated videos by health experts.
+
+4. For behavioral intent between the Placebo and CoVideo arms. Among the CoVideo arm,
+there was lower intent to go out with friends. There was no difference in stockpiling
+(ideally should be lower in CoVideo arm). There was higher intent in CoVideo arm to wash
+hands, clean dishes, and clean surfaces compared to the APC. Also higher intent to seek
+health information from animated videos made by health experts. 
+
+
+5. Early analyses that participants in APC and Control arms voluntarily watched most of
+the CoVideo.
+
+\section*{Consort Flow Chart}
+
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[scale=0.8]{DataFlow1.png}
+\caption{text}
+\end{figure} 
+
+\section*{Total size}
+
+The total sample size is \Sexpr{nrow(dat_all)}.
+
+
+\section*{Language}
+
+
+Shows summary of participants' first language. Most participants are English speaking. 
+<<>>=
+lan <- table(dat_all$Language)
+lan
+barplot(lan)
+@
+
+
+\section*{Age}
+
+Shows age distribution. 
+
+<<>>=
+age <- table(dat_all$Age)
+age
+barplot(age, las=2)
+@
+
+\section*{Gender}
+\label{sec:Gender}
+
+Shows gender distribution. More women than men. 
+
+<<>>=
+sex <- table(dat_all$Gender)
+sex
+prop.table(sex)
+barplot(sex)
+@
+
+\section*{Country}
+\label{sec:Country}
+
+Shows distribution by country of residence. US and UK disproportionately represented.
+Around 1000  maximum participants in Mexico, Spain, Germany.
+
+<<>>=
+ctry <- table(dat_all$Country)
+ctry 
+barplot(ctry, las=2)
+@
+
+
+
+\section*{Education}
+\label{sec:Education}
+
+Shows education completed.
+<<>>=
+educ <- table(dat_all$Educ)
+data.frame(educ, round(prop.table(educ), 3))[, -3]
+barplot(educ, las=2)
+@
+
+\section*{Knowledge}
+\label{sec:Knowledge}
+
+The following shows the knowledge scores for the three trial arms. By the time of data
+collection, knowledge was unsurprisingly already quite high. The CoVideo improves
+knowledge of the clinical aspects of COVID-19, not by much, but it is statistically
+significant. For the CoVideo arm, knowledge about how COVID-19 is spread is slightly
+higher but not significantly so. 
+
+<<>>=
+
+know <- group_by(dat_all, VideoArm) %>% 
+  summarize(
+    ClinicMean=mean(ClinicTotal, na.rm=TRUE),
+    SpreadMean=mean(SpreadTotal, na.rm=TRUE))
+know
+# filter(dat_all, is.na(ClinicTotal)) %>% select(ID, ClinicTotal)
+# filter(dat_all, ID==1400098) %>% select(ID, Antibiotic:FaceMask)
+barplot(know$ClinicMean, las=1, names.arg=know$VideoArm, main="Clinic", ylim=c(8, 10))
+barplot(know$SpreadMean, las=1, names.arg=know$VideoArm, main="Spread", ylim=c(8, 10))
+
+adat <- filter(dat_all, !is.na(ClinicTotal) | !is.na(SpreadTotal))
+adat <- mutate(adat, VideoArm = as.factor(VideoArm))
+mod2 <- aov(ClinicTotal ~  VideoArm , data=adat)
+summary(lm(ClinicTotal ~ VideoArm, data=adat))
+with(adat, pairwise.t.test(ClinicTotal, VideoArm, p.adj = "none"))
+
+mod3 <- aov(SpreadTotal ~ VideoArm, data=adat)
+summary(lm(SpreadTotal ~ VideoArm, data=adat))
+with(adat, pairwise.t.test(SpreadTotal, VideoArm, p.adj = "none"))
+
+@
+
+\section*{Behavioral intent}
+\label{sec:Behavioral intent}
+
+For the behavioral intent to practice COVID-19 hygiene, I show only the prevalence of the
+six items for the control group (who receive questions first) and who do not receive the
+treatment list (control items plus one sensitive item). 
+
+
+* Most people say they will go out with their friends this week, despite lockdown.
+
+* High percentage say they will wash hand frequently.
+
+* Around 1/3 say they will stockpile goods. 
+
+* Most people say they will wash kitchen counters after use. 
+
+* Around 1/5 people said they will clean their dishes after use. 
+
+* Around 1/4 say they will seek health information from animated videos by health experts. 
+
+
+<<>>=
+
+bstate <- c("go out with my friends",
+"wash  hands frequently",
+"stock up on household supplies for a month",
+"clean  kitchen counters after use",
+"clean  dishes after use",
+"seek health information, animated videos by health experts")
+bwrap <- function(y) paste(strwrap(y, 10), collapse="\n")
+bnames <- lapply(bstate, bwrap)
+
+behav <- select(dat_all, VideoArm, TreatList, starts_with("BE"))
+behav <- filter(behav, VideoArm=="Control" & TreatList==0)
+prev <- sapply(behav[-c(1:2)], function(x) round(mean(x), 2))
+names(prev) <- bstate
+data.frame(prev)
+
+@
+
+<<fig.width=7, fig.height=7>>=
+bp <- barplot(prev, ylim=c(0,1.1), names.arg=bnames, main="This week I will,")
+text(bp, prev, labels=prev, pos=3)
+@
+
+
+
+\section*{List Experiment}
+
+Let us look at the list experiment results. 
+
+\subsubsection*{Attention effects}
+
+First, let's isolate the attention effects of
+the APC video. We can think of the attention effect as $A^E =$ APC - CTRL.  Since each arm
+gets a control list and treatment list, there are 4 possible comparisons. 
+
+\begin{tabular}{c | c | c}
+& Ctrl Trt & Ctrl Ctrl \\
+\hline
+APC Trt & Do1 & X \\
+\hline
+APC Ctrl & X & Do2 \\
+\end{tabular}
+
+For now, I define $A^E = \textnormal{APC}_{TrtList} - \textnormal{CTRL}_{TrtList}$.
+
+<<>>=
+ldat <- select(dat_all, VideoArm, TreatList, SocialDist, Wash, StockPile, CleanSurfaces,
+               ShareUtensils, UseMedia)
+varn <- names(ldat)[-c(1,2)]
+ldat1 <- filter(ldat, VideoArm %in% c("Control", "Placebo") & TreatList==1)
+ldat2 <- filter(ldat, VideoArm %in% c("Control", "Placebo") & TreatList==0)
+with(ldat1, table(VideoArm, TreatList))
+@
+
+Now we calculate the difference for each of the six items for Analysis Do1, which is the
+comparison between respondents getting the treatment lists in both arms. We see there
+are significant attention effects for ``going out with friends'' and ``stockpiling''.
+
+<<>>=
+calcList <- function(x, dat) {
+  mod <- lm(as.formula(paste(x, "~ VideoArm")), data=dat)
+  summary(mod)$coefficients
+}
+lapply(setNames(varn, bstate), calcList, ldat1)
+@
+
+I do the analysis for Do2 below, which is a comparison between respondents getting the
+control lists in both arms. We see that there are significant attention effects for
+``going out with friends'' ``wash hands'' and ``stockpiling''. 
+
+<<>>=
+lapply(setNames(varn, bstate), calcList, ldat2)
+@
+
+\subsubsection*{Total effects}
+
+I now isolate the total effects, defined as $T^E = \textnormal{CoVideo} -
+\textnormal{CTRL}$.  Since each arm
+gets a control list and treatment list, there are 4 possible comparisons. 
+
+\begin{tabular}{c | c | c}
+& Ctrl Trt & Ctrl Ctrl \\
+\hline
+CoVid Trt & Do1 & Do2 \\
+\hline
+CoVid Ctrl & X & X \\
+\end{tabular}
+
+For now, I define $T^E = \textnormal{CoVideo}_{TrtList} - \textnormal{CTRL}_{TrtList}$.
+The results are shown below for Do1.
+
+* We see that the CoVideo actually increased behavioral intent to go out with friends. 
+
+* The intent to ``wash hands frequently'' was higher in CoVideo arm but not significantly so.
+This is probably because behavioral intent was already high in both arms. 
+
+* The CoVideo increased  behavioral intent  to stockpile goods. 
+
+* The CoVideo increased behavioral intent to ``clean kitchen counters'' ``clean dishes''
+and ``seek health information from animated videos.''
+
+<<>>=
+vdat1 <- filter(ldat, VideoArm %in% c("Control", "Treatment") & TreatList==1)
+with(vdat1, table(VideoArm, TreatList))
+lapply(setNames(varn, bstate), calcList, vdat1)
+@
+
+We can also look at the total effect of $T^E = \textnormal{CoVideo}_{TrtList} -
+\textnormal{CTRL}_{CtrlList}$, which is Do2.
+
+
+<<>>=
+vdat2 <- filter(ldat, (VideoArm=="Control" & TreatList==0) |
+    (VideoArm=="Treatment" & TreatList==1))
+with(vdat2, table(VideoArm, TreatList))
+lapply(setNames(varn, bstate), calcList, vdat2)
+@
+
+
+We find all differences to be significant. However:
+
+*  People  from the CoVideo arm were more likely to go out with their friends. 
+
+*  People from the CoVideo arm were more likely to stockpile. 
+
+Just a note. We expect that all means from the CoVideo TreatmentList group will be higher
+than the CTRL CtrlList group, since the former has one more sensitive item. For this
+reason, I believe Do1 is the more informative analysis.  
+
+
+\subsubsection*{Treatment effects}
+
+Finally, I examine the treatment effect of the CoVideo, defined as
+$Trt^E = \textnormal{CoVideo}_{TrtList} - \textnormal{APC}_{TrtList}$.
+
+\begin{tabular}{c | c | c}
+& APC Trt & APC Ctrl \\
+\hline
+CoVid Trt & Do1 & Do2 \\
+\hline
+CoVid Ctrl & X & X \\
+\end{tabular}
+
+* Results show that the CoVideo reduced intent to go out with friend when compared with
+APC.
+
+* No difference in ``wash hands frequently'' probably because already high at baseline.
+
+* No difference in intent to stockpile or ``clean kitchen counters'' bewteen both arms.
+
+* CoVideo arm was more likely to ``clean dishes after use''. 
+
+* The CoVideo increased behavioral intent to ``clean kitchen counters'' ``clean dishes''
+and ``seek health information from animated videos.''
+
+
+
+<<>>=
+tdat1 <- filter(ldat, VideoArm %in% c("Placebo", "Treatment") & TreatList==1)
+lapply(setNames(varn, bstate), calcList, tdat1)
+@
+
+
+
+I think that these are the best set of results to present. They account for attention
+effects. Importantly, they are in the direction that we expect. Lower intent to go out
+with friends, no difference in stockpiling (ideally should be lower), and higher
+behavioral intent for clean kitchen counters and dishes. No difference in washing hands
+which was already high. 
+
+Lets look at the Do2 analysis.  We see that all items are significantly higher in CoVideo
+arm that received the Treatment List, including going out with friends and stockpiling.
+
+<<>>=
+tdat2 <- filter(ldat, (VideoArm=="Placebo" & TreatList==0) |
+  (VideoArm=="Treatment" & TreatList==1))
+with(tdat2, table(VideoArm, TreatList))
+lapply(setNames(varn, bstate), calcList, tdat2)
+@
+
+
+
+\subsubsection*{Advanced list analysis} 
+
+In this section we use more advance regression methods proposed by Blaire et al. using the
+\texttt{ictreg} package. Here I  continue with the Total effects analysis (the
+difference between the CoVideo and Control). I first limit the anlysis to ``Social
+Distance``. For this method, we compare the Control List with the Treatment List. The
+analysis is then:
+
+\begin{tabular}{c | c | c}
+& CTRL Trt & CTRL Ctrl \\
+\hline
+COVID Trt & X & Do1 \\
+\hline
+COVID Ctrl & X & X \\
+\end{tabular}
+
+
+
+We can compare the difference in means.  As a sanity check, this gives us the same answer
+for Do2 in the Total Effects analysis. 
+
+<<>>=
+library(list)
+
+ldat <- select(dat_all, VideoArm, TreatList, SocialDist, Wash, StockPile, CleanSurfaces,
+               ShareUtensils, UseMedia, Age, Gender)
+ldat1 <- filter(ldat, (VideoArm=="Control" &  TreatList==0) |
+  (VideoArm=="Treatment" & TreatList==1))
+ldat1 <- data.frame(ldat1)
+with(ldat1, table(VideoArm, TreatList))
+
+# First check if design effect
+ict.test(ldat1$SocialDist, ldat1$TreatList, J=5, gms=TRUE, pi.table=FALSE)
+
+diff_means <- ictreg(SocialDist ~ 1, data = ldat1, 
+    treat = "TreatList", J=5, method = "lm")
+summary(diff_means)
+@
+
+We can now add covariates to the model. Let's add age and gender. Results show the effect
+of each covariate and covariate level on the CtrlList and TreatmentList means.
+
+<<>>=
+
+# Now add covariates
+mod1 <- ictreg(SocialDist ~ -1 + Gender + Age, data = ldat1, 
+    treat = "TreatList", J=5, method = "lm")
+summary(mod1)
+@
+
+
+
+\subsection*{Post access to treatment} 
+
+After Control and Placebo arms finished questions, they had an opportunity to watch the
+CoVideo. How many watched and for how long. 
+
+
+<<>>=
+vid_dat <- select(dat_all, ID, VideoArm, CtrVidTime)
+vid_dat <- filter(vid_dat, VideoArm != "Treatment") %>%
+  mutate(Vid60 = CtrVidTime/60)
+vid_dat <- filter(vid_dat, Vid60 <= 3)
+summary(vid_dat$Vid60)
+table(as.numeric(vid_dat$Vid60==0))
+tapply(vid_dat$Vid60, vid_dat$VideoArm, mean)
+@
+
+
+
+\end{document}

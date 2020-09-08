@@ -37,6 +37,8 @@
 \linespread{1.2}
 \pagenumbering{arabic}
 
+
+
 \title{Going viral---an entertainment-education response to COVID-19: a parallel group, randomized controlled trial}
 
 \renewcommand*{\Affilfont}{\footnotesize\normalfont}
@@ -77,7 +79,9 @@ load(file.path(output, "Results.RData"), envir=.GlobalEnv)
 
 
 \begin{document}
+
 \maketitle
+
 
 
 

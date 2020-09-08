@@ -3,10 +3,10 @@
 \Sexpr{knitr::set_parent('master.Rnw')}
 
 \clearpage
-\subsection*{Supplementary Figures}
-\label{sub:SupFigures}
-\setcounter{figure}{0}
-\renewcommand{\thefigure}{S\arabic{figure}}
+% \subsection*{Supplementary Figures}
+% \label{sub:SupFigures}
+% \setcounter{figure}{0}
+% \renewcommand{\thefigure}{S\arabic{figure}}
 
 % \begin{figure}[h]
 % \begin{center}
@@ -27,20 +27,7 @@
 % \end{figure}
 
 
-\begin{figure}[h]
-\begin{center}
-\captionsetup{width=0.9\linewidth}
-\caption{Shows the study design with the three arms. Participants were 
-randomly assigned (at a 1:1:1 ratio) to the CoVideo (Intervention), an APC video
-(Placebo), or no video (Control). Each arm had a list experiment, with participants
-randomized (at a 1:1 ratio) into a control or treatment group. }
-\label{fig:design}
-\includegraphics[scale=0.13]{CoVideoRCT.jpg}
-\end{center}
-\end{figure}
-
-
-\clearpage
+% \clearpage
 
 \subsection*{Supplementary Tables}
 \label{sub:SupTables}
@@ -50,60 +37,6 @@ randomized (at a 1:1 ratio) into a control or treatment group. }
 
 
 
-\begin{table}[h!]
-\centering
-\begin{threeparttable}
-
-\caption{In each trial arm, participants were randomized (at a 1:1 ratio) to a control
-or treatment group. Both groups  received five lists. For each list, the control group
-received the first five items only; the treatment group  received the five items and
-the sixth sensitive item, indicated by an asterisk (*). Each list experiment was 
-preceded by the question: ``How many of the five/six statements do you agree with? We
-don't want to know which ones, just answer how many. This week I will...'' To avoid order
-effects, the items in each list were randomized as well as the presentation order of
-the lists.  } 
-
-\label{tab:items}
-\footnotesize
-\begin{tabular}{p{8cm} | p{7cm}}
-\toprule
-List 1: Social distancing	& List 2: Wash hands \\
-\hline
-1. Spend time watching TV	& 1. Clip my toenails \\
-2. Do the vacuuming	& 2. Spend time watching movies \\
-3. Pick a fight with my partner	& 3. Clean the toilet \\
-4. Eat a low sugar diet 	& 4. Smoke marijuana \\
-5. Rinse my nose with salt water daily	& 5. Eat fruit daily \\
-6. Go out with my friends*	& 6. Wash my hands frequently* \\
-\hline
-List 3: Clean surfaces & 	List 4: Share utensils \\
-\hline
-1. Watch a new TV series	& 1. Spend time on the internet \\
-2. Spend time gardening by myself 	& 2. Do daily indoor exercises  \\
-3. Try to go vegetarian       & 3. Take an online course \\
-4. Have alcoholic drinks on at least three evenings 	& 4. Play a prank on my partner \\
-5. Catch up on last week's work & 	5. Smoke cigarettes \\
-6. Clean kitchen counters after use*	& 6. Clean my dishes after use* \\
-\hline
-List 5: Stockpiling &	\\
-\hline
-1. Spend time chatting with my friends online	& \\
-2. Try new cooking recipes 	& \\
-3. Watch a pornographic movie	& \\
-4. Clean all floor surfaces 	& \\
-5. Visit the World Health Organization (WHO) website	& \\
-6. Stock up on household supplies for a month*	& \\
-
-
-\bottomrule
-\end{tabular}
-\begin{tablenotes} 
-\scriptsize 
-\end{tablenotes}
-\end{threeparttable}
-\end{table}
-
-\clearpage
 
 \begin{table}[h!]
 \centering
@@ -206,41 +139,41 @@ print(xtable(sknow),
 
 \setlength{\tabcolsep}{5pt}
 
+% \begin{table}[h!]
+% \centering
+% \begin{threeparttable}
+
+% \caption{Regression estimates of COVID-19 knowledge (18 items) in the Control arm.} 
+
+% \label{tab:moda_ctrl}
+% \footnotesize
+% \begin{tabular}{l *{4}{C{1.3cm}}}
+% \toprule
+% & Estimate & SE  & t-value & p-value \\
+% \hline
+% <<echo=FALSE, results='asis'>>=
+% print(xtable(reg_all),
+%   include.colnames=FALSE,
+%   include.rownames=TRUE,
+%   hline.after=NULL,
+%   only.contents=TRUE)
+% @
+% \bottomrule
+% \end{tabular}
+% \begin{tablenotes} 
+% \scriptsize 
+% \end{tablenotes}
+% \end{threeparttable}
+% \end{table}
+
+
 \begin{table}[h!]
 \centering
 \begin{threeparttable}
 
-\caption{Regression estimates of COVID-19 knowledge (18 items) in the Control arm.} 
+\caption{Regression estimates of combined COVID-19 knowledge (18 items) in the CoVideo arm.} 
 
-\label{tab:modc}
-\footnotesize
-\begin{tabular}{l *{4}{C{1.3cm}}}
-\toprule
-& Estimate & SE  & t-value & p-value \\
-\hline
-<<echo=FALSE, results='asis'>>=
-print(xtable(reg_all),
-  include.colnames=FALSE,
-  include.rownames=TRUE,
-  hline.after=NULL,
-  only.contents=TRUE)
-@
-\bottomrule
-\end{tabular}
-\begin{tablenotes} 
-\scriptsize 
-\end{tablenotes}
-\end{threeparttable}
-\end{table}
-
-
-\begin{table}[h!]
-\centering
-\begin{threeparttable}
-
-\caption{Regression estimates of COVID-19 knowledge (18 items) in the CoVideo arm.} 
-
-\label{tab:modc_trt}
+\label{tab:moda_trt}
 \footnotesize
 \begin{tabular}{l *{4}{C{1.3cm}}}
 \toprule
@@ -264,67 +197,67 @@ print(xtable(reg_all_trt),
 
 \cleapage
 
-\setlength{\tabcolsep}{5pt}
+% \setlength{\tabcolsep}{5pt}
+
+% \begin{table}[h!]
+% \centering
+% \begin{threeparttable}
+
+% \caption{Regression estimates of clinic knowledge of COVID-19 (10 items) in the Control arm.} 
+
+% \label{tab:modc}
+% \footnotesize
+% \begin{tabular}{l *{4}{C{1.3cm}}}
+% \toprule
+% & Estimate & SE  & t-value & p-value \\
+% \hline
+% <<echo=FALSE, results='asis'>>=
+% print(xtable(reg_clinic),
+%   include.colnames=FALSE,
+%   include.rownames=TRUE,
+%   hline.after=NULL,
+%   only.contents=TRUE)
+% @
+% \bottomrule
+% \end{tabular}
+% \begin{tablenotes} 
+% \scriptsize 
+% \end{tablenotes}
+% \end{threeparttable}
+% \end{table}
+
+% \begin{table}[h!]
+% \centering
+% \begin{threeparttable}
+
+% \caption{Regression estimates of knowledge spread of COVID-19 (8 items) in the Control arm.} 
+
+% \label{tab:mods}
+% \footnotesize
+% \begin{tabular}{l *{4}{C{1.3cm}}}
+% \toprule
+% & Estimate & SE  & t-value & p-value \\
+% \hline
+% <<echo=FALSE, results='asis'>>=
+% print(xtable(reg_spread),
+%   include.colnames=FALSE,
+%   include.rownames=TRUE,
+%   hline.after=NULL,
+%   only.contents=TRUE)
+% @
+% \bottomrule
+% \end{tabular}
+% \begin{tablenotes} 
+% \scriptsize 
+% \end{tablenotes}
+% \end{threeparttable}
+% \end{table}
 
 \begin{table}[h!]
 \centering
 \begin{threeparttable}
 
-\caption{Regression estimates of clinic knowledge of COVID-19 (10 items) in the Control arm.} 
-
-\label{tab:modc}
-\footnotesize
-\begin{tabular}{l *{4}{C{1.3cm}}}
-\toprule
-& Estimate & SE  & t-value & p-value \\
-\hline
-<<echo=FALSE, results='asis'>>=
-print(xtable(reg_clinic),
-  include.colnames=FALSE,
-  include.rownames=TRUE,
-  hline.after=NULL,
-  only.contents=TRUE)
-@
-\bottomrule
-\end{tabular}
-\begin{tablenotes} 
-\scriptsize 
-\end{tablenotes}
-\end{threeparttable}
-\end{table}
-
-\begin{table}[h!]
-\centering
-\begin{threeparttable}
-
-\caption{Regression estimates of knowledge spread of COVID-19 (8 items) in the Control arm.} 
-
-\label{tab:mods}
-\footnotesize
-\begin{tabular}{l *{4}{C{1.3cm}}}
-\toprule
-& Estimate & SE  & t-value & p-value \\
-\hline
-<<echo=FALSE, results='asis'>>=
-print(xtable(reg_spread),
-  include.colnames=FALSE,
-  include.rownames=TRUE,
-  hline.after=NULL,
-  only.contents=TRUE)
-@
-\bottomrule
-\end{tabular}
-\begin{tablenotes} 
-\scriptsize 
-\end{tablenotes}
-\end{threeparttable}
-\end{table}
-
-\begin{table}[h!]
-\centering
-\begin{threeparttable}
-
-\caption{Regression estimates of clinic knowledge of COVID-19 (10 items) in the CoVideo arm.} 
+\caption{Regression estimates of clinic COVID-19 knowledge (10 items) in the CoVideo arm.} 
 
 \label{tab:modc_trt}
 \footnotesize
