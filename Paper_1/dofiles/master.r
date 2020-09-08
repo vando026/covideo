@@ -14,20 +14,17 @@ library(plotrix)
 # Paths
 home <- file.path(Sys.getenv("HOME"),
   "Seafile/Heidelberg/Projects/CoVideo")
+dofiles <- file.path(home, "Paper_1/dofiles")
 datapath <- file.path(home, "Data")
-output <- file.path(home, "drafts/output")
+output <- file.path(home, "Paper_1/output")
 
 # Colors
 set3 <- RColorBrewer::brewer.pal(3, "Set2") 
 
 ######################################################################
-######################### Functions ##################################
+######################### Read  Dataset ##############################
 ######################################################################
-source(file.path(home, "dofiles/functions.r"))
 
-######################################################################
-######################### Build Dataset ##############################
-######################################################################
 # Option to make standalone Video dataset
 doVideo = FALSE
 

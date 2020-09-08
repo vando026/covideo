@@ -1,11 +1,3 @@
-## Description: 
-## Project: CoVideo
-## Author: AV / Created: 25May2020 
-
-######################################################################
-######################### Names of behav statements ##################
-######################################################################
-
 #' @title bstate
 #' 
 #' @description  behavior intent statements
@@ -26,10 +18,6 @@ bstate <- function() {
     UseMedia = "seek health information from animated videos made by health experts"))
 }
 
-
-######################################################################
-######################### Knowledge ##################################
-######################################################################
 
 #' @title cstate
 #' 
@@ -79,34 +67,5 @@ sstate <- function() {
   FaceMask = c("An effective way to prevent COVID-19 spread: wear a face mask even if you don't have COVID-19 symptoms", "True")))
 }
 
-######################################################################
-######################### Drop miss ##################################
-######################################################################
-kdat <- dat_all[, c("ID", names(sstate), names(cstate))]
-dropID <- kdat[apply(kdat, 1, function(x) any(is.na(x))), ]$ID
-dat_all <- dat_all[!dat_all$ID %in% dropID, ]
-
-######################################################################
-######################### Calc Know ##################################
-######################################################################
-setKnow <- function(irow, state) {
-  irow <- irow[names(state)]
-  correct <- sapply(names(irow), function(x) state[[x]][2])
-  sum(irow==correct)
-}
-dat_all$SpreadTotal <- apply(dat_all, 1, setKnow, sstate)
-dat_all$ClinicTotal <- apply(dat_all, 1, setKnow, cstate)
-dat_all$KnowledgeAll <- apply(dat_all, 1, setKnow, c(sstate, cstate))
 
 
-######################################################################
-######################### Diffs ######################################
-######################################################################
-eqs <- list(
-  ctrdif = "1*VideoArmControl:TreatList1 - 1*VideoArmControl:TreatList0 = 0",
-  apcdif = "1*VideoArmPlacebo:TreatList1 - 1*VideoArmPlacebo:TreatList0 = 0",
-  trtdif = "1*VideoArmTreatment:TreatList1 - 1*VideoArmTreatment:TreatList0 = 0",
-  toteq = "1*VideoArmTreatment:TreatList1 - 1*VideoArmTreatment:TreatList0 -
-    1*VideoArmControl:TreatList1 + 1*VideoArmControl:TreatList0 = 0",
-  trteq = "1*VideoArmTreatment:TreatList1 - 1*VideoArmTreatment:TreatList0 -
-    1*VideoArmPlacebo:TreatList1 + 1*VideoArmPlacebo:TreatList0 = 0")

@@ -15,7 +15,7 @@ library(plotrix)
 home <- file.path(Sys.getenv("HOME"),
   "Seafile/Heidelberg/Projects/CoVideo")
 datapath <- file.path(home, "Data")
-output <- file.path(home, "drafts/output")
+dofiles <- file.path(datapath, "dofiles")
 
 # Colors
 set3 <- RColorBrewer::brewer.pal(3, "Set2") 
@@ -23,7 +23,8 @@ set3 <- RColorBrewer::brewer.pal(3, "Set2")
 ######################################################################
 ######################### Functions ##################################
 ######################################################################
-source(file.path(home, "dofiles/functions.r"))
+source(file.path(datapath, "dofiles/functions.r"))
+source(file.path(datapath, "dofiles/functions.r"))
 
 ######################################################################
 ######################### Build Dataset ##############################
@@ -31,28 +32,23 @@ source(file.path(home, "dofiles/functions.r"))
 # Option to make standalone Video dataset
 doVideo = FALSE
 
-if (TRUE) {
-  # Rewrite getData function
-  if (doVideo) {
-    getData <- function(sourced, ename) {
-      getVid(sourced,  ename$Vid)
-    } 
-  }
-  # Put all the datasets together
-  source(file.path(home, "dofiles/build_data.r"))
-  if (!doVideo) {
-    all.equal(nrow(dat_all), 14499) 
-    all.equal(floor(mean(dat_all$TreatList)*1000), 500) 
-    saveRDS(dat_all, file=file.path(datapath, "Derived", "dat_all.Rda")) 
-  } else  {
-    readr::write_csv(dat_all, path=file.path(datapath, "Derived", "VideoTime.csv")) 
-  }
+# Rewrite getData function
+if (doVideo) {
+  getData <- function(ename) {
+    getVid(ename$Vid)
+  } 
 }
 
-# Additional preprocessing
-dat_all <- readRDS(file=file.path(datapath, "Derived", "dat_all.Rda")) 
-source(file.path(home, "dofiles/main.R"))
-readr::write_csv(dat_all, path=file.path(datapath, "Derived", "dat_all.csv")) 
-# Run results and figures
-# source(file.path(home, "dofiles/do-analysis.R"))
-# source(file.path(home, "dofiles/do-figs.R"))
+# Put all the datasets together
+source(file.path(dofiles, "build_data.r"))
+all.equal(nrow(dat_all), 14499) 
+all.equal(floor(mean(dat_all$TreatList)*1000), 500) 
+
+if (doVideo) {
+  readr::write_csv(dat_all, path=file.path(datapath, "Derived", "VideoTime.csv")) 
+} else {
+  # Additional preprocessing
+  source(file.path(home, "main.R"))
+  readr::write_csv(dat_all, path=file.path(datapath, "Derived", "dat_all.csv")) 
+  saveRDS(dat_all, file=file.path(datapath, "Derived", "dat_all.Rda")) 
+}
