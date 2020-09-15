@@ -24,8 +24,8 @@
 \usepackage[style=nature, isbn=false, doi=false, url=false]{biblatex}
 \addbibresource{library.bib}
 
-\graphicspath{{C:/Users/alainv/Seafile/Heidelberg/Projects/CoVideo/drafts/output/}
-{C:/Users/alain.vandormael/Seafile/Heidelberg/Projects/CoVideo/drafts/output/}}
+\graphicspath{{C:/Users/alainv/Seafile/Heidelberg/Projects/CoVideo/Paper_1/output/}
+{C:/Users/alain.vandormael/Seafile/Heidelberg/Projects/CoVideo/Paper_1/output/}}
  
 \titlespacing\subsection{0pt}{12pt plus 4pt minus 2pt}{0pt plus 2pt minus 2pt}
   
@@ -59,6 +59,7 @@
 
 
 <<echo=FALSE>>=
+library(covideo)
 library(xtable)
 library(tidyverse)
 knitr::opts_chunk$set(
@@ -70,9 +71,9 @@ knitr::opts_chunk$set(
 
 
 <<echo=FALSE>>=
-home <- file.path(Sys.getenv("HOME"), "Seafile\\Heidelberg\\Projects\\CoVideo")
-output <- file.path(home, "drafts/output")
-dat_all <- readRDS(file.path(home, "Data/Derived/dat_all.Rda"))
+home <- file.path(Sys.getenv("HOME"), "Seafile\\Heidelberg\\Projects\\CoVideo\\Paper_1")
+output <- file.path(home, "output")
+dat_all <- load_covideo()
 load(file.path(output, "Results.RData"), envir=.GlobalEnv)
 @
 

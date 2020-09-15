@@ -51,7 +51,7 @@ behaviors to prevent the spread of COVID-19. All responses  required True/False 
 \toprule
 \hspace{-0.6em}{\textit{Clinical knowledge of COVID-19 spread}} \\
 <<echo=FALSE, results='asis'>>=
-cknow = data.frame(sapply(cstate, function(x) x[[1]]))
+cknow = data.frame(sapply(cstate(), function(x) x[[1]]))
 print(xtable(cknow),
   include.colnames=FALSE,
   include.rownames=FALSE,
@@ -61,7 +61,7 @@ print(xtable(cknow),
 \hline
 \hspace{-0.6em}{\textit{Knowledge of preventing COVID-19 spread}} \\
 <<echo=FALSE, results='asis'>>=
-sknow = data.frame(sapply(sstate, function(x) x[[1]]))
+sknow = data.frame(sapply(sstate(), function(x) x[[1]]))
 print(xtable(sknow),
   include.colnames=FALSE,
   include.rownames=FALSE,
@@ -137,8 +137,6 @@ print(xtable(sknow),
 
 
 
-\setlength{\tabcolsep}{5pt}
-
 % \begin{table}[h!]
 % \centering
 % \begin{threeparttable}
@@ -171,7 +169,8 @@ print(xtable(sknow),
 \centering
 \begin{threeparttable}
 
-\caption{Regression estimates of combined COVID-19 knowledge (18 items) in the CoVideo arm.} 
+\caption{Regression estimates of combined COVID-19 knowledge (18 items) in the CoVideo arm
+($N = \Sexpr{fmt(dat_trt_n)}$).} 
 
 \label{tab:moda_trt}
 \footnotesize
@@ -257,7 +256,8 @@ print(xtable(reg_all_trt),
 \centering
 \begin{threeparttable}
 
-\caption{Regression estimates of clinic COVID-19 knowledge (10 items) in the CoVideo arm.} 
+\caption{Regression estimates of basic clinica knowledge of COVID-19 (10 items) in the CoVideo arm
+($N = \Sexpr{fmt(dat_trt_n)}$).} 
 
 \label{tab:modc_trt}
 \footnotesize
@@ -285,7 +285,8 @@ print(xtable(reg_clinic_trt),
 \centering
 \begin{threeparttable}
 
-\caption{Regression estimates of knowledge spread of COVID-19 (8 items) in the CoVideo arm.} 
+\caption{Regression estimates of knowledge spread of COVID-19 (8 items) in the CoVideo
+arm ($N = \Sexpr{fmt(dat_trt_n)}$).} 
 
 \label{tab:mods_trt}
 \footnotesize

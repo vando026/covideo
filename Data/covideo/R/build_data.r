@@ -17,7 +17,7 @@ build_data <- function(datapath=set_paths()$datapath,
   getDataFun=getData) {
 
   ename <- c("questionnaire-lf5j", "task-lekh", 
-    "task-7ce7",  "task-8qrr", "task-aaaf", "task-7o8q")
+    "task-7ce7",  "task-8qrr", "task-aaaf", "task-7o8q", "task-4u1p")
 
   ######################################################################
   ######################### En #########################################
@@ -45,7 +45,6 @@ build_data <- function(datapath=set_paths()$datapath,
   dat_en <- rbind(en_v19, en_v20, en_v21, en_v25, en_v26)
   dat_en <- mutate(dat_en, Language="EN")
 
-  saveRDS(dat_en, file=file.path(datapath, "Derived", "dat_en.Rda"))
 
   ######################################################################
   ######################### DE #########################################
@@ -64,7 +63,6 @@ build_data <- function(datapath=set_paths()$datapath,
 
   dat_de <- rbind(de_v7, de_v9, de_v13)
   dat_de <- mutate(dat_de, Language="DE")
-  saveRDS(dat_de, file=file.path(datapath, "Derived", "dat_de.Rda"))
 
   ######################################################################
   ######################### SP #########################################
@@ -73,7 +71,6 @@ build_data <- function(datapath=set_paths()$datapath,
   cov_sp <- mkName("18351-v5" , ename, sourced)
   dat_sp <- getDataFun(cov_sp)
   dat_sp <- mutate(dat_sp, Language="SP")
-  saveRDS(dat_sp, file=file.path(datapath, "Derived", "dat_sp.Rda"))
 
   ######################################################################
   ######################### MX #########################################
@@ -82,28 +79,52 @@ build_data <- function(datapath=set_paths()$datapath,
   cov_mx <- mkName("18353-v5" , ename, sourced)
   dat_mx <- getDataFun(cov_mx)
   dat_mx <- mutate(dat_mx, Language="MX")
-  saveRDS(dat_mx, file=file.path(datapath, "Derived", "dat_mx.Rda"))
 
   ######################################################################
   ######################### All ########################################
   ######################################################################
-  dat_en <- readRDS(file.path(datapath, "Derived/dat_en.Rda"))
-  dat_de <- readRDS(file.path(datapath, "Derived/dat_de.Rda"))
-  dat_mx <- readRDS(file.path(datapath, "Derived/dat_mx.Rda"))
-  dat_sp <- readRDS(file.path(datapath, "Derived/dat_sp.Rda"))
   dat_all <- bind_rows(dat_en, dat_de, dat_sp, dat_mx)
   
-  if (formals(build_data)$getDataFun=="getData") {
-    dat_all <- recode_data(dat_all)
-    dat_all <- dropMissKnow(dat_all)
-    # Calculate knowledge scores
-    dat_all$SpreadTotal <- apply(dat_all, 1, setKnow, sstate())
-    dat_all$ClinicTotal <- apply(dat_all, 1, setKnow, cstate())
-    dat_all$KnowledgeAll <- apply(dat_all, 1, setKnow, c(sstate(), cstate()))
-  }
-
   return(dat_all)
 } 
+
+#' @title build_covideo
+#' 
+#' @description  Build all the CoVideo data and write to file
+#' 
+#' @param  datapath
+#' 
+#' @return 
+#'
+#' @export 
+
+build_covideo <- function(datapath=set_paths()$datapath) {
+  dat <- build_data()
+  dat <- recode_data(dat)
+  dat <- dropMissKnow(dat)
+  # Calculate knowledge scores
+  dat$SpreadTotal <- apply(dat, 1, setKnow, sstate())
+  dat$ClinicTotal <- apply(dat, 1, setKnow, cstate())
+  dat$KnowledgeAll <- apply(dat, 1, setKnow, c(sstate(), cstate()))
+  readr::write_csv(dat, path=file.path(datapath, "Derived", "dat_all.csv")) 
+  saveRDS(dat, file=file.path(datapath, "Derived", "dat_all.Rda")) 
+}
+
+
+#' @title build_video
+#' 
+#' @description  Build only the Video data and write to file
+#' 
+#' @param  datapath
+#' 
+#' @return 
+#'
+#' @export 
+
+build_video <- function(datapath=set_paths()$datapath) {
+  dat <- build_data(getDataFun=getVid)
+  readr::write_csv(dat, path=file.path(datapath, "Derived", "VideoTime.csv")) 
+}
 
 
 ######################################################################

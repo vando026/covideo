@@ -124,7 +124,7 @@ getBehav <- function(name) {
 getVid <- function(name) {
   message(sprintf("==> Reading %s ", name$Vid))
   dat <- suppressMessages(
-    read_csv(file.path(name$Vid), comment='END OF FILE'))
+    readr::read_csv(file.path(name$Vid), comment='END OF FILE'))
   dat <- select(dat, 
     ID=`Participant Public ID`, 
     UTC_Timestamp=`UTC Timestamp`, 
@@ -134,6 +134,9 @@ getVid <- function(name) {
     ZoneName=`Zone Name`,
     ZoneType=`Zone Type`,
     Response=Response)
+  gdat <- getGoodBye(name)
+  dat <- rbind(dat, gdat)
+  dat <- arrange(dat, ID, UTC_Timestamp)
   dat <- group_by(dat, ID) %>% mutate(DiffTime = 
     round((UTC_Timestamp - lag(UTC_Timestamp))/1000, 2))
   idat <- split(dat, dat$ID)
@@ -158,11 +161,41 @@ getVid <- function(name) {
   left_join(dat, ddat)
 }
 
+#' @title getGoodBye
+#' 
+#' @description  Get Goodbye data
+#' 
+#' @param 
+#' 
+#' @return 
+#'
+#' @export 
+
+getGoodBye <- function(name) {
+  message(sprintf("==> Reading %s ", name$GBye))
+  dat <- suppressMessages(
+    readr::read_csv(file.path(name$GBye), comment='END OF FILE'))
+  dat <- select(dat, 
+    ID=`Participant Public ID`, 
+    UTC_Timestamp=`UTC Timestamp`, 
+    UTC_Date=`UTC Date`,
+    Arm=`randomiser-alpe`,
+    TrialNumber=`Trial Number`,
+    ZoneName=`Zone Name`,
+    ZoneType=`Zone Type`,
+    Response=Response)
+  dat <- filter(dat, TrialNumber %in% c("BEGIN TASK", "END TASK"))
+  dat$ZoneName <- "Goodbye"
+  dat
+}
+
+
+
 # Make file names easier
 mkName <- function(code="", type, datapath) {
   # browser()
   x <- as.list(paste0("data_exp_", code, "_", type, ".csv"))
-  names(x) <- c("Dem", "ListTrt", "ListCtrl",  "Know", "Behav", "Vid")
+  names(x) <- c("Dem", "ListTrt", "ListCtrl",  "Know", "Behav", "Vid", "GBye")
   lapply(x, function(x) file.path(datapath, x))
 }
 

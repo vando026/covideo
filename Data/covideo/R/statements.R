@@ -2,7 +2,7 @@
 #' 
 #' @description  behavior intent statements
 #' 
-#' @param 
+#' @param NULL
 #' 
 #' @return 
 #'
@@ -23,7 +23,7 @@ bstate <- function() {
 #' 
 #' @description  clinical knowledge statements
 #' 
-#' @param 
+#' @param NULL
 #' 
 #' @return 
 #'
@@ -47,7 +47,7 @@ cstate <- function() {
 #' 
 #' @description  knowledge spread questions
 #' 
-#' @param 
+#' @param NULL
 #' 
 #' @return 
 #'
