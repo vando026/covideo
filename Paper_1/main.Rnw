@@ -2,98 +2,14 @@
 %! TEX root = master.tex
 \Sexpr{knitr::set_parent('master.Rnw')}
 
-<<echo=FALSE>>=
-fmt <- function(x, d=0) formatC(x, format="f", digits=d, big.mark=",")
-@
 
-
-
-<<echo=FALSE>>=
-adiff <- res_all$means["VideoArmTreatment"] - res_all$means['VideoArmControl']
-adiff2 <- res_all$means["VideoArmTreatment"] - res_all$means['VideoArmPlacebo']
-an <- length(c(sstate(), cstate()))
-amax <- an - res_all$means["VideoArmControl"]
-amax2 <- an - res_all$means["VideoArmPlacebo"]
-acorrect <- res_all$means["VideoArmControl"]/an*100
-@
-
-
-<<echo=FALSE>>=
-kdiff <- res_know$means["VideoArmTreatment"] - res_know$means['VideoArmControl']
-kdiff2 <- res_know$means["VideoArmTreatment"] - res_know$means['VideoArmPlacebo']
-kn <- length(cstate())
-kmax <- kn - res_know$means["VideoArmControl"]
-kmax2 <- kn - res_know$means["VideoArmPlacebo"]
-corrects <- res_know$means["VideoArmControl"]/kn*100
-@
-
-
-<<echo=FALSE>>=
-kns <- length(sstate())
-kmaxc <- kn - res_spr$means["VideoArmControl"]
-correctc <- res_spr$means["VideoArmControl"]/kns*100
-@
-
-<<echo=FALSE>>=
-fmtCI <- function(x) {
-  dd <- behav[rownames(behav) %in% x, ]
-  ci <- paste0("95\\% CI: ", dd["LB"], "--", dd["UB"], "\\%")
-  mn <- paste0(dd["Est"], "\\%")
-  return(list(both = paste0(mn, ", ", ci), mn=mn, ci=ci))
-}
-@
-
-
-
-\subsection*{Abstract}
-
-
-\textbf{Background:} Entertainment-education (E-E) media can improve health knowledge and
-reach millions of people without requiring any physical contact. We have designed a short,
-wordless, animated video about preventative COVID-19 behaviours---such as social distancing
-and frequent hand washing---that can be rapidly distributed through social media channels
-to a global audience. The E-E video's effectiveness, however, remains unclear.  
-
-\textbf{Methods:} This multi-site, parallel group, randomized controlled trial compared
-the effectiveness of an E-E video on COVID-19 (CoVideo) against  an attention placebo
-control (APC) video and  no video (control). Using an online platform, we recruited
-participants aged 18--59 years from the United States, the United Kingdom, Germany, Spain,
-and Mexico.  The main outcome measure was knowledge about the basic clinical aspects of
-COVID-19 (clinical knowledge, 10 items)  and knowledge of behaviours that prevent COVID-19
-spread (knowledge spread, 8 items). 
-
-
-\textbf{Findings:} We recruited \Sexpr{fmt(flow$In)} online participants between
-\Sexpr{res$dates[1]} and \Sexpr{res$dates[2]}. The final analysis included
-\Sexpr{fmt(flow$In - flow$Start)} participants randomly assigned to the Control
-(\Sexpr{fmt(flow$CtrlN)}) APC (\Sexpr{fmt(flow$APCN)}), and CoVideo
-(\Sexpr{fmt(flow$CoVidN)}) arms.  Knowledge in the Control arm was high: participants
-correctly answered \Sexpr{fmt(corrects, 1)}\%  of the clinical knowledge questions,
-\Sexpr{fmt(correctc, 1)}\% of the knowledge spread questions, and \Sexpr{fmt(acorrect,
-1)}\% of the combined (18) items. Combined knowledge was higher in the CoVideo arm, with
-greater clinical knowledge gains in older participants (45--59 years).  Adjusting for
-demographic factors, knowledge scores were higher among women, more educated participants,
-and German speaking residents. 
-
-
-\textbf{Interpretation:} In a large, online randomized controlled trial, we found high
-levels  of COVID-19 knowledge. Given these high baseline levels, the CoVideo was
-nevertheless effective at increasing basic clinical knowledge about COVID-19.  Our results
-support the rapid and global distribution of E-E media on social media platforms to
-improve COVID-19 knowledge. 
-
-\textbf{Funding:}
-This study is funded by the Alexander von Humboldt University Professor Prize.
-
-
-\clearpage
 
 \subsection*{Introduction}
 
 A large amount of published health information about the novel coronavirus (COVID-19) has
 been disseminated by the traditional mass media since the outbreak of the
 pandemic.\autocite{Cinelli2020,Kouzy2020,Mian2020a} However, it is not clear if this
-information has improved knowledge of preventative COVID-19 behaviours. By preventative
+information has improved knowledge of preventive COVID-19 behaviours. By preventive
 behaviours, we mean the public's adoption of practices such as social distancing, reduced
 physical contact, and hand sanitation (among others) that can prevent the spread of
 COVID-19. 
@@ -104,26 +20,26 @@ messages about COVID-19.\autocite{Garfin2020a, Garrett2020} It is also likely th
 traditional mass media channels (e.g., local or national television networks) have missed
 key segments of the population, such as young people (18--35 years) who are
 disproportionately more likely to transmit the virus to older people ($\geq$ 50
-years).\autocite{Dowd2020, Harris2020, Zhao2020} An effective public health response could therefore benefit
-from entertainment-education (E-E) approaches that focus on
-behaviours to prevent COVID-19 spread.\autocite{Hahn2020, Block2020} 
+years).\autocite{Dowd2020, Harris2020, Zhao2020} An effective public health response could
+therefore benefit from entertainment-education (E-E) approaches that reach a wide
+age-range and focus on behaviours to prevent COVID-19 spread.\autocite{Hahn2020, Block2020} 
 
-To improve knowledge about preventative COVID-19 behaviours, we have designed a wordless,
+To improve knowledge about preventive COVID-19 behaviours, we have designed a wordless,
 animated video (abbreviated to CoVideo) that can be rapidly distributed to a diverse and
 global audience through social media channels.\autocite{Adam2020} With a short duration
-(approximately 2.30 minutes), the CoVideo contains no speech and minimizes cultural
-signifiers to increase universality and appeal. The CoVideo was released on Stanford
-Medicine's YouTube channel on March 21, 2020, and went viral within 24 hours.  After ten
-days, it had reached 332,000 views on YouTube, 220,000 views on Instagram, 294,000 views
-on Facebook, and 402,000 views on Twitter, with a cumulative count of 1.2 million
-views.\autocite{Adam2020} The CoVideo's effectiveness to improve knowledge about
-preventative COVID-19 behaviours, however, remains unclear. 
+(2.30 minutes), the CoVideo contains no speech and minimizes cultural identifiers to
+increase universality and appeal. The CoVideo was released on Stanford Medicine's YouTube
+channel on March 21, 2020, and accumulated a large number of views (`went viral') within
+24 hours.  After ten days, it had reached 332,000 views on YouTube, 220,000 views on
+Instagram, 294,000 views on Facebook, and 402,000 views on Twitter, with a cumulative
+count of 1.2 million views.\autocite{Adam2020} However, the CoVideo's effectiveness to improve
+knowledge about COVID-19 prevention remains unclear. 
 
 Using a randomized controlled trial, we  compared the  effectiveness of the CoVideo
 against an attention placebo control (APC) video and no video (control) among online
 participants from the United States, the United Kingdom, Germany, Spain, and Mexico. We
 measured effectiveness as the difference in mean knowledge about the clinical aspects of
-COVID-19 and mean knowledge about behaviours that can prevent COVID-19 spread. The study
+COVID-19 and mean knowledge about behaviours that prevent COVID-19 spread. The study
 results will inform the design of future E-E videos to disseminate evidence-based health
 recommendations related to COVID-19 as well as other public health emergencies.   
 
@@ -138,7 +54,7 @@ and no video (the control arm).\autocite{Vandormael2020b} Each trial arm consist
 video intervention (the CoVideo, APC video, or no video) and survey questions about
 COVID-19 knowledge.  We used an online platform called Prolific Academic
 (\url{https://www.prolific.co}) to recruit participants, who selected to enter the study
-on a ``first come, first served'' basis. Participants had to be between the age of 18 and
+on a ``first come, first served'' basis. Participants had to be between the ages of 18 and
 59 years (male, female, or other) and have current residence in the United States, the
 United Kingdom, Germany, Spain, or Mexico.  Participants were excluded from the study if
 they could not speak English, German, or Spanish. The trial was hosted and deployed on
@@ -154,8 +70,8 @@ Randomization was at a 1:1:1 ratio for the three arms of the trial.  Because Pro
 Academic handled the interaction between the study investigators and participants, the
 participants were completely anonymous to the study investigators. Participants
 self-responded to the survey questions and self-submitted their responses anonymously on
-the Gorilla platform. The study investigators and those involved in the data analyses and
-statistics were blinded to the group (CoVideo, APC, control) allocation.  
+the Gorilla platform. The study investigators and those involved in the data analyses 
+were blinded to the group (CoVideo, APC, control) allocation.  
 
 
 \paragraph{Procedures}
@@ -166,12 +82,12 @@ education completed.
 
 The Gorilla randomization algorithm then randomized participants to the intervention,
 placebo, or control arms.  The intervention arm participants received the CoVideo, which
-is an wordless, animated video about how the novel coronavirus is spread (airborne,
+is a wordless, animated video about how the novel coronavirus is spread (airborne,
 physical contact), and recommends best practices to prevent or reduce the spread of
 COVID-19 (staying at home, not congregating in public spaces, and sanitizing
 hands/surfaces). The CoVideo also covers the mass media coverage of the outbreak and the
-public's response to this media coverage, which includes a subplot on the stockpiling of
-essential goods, and the impact thereof on health-care services and resources (e.g.,
+public's response to this coverage, which includes a subplot on the stockpiling of
+essential goods and the impact thereof on health-care services and resources (e.g.,
 doctors being unable to access protective equipment). The CoVideo, which can be viewed at
 \url{https://www.youtube.com/watch?v=rAj38E7vrS8}, was designed for universal reach and
 optimized for release on social media channels. 
@@ -212,7 +128,7 @@ questions, the knowledge spread questions, and the combined knowledge questions.
 
 We obtained means and standard deviations of the participants' age, gender, primary
 language, country of residence, and education status. For each arm, we calculated the mean
-clinical knowledge, knowledge spread, and combined knowledge scores. We defined the
+scores in clinical knowledge, knowledge spread, and combined knowledge. We defined the
 difference in mean scores between the CoVideo and control arms as the Total Effect, the
 difference in mean scores between the APC and control arms as the Attention Effect, and
 the difference in mean scores between the CoVideo and APC arms as the Treatment Effect.
@@ -220,7 +136,7 @@ For participants in the CoVideo and control arms, we used a linear regression mo
 quantify the effects of the demographic characteristics on the clinical knowledge,
 knowledge spread, and combined knowledge scores. To measure CoVideo engagment, we counted
 the number of APC and control arm participants that chose to watch the CoVideo
-(participants could click ``Watch CoVideo'' or ``Finish Study'') and for how long
+(participants could click ``Watch the video'' or ``End the study'') and for how long
 (participants were not renumerated for this additional time).  Statistical analyses were
 performed with R software version 4.2.
 
@@ -235,38 +151,40 @@ publication.
 \subsection*{Results}
 
 
-Between \Sexpr{res$dates[1]} and \Sexpr{res$dates[2]}, we recruited \Sexpr{fmt(flow$In)}
+Between \Sexpr{res$dates[1]} and \Sexpr{res$dates[2]}, we enrolled \Sexpr{fmt(flow$In)}
 participants through the Prolific Academic platform. A total of  \Sexpr{fmt(flow$In -
 flow$Start)} participants were randomly assigned to the control (\Sexpr{fmt(flow$CtrlN)})
 APC (\Sexpr{fmt(flow$APCN)}), and CoVideo (\Sexpr{fmt(flow$CoVidN)}) arms (Figure
 \ref{fig:dataflow}).  Between recruitment and randomization, \Sexpr{flow$Start}
 participants were lost.  After randomization to each arm, another \Sexpr{flow$Ctrl}
 (control), \Sexpr{flow$APC} (APC), and \Sexpr{flow$Trt} (CoVideo) participants were lost
-due to technical reasons.  A total of \Sexpr{fmt(flow$FinalN)} participants completed the
-trial and contributed data to the final analysis. 
+due to technical reasons (e.g., lost internet connection, issues with linking to the video
+host, YouTube, server complications).  A total of \Sexpr{fmt(flow$FinalN)} participants
+completed the trial and contributed data to the final analysis. 
 
 The majority of participants  reported their residence in the United Kingdom
 (\Sexpr{res$ctry["United Kingdom"]}\%) or the United States (\Sexpr{res$ctry["United States"]}\%), and \Sexpr{res$lan["EN"]}\% of participants reported English as their first
 language.  The sample was relatively well-educated, with \Sexpr{sum(res$educ[c(3,4)])}\%
-having some college education or higher (BA, MA equivalent or PhD).  Table
-\ref{tab:tab0} shows the percentage of participants in each arm by age, gender, country of
-residence, educational status, and primary language. 
+having some college education or higher (BA, MA equivalent or PhD).  Table \ref{tab:tab0}
+shows the percentage of participants in each arm by age, gender, country of residence,
+educational status, and primary language. 
 
 
-For the primary outcome, the combined knowledge score was higher in the CoVideo arm
-relative to the control and APC arms (Figure \ref{fig:knowall}). In the control arm,
-\Sexpr{fmt(res_all$means["VideoArmControl"], 2)} out of \Sexpr{an} items
-(\Sexpr{fmt(res_all$means["VideoArmControl"]/an*100, 2)}\%) were correctly answered.  With
-this high baseline score, the CoVideo could therefore only increase knowledge by a maximum
-of \Sexpr{fmt(amax, 2)} points.  Relative to the control arm, the CoVideo increased the
-average response by \Sexpr{fmt(adiff, 2)} points (\Sexpr{(res_all$pvals[2, 1])}), which
-represents a \Sexpr{fmt(adiff, 2)}/\Sexpr{fmt(amax, 2)} $=$ \Sexpr{fmt(adiff/amax*100, 2)}
-percentage point increase in knowledge. The average score for the APC arm was
-\Sexpr{fmt(res_all$means["VideoArmPlacebo"],2)}, a correct response rate of
-\Sexpr{fmt(res_all$means["VideoArmPlacebo"]/an*100, 2)}\% .  When we removed the attention
-effect of the video medium, the CoVideo increased overall knowledge by \Sexpr{fmt(adiff2,
-2)} points (\Sexpr{res_all$pvals[2,2]}), which represents a \Sexpr{fmt(adiff2,
-2)}/\Sexpr{fmt(amax2, 2)} $=$ \Sexpr{fmt(adiff2/amax2*100, 2)} percentage point increase. 
+For the primary outcome, we report that the combined knowledge score was higher in the
+CoVideo arm compared with the control and APC arms (Figure \ref{fig:knowall}). In the
+control arm, \Sexpr{fmt(res_all$means["VideoArmControl"], 2)} out of the combined
+knowledge \Sexpr{an} items (\Sexpr{fmt(res_all$means["VideoArmControl"]/an*100, 2)}\%)
+were correctly answered.  With this high baseline score, the CoVideo could therefore only
+increase knowledge by a maximum of \Sexpr{fmt(amax, 2)} points.  Relative to the control
+arm, the CoVideo increased the average response by \Sexpr{fmt(adiff, 2)} points
+(\Sexpr{(res_all$pvals[2, 1])}), which represents a \Sexpr{fmt(adiff, 2)}/\Sexpr{fmt(amax,
+2)} $=$ \Sexpr{fmt(adiff/amax*100, 2)} percentage point increase in combined knowledge.
+The average score for the APC arm was \Sexpr{fmt(res_all$means["VideoArmPlacebo"],2)}, a
+correct response rate of \Sexpr{fmt(res_all$means["VideoArmPlacebo"]/an*100, 2)}\%.  When
+we removed the attention effect of the video medium, the CoVideo increased overall
+knowledge by \Sexpr{fmt(adiff2, 2)} points (\Sexpr{res_all$pvals[2,2]}), which represents
+a \Sexpr{fmt(adiff2, 2)}/\Sexpr{fmt(amax2, 2)} $=$ \Sexpr{fmt(adiff2/amax2*100, 2)}
+percentage point increase. 
 
 
 Clinical knowledge was higher in the CoVideo arm relative to the control and APC arms
@@ -302,21 +220,21 @@ For the clinical knowledge questions, more than \Sexpr{getMin(tabc, "SpreadHealt
 knew that the coronavirus could be infected by a healthy person even if they looked
 healthy; more than \Sexpr{getMin(tabc, "Cough")}\% knew that some people with COVID-19
 infection may experience a cough; and more than \Sexpr{getMin(tabc, "TouchFace")}\% knew
-that you can catch COVID-19 by touching a contaminated surface and then touching your
-face.  The lowest correctly answered item (\Sexpr{getMin(tabc, "CleanSoap")}\%) was
-knowing that cleaning surfaces with soap and water is an effective way to kill the
-coronavirus.  For the knowledge spread questions, more than \Sexpr{getMin(tabs,
-"WashHandSoap")}\% of participants knew that an effective way to prevent COVID-19 spread
-is to wash hands frequently with soap and water; and \Sexpr{getMin(tabs,
-"NoShakeHands")}\% of participants knew that an effective way to prevent COVID-19 spread
-is to avoid shaking hands with other people; and to avoid places that are crowded with
-people (like bars, restaurants or performances), respectively. On the lower end,
-\Sexpr{getMin(tabs, "RinseSalt")}\%  answered correctly that regularly rinsing your nose
-with salt water cannot prevent the spread of COVID-19. 
+that you can catch COVID-19 by touching a contaminated surface and then touching your face
+(Table \ref{tab:tabk}).  The lowest correctly answered item (\Sexpr{getMin(tabc,
+"CleanSoap")}\%) was knowing that cleaning surfaces with soap and water is an effective
+way to kill the coronavirus.  For the knowledge spread questions, more than
+\Sexpr{getMin(tabs, "WashHandSoap")}\% of participants knew that an effective way to
+prevent COVID-19 spread is to wash hands frequently with soap and water; and
+\Sexpr{getMin(tabs, "NoShakeHands")}\% of participants knew that an effective way to
+prevent COVID-19 spread is to avoid shaking hands with other people; and to avoid places
+that are crowded with people (like bars, restaurants or performances), respectively. On
+the lower end, \Sexpr{getMin(tabs, "RinseSalt")}\%  answered correctly that regularly
+rinsing your nose with salt water cannot prevent the spread of COVID-19 (Table \ref{tab:tabk}). 
 
 
 Table \ref{tab:moda_trt}  shows the regression results for the combined knowledge items
-(18 items) in the CoVideo arm. Older participants (aged 45--59 years) had the highest
+ in the CoVideo arm. Older participants (aged 45--59 years) had the highest
 knowledge scores.  Women had higher knowledge scores than men and German speaking
 residents had the highest knowledge scores of the five countries, after controlling for
 the other factors.  Results show that higher education was significantly associated with
@@ -338,10 +256,13 @@ was in the 18--24 year age group ($\text{Mean Diff.}=\Sexpr{agediff$c1824[1]}$,
 spread among the control and CoVideo arms by age group (data not shown).
 
 
-Participants in the APC and control arms could choose to watch the CoVideo as post-access
-to treatment. Of these participants, 72\% selected to watch the CoVideo, with an average
-view time of 144.3 seconds, which is 96\%  of the full duration (150 seconds).  Of these
-participants,  XXX (XX\%) watched to the end.
+As post-access to treatment, participants in the APC and control arms ($n =
+\Sexpr{fmt(sum(table(dat_all$VideoArm)[-3]))}$) were given the choice to watch the
+CoVideo. Of these participants, \Sexpr{fmt(leftwatch)} were able to access the CoVideo
+without any technical issues (e.g., failure to be redirected to the YouTube site where the
+CoVideo was hosted, poor download connection, slow internet). From this number,
+\Sexpr{round(watched*100, 1)}\% chose to watch the CoVideo and \Sexpr{round(less150*100,
+1)}\% watched to the end.
 
 
 
@@ -351,14 +272,14 @@ participants,  XXX (XX\%) watched to the end.
 
 There is a critical need for public health actors to disseminate scientific information
 about the treatment and prevention of COVID-19. To inform the public about the prevention
-of COVID-19 spread, we produced a short, animated video that went viral in the first week
-of its release on social media.\autocite{Adam2020}  To evaluate the CoVideo's
-effectiveness, we recruited \Sexpr{fmt(flow$FinalN)} participants to take part in a
+of COVID-19 spread, we produced a short, animated video that went viral on social media in
+the first week of its release.\autocite{Adam2020}  To evaluate the CoVideo's
+effectiveness, we recruited \Sexpr{fmt(flow$In)} participants to take part in a
 multi-site, parallel group, randomized controlled trial in an online setting.  We asked
-participants questions about the basic clinical characteristics of COVID-19
-(clinical knowledge) and questions about behaviours to prevent the spread of COVID-19
-(knowledge spread).  Our primary aim was to assess if the CoVideo was effective in
-improving knowledge about behaviours that can prevent  COVID-19 spread. 
+participants questions about the basic clinical characteristics of COVID-19 (clinical
+knowledge) and questions about behaviours to prevent the spread of COVID-19 (knowledge
+spread).  Our primary aim was to assess if the CoVideo was effective in improving
+knowledge about behaviours that can prevent the spread of  COVID-19. 
 
 
 We report that participants in our study had high levels of COVID-19 knowledge.  For
@@ -369,23 +290,31 @@ experience a cough, and \Sexpr{getMin(tabc, "TouchFace")}\% knew that you can ca
 COVID-19 by touching a contaminated surface and then touching your face.  Overall,
 participants in the control arm correctly answered \Sexpr{fmt(corrects, 1)}\% of the
 clinical knowledge questions, \Sexpr{fmt(correctc, 1)}\% of the knowledge spread
-questions, and \Sexpr{fmt(acorrect, 1)}\% of the combined questions.  Given such high
-baseline levels, the CoVideo was nevertheless effective at increasing basic knowledge of the
-clinical characteristics of COVID-19:   out of the remaining \Sexpr{fmt(100 - corrects,
-1)}\% needed to achieve a 100\% correct response rate, the CoVideo increased clinical
-knowledge by a further \Sexpr{fmt(kdiff/kmax*100, 1)}\%. After adjusting for attention effects, the
-increase in this clinical knowledge was \Sexpr{fmt(kdiff2/kmax2*100, 1)}\%.  
+questions, and \Sexpr{fmt(acorrect, 1)}\% of the combined questions.  These high scores
+could reflect the relatively well educated status of our online sample, with
+\Sexpr{sum(res$educ[c(3,4)])}\% having some college education or higher (BA, MA equivalent
+or PhD). It is possible that our sample was more educated than the general populations of
+the United States, the United Kingdom, Germany, Spain, and Mexico.  Nevetheless, our study
+shows a similar educational composition to a recent study on COVID-19 knowledge in
+the United States and Great Britain, where 76\% of the online sample had some college education
+or higher.\autocite{Geldsetzer2020}
 
-Results show that there was no difference in knowledge about behaviours to prevent COVID-19
-spread. There are two likely explanations for this result. The first is that the baseline
-knowledge level in the control arm was very high (\Sexpr{fmt(correctc, 1)}\%): possibly,
-the CoVideo could not further improve knowledge of behaviours to prevent COVID-spread.  The
-second explanation is that it may be easier to improve knowledge about the clinical
-features of a disease (such as COVID-19) when compared to improving knowledge about health
-behaviours to prevent that disease.
-This second explanation has been discussed in the literature with respect to the use of
-knowledge to promote health behaviour change, which is often difficult to achieve in
-practice.\autocite{Ajzen2011a} Where possible, additional analyses may be needed to
+
+
+Given the already high basline knowledge levels, the CoVideo was effective at increasing
+knowledge of the basic clinical characteristics of COVID-19.   Out of the remaining
+\Sexpr{fmt(100 - corrects, 1)}\% margin needed to achieve a 100\% correct response rate,
+the CoVideo increased clinical knowledge by a further \Sexpr{fmt(kdiff/kmax*100, 1)}\%.
+After adjusting for attention effects, the increase in this clinical knowledge was
+\Sexpr{fmt(kdiff2/kmax2*100, 1)}\%.  However, there was no difference across the trial
+arms in knowledge of behaviours to prevent COVID-19 spread. There are two likely
+explanations for this result.  First, the CoVideo could not improve the high knowledge
+spread scores (\Sexpr{fmt(correctc, 1)}\%) any further.  Second, the CoVideo may have been
+more effective in improving knowledge about the basic clinical characteristics of COVID-19
+than knowledge about behaviours to prevent COVID-19 spread. More generally and
+in practice, it may be easier to improve knowledge about the clinical features of a
+disease  when compared to improving knowledge about health behaviours to prevent that
+disease.\autocite{Ajzen2011a} Where possible, additional analyses may be needed to
 determine which of the two explanations best fits the data. 
  
 We report that the COVID-19 knowledge scores differed by several factors. In the control
@@ -401,37 +330,41 @@ more vulnerable to health issues, as is the case with the  COVID-19
 pandemic.\autocite{Zhou2020, Sudharsanan2020}
 
 
+
+
 Our study has several strengths.  We  used state-of-the-art online technology to implement
-our randomized controlled trial.\autocite{Vandormael2020b} The Prolific Academic platform
-enabled us to rapidly recruit a large number of participants who speak different languages
-and live in different countries in Europe, North America, and Latin America.  We  also
-hosted our study on the Gorilla platform, which facilitates the design, implementation,
-and management of  online trials in behavioural research.\autocite{Anwyl-Irvine2020} The
-Gorilla platform provides ready-made mechanisms for randomization to the trial arms,
-prevention of repeat or duplicate participants, bot checks, and questionnaire builders.
-Further, the Gorilla platform enabled us to implement design mechanisms such as
-count-downs (time limits) to prevent respondents from searching for online answers to the
-knowledge questions. Together, these tools enabled us to rapidly recruit a diverse sample
-of participants while ensuring the rigor of a completely randomized control design.
+our randomized controlled trial.\autocite{Vandormael2020b} Through the Prolific Academic
+platform, we rapidly  recruited a large number of participants who speak different
+languages and live in different countries in Europe, North America, and Latin America.  We
+also hosted our study on the Gorilla platform, which provides services for the design,
+implementation, and management of  online trials in behavioural
+research.\autocite{Anwyl-Irvine2020} Gorilla has ready-made tools for randomization to the
+trial arms, blinding, prevention of repeat or duplicate participants, bot checks,
+questionnaire builders, and count-downs (time limits), which we used to prevent
+respondents from searching for online answers to the knowledge questions. Together, these
+tools enabled us to rapidly recruit online participants and ensure the rigour  of a
+completely randomized controlled design.
 
 
-As an additional strength, we were able to measure participant engagement with the
-CoVideo. Because of post-access to treatment, participants in the APC and control arms
-were offered the opportunity to watch the CoVideo. The Gorilla platform then recorded
-whether participants' decided to click ``End the study'' or ``Watch the video''; time
-spent watching the video was also recorded.  Our preliminary results show a relatively
-high engagement with the CoVideo: 72\% of participants chose to watch; of these
-participants, XXX\% completed the 150 second view time.  Given the high baseline knowledge
-scores, it is plausible that respondents already knew most of the COVID-19 facts featured
-in the CoVideo. So why the high rate of engagement? It is plausible that APC and
-control arm participants believed they could benefit from watching the CoVideo. These
-participants may not have been certain of their COVID-19 knowledge and therefore engaged
-with the CoVideo to gain further information. To this extent, the CoVideo increased their
-subjective probability that this knowledge is correct. 
+As an additional strength of this study, we were able to measure participant engagement
+with the CoVideo intervention.  To ensure post-access to treatment, we offered
+participants in the APC and control arms the option to watch the CoVideo.  We used Gorilla
+tools to  record whether participants' clicked ``End the study'' or ``Watch the video''
+and also recorded the time spent watching the CoVideo.  Our preliminary results show a
+relatively high engagement with the CoVideo: of the \Sexpr{round(watched*100)}\%
+participants that chose to watch, \Sexpr{round(less150*100, 1)}\% watched to the end.
+This engagement is interesting given that respondents already knew most of the COVID-19
+facts featured in the CoVideo. It is plausible that the APC and control arm participants
+believed they could benefit from watching the CoVideo and gain further COVID-19 information.
+To this extent, the CoVideo may have increased the participants' subjective probability
+that their current COVID-19 knowledge was correct.  Finally, it is possible that the
+CoVideo elicited some form of emotional engagement in  participants, such as giving them
+a sense of hope or reassurance. Further E-E studies are needed to measure the
+potential for using emotional engagement to sustain attention to health messages.
 
 
 Our study results demonstrate the potential of E-E media, such as a short, animated video
-format, that can  be rapidly and comprehensively distributed to improve knowledge about an
+format that can  be rapidly and comprehensively distributed to improve knowledge about an
 important public health topic.  We expect that our study will make important contributions
 to the E-E literature.  These lessons can improve the design of E-E videos to disseminate
 public health information for future pandemics.  Our results will also guide future E-E
@@ -441,9 +374,9 @@ restrictions.
 
 \paragraph{Contributors}
 
-AV wrote the paper, MA, MG, JG, and TB provided comments and feedback. MA designed the
-CoVideo. AV and TB designed the trial. All authors contributed to the questionnaire
-development.
+AV wrote the paper and undertook the statistical analysis. MA, MG, JG, and TB provided
+comments and feedback. MA designed, produced, and created the CoVideo. AV and TB designed
+the trial. AV, TB, MA, and MG contributed to the questionnaire development.
 
 
 \paragraph{Declaration of interests}

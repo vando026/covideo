@@ -29,7 +29,8 @@ flow$CoVidN <- fdat_sum["Treatment"] + flow$Trt
 flow$APCN <- fdat_sum["Placebo"] + flow$APC
 flow$CtrlN <- flow$In - flow$Start  - flow$CoVidN - flow$APCN - 17 #dropped because of missing 
 flow$Ctrl <- flow$CtrlN - fdat_sum["Control"]
-
+flow$CtrlN; flow$APCN; flow$CoVidN
+tapply(dat_all$ID, dat_all$VideoArm, function(x) length(unique(x)))
 
 #####################################################################
 ######################## Demo   #####################################
@@ -143,11 +144,20 @@ agediffa_apc <- data.frame(
   sapply(setNames(c(c1824, c2534, c3544, c4554, c5559), cnm), lincom, moda))
 
 
-save(tab0, flow, res, tabc, tabs, res_know, res_spr, res_all,
-  reg_clinic, reg_clinic_trt, reg_spread, reg_spread_trt, dat_trt_n, 
-  reg_all, reg_all_trt, agediff, agediffs, agediffa, 
-  file=file.path(output, "Results.RData"))
-
 ######################################################################
 ######################### Video data #################################
 ######################################################################
+vdat <- haven::read_dta(file.path(datapath, "Derived/VideoTime_ID.dta"))
+vdat <- filter(vdat, VideoTime_category != 4)
+leftwatch <- alainr::dx(vdat$ID)[2]
+watched <- 1 - prop.table(table(vdat$VideoTime_category))[1]
+vdat <- filter(vdat, VideoTime_category != 1)
+less150 <-  prop.table(table(vdat$VideoTime_category))[1]
+vdat <- mutate(vdat, VideoTime = ifelse(VideoTime > 150, 150, VideoTime))
+meanwatch <- mean(vdat$VideoTime)
+
+save(tab0, flow, res, tabc, tabs, res_know, res_spr, res_all,
+  reg_clinic, reg_clinic_trt, reg_spread, reg_spread_trt, dat_trt_n, 
+  reg_all, reg_all_trt, agediff, agediffs, agediffa, watched, less150,
+  leftwatch, meanwatch, file=file.path(output, "Results.RData"))
+

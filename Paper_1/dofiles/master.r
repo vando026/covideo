@@ -20,7 +20,7 @@ datapath <- file.path(home, "Data")
 output <- file.path(home, "Paper_1/output")
 
 # Colors
-set3 <- RColorBrewer::brewer.pal(3, "Set2") 
+set3 <- RColorBrewer::brewer.pal(3, "Set2")
 
 ######################################################################
 ######################### Read  Dataset ##############################

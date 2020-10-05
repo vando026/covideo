@@ -39,21 +39,18 @@
 
 
 
-\title{Going viral---an entertainment-education response to COVID-19: a parallel group, randomized controlled trial}
-
 \renewcommand*{\Affilfont}{\footnotesize\normalfont}
 \date{\vspace{-5ex}}
-\author[1, 2*]{Alain Vandormael}
-\author[3]{Maya Adam}
+\author[1*]{Alain Vandormael}
+\author[2]{Maya Adam}
 \author[1]{Merlin Greuel}
-\author[4]{Jennifer Gates}
-\author[1,5,6]{Till B\"arnighausen}
+\author[3]{Jennifer Gates}
+\author[1,4,5]{Till B\"arnighausen}
 \affil[1]{Heidelberg Institute of Global Health, University of Heidelberg, Heidelberg, Germany}
-\affil[2]{KwaZulu-Natal Research and Innovation Sequencing Platform, University of KwaZulu-Natal, Durban, South Africa}
-\affil[3]{Department of Pediatrics, Stanford University School of Medicine, Stanford, CA, USA}
-\affil[4]{Icahn School of Medicine, Mount Sinai, New York, USA}
-\affil[5]{Africa Health Research Institute (AHRI), Durban, South Africa.}
-\affil[6]{Department of Global Health and Population, Harvard T.H. Chan School of Public Health, Boston, USA}
+\affil[2]{Department of Pediatrics, Stanford University School of Medicine, Stanford, CA, USA}
+\affil[3]{Icahn School of Medicine, Mount Sinai, New York, USA}
+\affil[4]{Africa Health Research Institute (AHRI), Durban, South Africa.}
+\affil[5]{Department of Global Health and Population, Harvard T.H. Chan School of Public Health, Boston, USA}
 \affil[*]{Corresponding author: alain.vandormael@uni-heidelberg.de}
 
 
@@ -77,6 +74,54 @@ dat_all <- load_covideo()
 load(file.path(output, "Results.RData"), envir=.GlobalEnv)
 @
 
+<<echo=FALSE>>=
+fmt <- function(x, d=0) formatC(x, format="f", digits=d, big.mark=",")
+@
+
+<<echo=FALSE>>=
+adiff <- res_all$means["VideoArmTreatment"] - res_all$means['VideoArmControl']
+adiff2 <- res_all$means["VideoArmTreatment"] - res_all$means['VideoArmPlacebo']
+an <- length(c(sstate(), cstate()))
+amax <- an - res_all$means["VideoArmControl"]
+amax2 <- an - res_all$means["VideoArmPlacebo"]
+acorrect <- res_all$means["VideoArmControl"]/an*100
+@
+
+<<echo=FALSE>>=
+kdiff <- res_know$means["VideoArmTreatment"] - res_know$means['VideoArmControl']
+kdiff2 <- res_know$means["VideoArmTreatment"] - res_know$means['VideoArmPlacebo']
+kn <- length(cstate())
+kmax <- kn - res_know$means["VideoArmControl"]
+kmax2 <- kn - res_know$means["VideoArmPlacebo"]
+corrects <- res_know$means["VideoArmControl"]/kn*100
+@
+
+
+<<echo=FALSE>>=
+kns <- length(sstate())
+kmaxc <- kn - res_spr$means["VideoArmControl"]
+correctc <- res_spr$means["VideoArmControl"]/kns*100
+@
+
+<<echo=FALSE>>=
+fmtCI <- function(x) {
+  dd <- behav[rownames(behav) %in% x, ]
+  ci <- paste0("95\\% CI: ", dd["LB"], "--", dd["UB"], "\\%")
+  mn <- paste0(dd["Est"], "\\%")
+  return(list(both = paste0(mn, ", ", ci), mn=mn, ci=ci))
+}
+@
+
+<<echo=FALSE>>=
+# % by arms
+arm_n <- tapply(dat_all$ID, dat_all$VideoArm, function(x) length(unique(x)))
+@
+
+
+\title{The effectiveness of an entertainment-education video on COVID-19 prevention
+knowledge: an online randomized controlled trial of \Sexpr{fmt(flow$In)} adults in the
+USA, Mexico, UK, Germany, and Spain.  }
+
 
 
 \begin{document}
@@ -84,9 +129,11 @@ load(file.path(output, "Results.RData"), envir=.GlobalEnv)
 \maketitle
 
 
+\clearpage
 
 
-
+<<abstract, child='abstract.Rnw', eval=TRUE>>=
+@
 
 <<results, child='main.Rnw', eval=TRUE>>=
 @

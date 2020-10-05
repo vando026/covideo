@@ -1,13 +1,11 @@
-//  program:    master.do
-//  task:       Set file paths
+//  program:    Descriptive_Statistics.do
+//  task:       Webdoc 
 //  project:	CoVideo
-//  author:     AV / Created: 17Aug2020
 
 drop _all
 clear matrix
 clear mata
 
-** Or put whatever version you have here
 version 14.2
 
 **********************************************************************
@@ -36,38 +34,19 @@ webdoc init Descriptive_Statistics, replace logdir(Descriptive_Statistics) prefi
 ***/
 
 /***
-<h3>How many people had an ERROR/NA and dropped?  343</h3>
+<h3> Distribution of VideoTime (when the 150 second-limit is not set) </h3>
 ***/
 
 webdoc stlog
 use "$Derived\VideoTime_ID.dta", clear
 count
-tab VideoTime_category , miss nolab 
+tab VideoTime_category
 webdoc stlog close
 
-/***
-<h3>How many people had VideoTime=0?  2,611</h3>
-***/
-
-webdoc stlog
-use "$Derived\VideoTime_ID.dta", clear
-drop if VideoTime_category==4
-bysort ID: keep if VideoTime_max150==0
-count
-webdoc stlog close
 
 /***
-<h3>How many people had VideoTime>0?  6,731</h3>
-***/
-
-use "$Derived\VideoTime_ID.dta", clear
-webdoc stlog
-bysort ID: keep if VideoTime_max150>0 & VideoTime_max150!=.
-count
-webdoc stlog close
-
-/***
-<h3>For those that watched the CoVideo, what was the average time watched?</h3>
+<h3> After setting the limit at 150 seconds, for those that watched the CoVideo, what was the average time watched?</h3>
+N= 6,731 (5,980+751)
 ***/
 
 use "$Derived\VideoTime_ID.dta", clear
@@ -150,13 +129,4 @@ sum VideoTime_max150 if Language=="DE"
 sum VideoTime_max150 if Language=="EN"
 sum VideoTime_max150 if Language=="MX"
 sum VideoTime_max150 if Language=="SP"
-webdoc stlog close
-
-/*** 
-<h3>Distribution of VideoTime (when the 150 second-limit is not set)</h3>
-***/
-use "$Derived\VideoTime_ID.dta", clear
-webdoc stlog
-bysort ID: keep if VideoTime!=0 & VideoTime!=.
-tab VideoTime_category
 webdoc stlog close

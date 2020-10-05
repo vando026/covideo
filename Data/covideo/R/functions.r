@@ -20,17 +20,27 @@ reviewStatus <- function(File, ln) {
   ddat <- filter(endat, TimeMin <=1)
   message("\nTo be rejected")
   print(table(ddat$status))
-  ddat <- select(ddat, participant_id)
+  ddat <- dplyr::select(ddat, participant_id)
   readr::write_delim(ddat, path=file.path(datapath, "Prolific", paste0(ln, "_reject.txt")))
 
   endat <- filter(endat, TimeMin > 1)
   message("\nTo be paid")
   print(table(endat$status))
-  pdat <- select(endat, participant_id)
+  pdat <- dplyr::select(endat, participant_id)
   readr::write_delim(pdat, path=file.path(datapath, "Prolific", paste0(ln, "_pay.txt")))
 }
 
-# Read and clean data
+#' @title clean
+#' 
+#' @description  Clean the data
+#' 
+#' @param name Name of csv file
+#' @param ctype Type of column
+#' 
+#' @return data.frame
+#' @import dplyr
+#' @export 
+
 clean <- function(name, ctype=col_character) {
   message(sprintf("==> Reading %s ", name))
   dat <- suppressMessages(
@@ -57,12 +67,22 @@ getList <- function(name)   {
   dat
 }
 
-# Get dem data
+#' @title getDem
+#' 
+#' @description  get Demographic data
+#' 
+#' @param name Name of csv file
+#' 
+#' @return data.frame
+#'
+#' @export 
+
+
 getDem <- function(name) {
   message(sprintf("==> Reading %s ", name))
   dat <- suppressMessages(
     readr::read_csv(name, comment="END OF FILE"))
-  dat <- select(dat, 
+  dat <- dplyr::select(dat, 
     ID=`Participant Public ID`, 
     SessionID=`Participant External Session ID`,
     Date=`Local Date`, 
@@ -74,6 +94,17 @@ getDem <- function(name) {
     TreatList = as.numeric(ListArm=="List Treatment"))
   dat
 }
+
+#' @title showDupList
+#' 
+#' @description  Show duplicates
+#' 
+#' @param dat A dataset
+#' 
+#' @return data.frame
+#'
+#' @import dplyr
+#' @export 
 
 showDupList <- function(dat) {
   Dups <- group_by(dat, ID, Label) %>% 
@@ -96,7 +127,17 @@ dropDups <- function(dat, dVars=c("ID", "Label")) {
 }
 
 
-# Get Kowledge data
+#' @title getKnow
+#' 
+#' @description  get Knowledge data
+#' 
+#' @param name Name of csv file
+#' 
+#' @return data.frame
+#'
+#' @export 
+
+
 getKnow <- function(name) {
   dat <- clean(name)
   dat <- mutate(dat, Response = recode(Response, 
@@ -120,12 +161,23 @@ getBehav <- function(name) {
   dat
 }
 
-# Get video end data
+
+#' @title getVid
+#' 
+#' @description   Gets the video participation data
+#' 
+#' @param name Name of csv file
+#' 
+#' @return data.frame
+#'
+#' @import dplyr
+#' @export 
+
 getVid <- function(name) {
   message(sprintf("==> Reading %s ", name$Vid))
   dat <- suppressMessages(
     readr::read_csv(file.path(name$Vid), comment='END OF FILE'))
-  dat <- select(dat, 
+  dat <- dplyr::select(dat, 
     ID=`Participant Public ID`, 
     UTC_Timestamp=`UTC Timestamp`, 
     UTC_Date=`UTC Date`,
@@ -136,7 +188,7 @@ getVid <- function(name) {
     Response=Response)
   gdat <- getGoodBye(name)
   dat <- rbind(dat, gdat)
-  dat <- arrange(dat, ID, UTC_Timestamp)
+  dat <- dplyr::arrange(dat, ID, UTC_Timestamp)
   dat <- group_by(dat, ID) %>% mutate(DiffTime = 
     round((UTC_Timestamp - lag(UTC_Timestamp))/1000, 2))
   idat <- split(dat, dat$ID)
@@ -165,17 +217,17 @@ getVid <- function(name) {
 #' 
 #' @description  Get Goodbye data
 #' 
-#' @param 
+#' @param name Name of csv file
 #' 
 #' @return 
-#'
+#' @import dplyr
 #' @export 
 
 getGoodBye <- function(name) {
   message(sprintf("==> Reading %s ", name$GBye))
   dat <- suppressMessages(
     readr::read_csv(file.path(name$GBye), comment='END OF FILE'))
-  dat <- select(dat, 
+  dat <- dplyr::select(dat, 
     ID=`Participant Public ID`, 
     UTC_Timestamp=`UTC Timestamp`, 
     UTC_Date=`UTC Date`,
@@ -184,7 +236,7 @@ getGoodBye <- function(name) {
     ZoneName=`Zone Name`,
     ZoneType=`Zone Type`,
     Response=Response)
-  dat <- filter(dat, TrialNumber %in% c("BEGIN TASK", "END TASK"))
+  dat <- dplyr::filter(dat, TrialNumber %in% c("BEGIN TASK", "END TASK"))
   dat$ZoneName <- "Goodbye"
   dat
 }
@@ -205,12 +257,22 @@ mkName <- function(code="", type, datapath) {
 #' 
 #' @param name Name of csv file
 #' 
-#' @return 
+#' @return data.frame
 #'
 #' @export 
 
 
-# Merge all the data
+#' @title getData
+#' 
+#' @description  Function to bring in all the data
+#' 
+#' @param name Name of csv file
+#' 
+#' @return data.frame
+#' @import dplyr
+#' @export 
+
+
 getData <- function(name) {
   Dem <- getDem(name$Dem)
   ListTrt <- getList(name$ListTrt)
@@ -221,11 +283,10 @@ getData <- function(name) {
   List <- doCast(List )
   Know <- getKnow(name$Know)
   Behav <- getBehav(name$Behav)
-  # Vid <- getVid(name$Vid)
   dat <- suppressMessages(Reduce(left_join, list(Dem, List, Behav, Know)))
   if ("NA" %in% colnames(dat)) {
     message(sprintf(" Dropping NA column %s", which((colnames(dat)=="NA"))))
-    dat <- select(dat, -(`NA`))
+    dat <- dplyr::select(dat, -(`NA`))
   }
   message(sprintf("==> Reading %s rows from %s\n", 
     nrow(dat), name[1][[1]]))
@@ -268,7 +329,7 @@ mkMod <- function(model=lm, RHS, ...) {
 ######################### Behav intent ###############################
 ######################################################################
 getListData <- function(dat=dat_all) {
-  ldat <- select(dat_all, VideoArm, TreatList, 
+  ldat <- dplyr::select(dat_all, VideoArm, TreatList, 
     SocialDist, Wash, StockPile, CleanDishes, CleanSurfaces, UseMedia)
   mutate(ldat, 
     VideoArm = as.factor(VideoArm), TreatList = as.factor(TreatList))

@@ -13,7 +13,7 @@
 #'
 #' @export 
 
-build_data <- function(datapath=set_paths()$datapath, 
+build_data <- function(datapath=set_paths()$datapath,
   getDataFun=getData) {
 
   ename <- c("questionnaire-lf5j", "task-lekh", 
@@ -117,13 +117,14 @@ build_covideo <- function(datapath=set_paths()$datapath) {
 #' 
 #' @param  datapath
 #' 
-#' @return 
+#' @return  data.frame
 #'
 #' @export 
 
 build_video <- function(datapath=set_paths()$datapath) {
   dat <- build_data(getDataFun=getVid)
   readr::write_csv(dat, path=file.path(datapath, "Derived", "VideoTime.csv")) 
+  saveRDS(dat, file=file.path(datapath, "Derived", "dat_video.Rda")) 
 }
 
 
