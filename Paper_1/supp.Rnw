@@ -3,31 +3,6 @@
 \Sexpr{knitr::set_parent('master.Rnw')}
 
 \clearpage
-% \subsection*{Supplementary Figures}
-% \label{sub:SupFigures}
-% \setcounter{figure}{0}
-% \renewcommand{\thefigure}{S\arabic{figure}}
-
-% \begin{figure}[h]
-% \begin{center}
-% \captionsetup{width=0.9\linewidth}
-
-% \caption{Compares the basic demographic characteristics of repeat-testers that entered the
-%   HIV cohort (labeled as HIV cohort) with eligible HIV-negative participants that did not
-%   enter the HIV cohort (labeled as HIV-negatives).  The comparison between both groups is
-%   for the percentage that were women, the mean age (in years) by sex, and the mean number
-% of in-migration and out-migration events irrespective of serostatus. The figure show that
-% the basic demographic characteristics  not markedly differ between the two groups. }
-
-% \label{fig:decomp}
-
-% \includegraphics[scale=0.8]{Decomp.png}
-
-% \end{center}
-% \end{figure}
-
-
-% \clearpage
 
 \subsection*{Supplementary Tables}
 \label{sub:SupTables}
@@ -42,14 +17,12 @@
 \centering
 \begin{threeparttable}
 
-\caption{Shows the items for basic clinical knowledge of COVID-19 spread and the knowledge of
-behaviors to prevent the spread of COVID-19. All responses  required True/False responses. } 
+\caption{Shows the 18 COVID-19 knowledge items; all responses  required True/False responses. } 
 
 \label{tab:know}
 \footnotesize
 \begin{tabular}{p{14cm}}
 \toprule
-\hspace{-0.6em}{\textit{Clinical knowledge of COVID-19 spread}} \\
 <<echo=FALSE, results='asis'>>=
 cknow = data.frame(sapply(cstate(), function(x) x[[1]]))
 print(xtable(cknow),
@@ -58,8 +31,6 @@ print(xtable(cknow),
   hline.after=NULL,
   only.contents=TRUE)
 @
-\hline
-\hspace{-0.6em}{\textit{Knowledge of preventing COVID-19 spread}} \\
 <<echo=FALSE, results='asis'>>=
 sknow = data.frame(sapply(sstate(), function(x) x[[1]]))
 print(xtable(sknow),
@@ -78,233 +49,3 @@ print(xtable(sknow),
 \end{threeparttable}
 \end{table}
 
-\clearpage
-
-\renewcommand{\arraystretch}{1.0} % Tighter
-\setlength{\tabcolsep}{4pt}
-
-% \begin{table}[h!]
-% \centering
-% \begin{threeparttable}
-
-% \caption{Mean estimates and standard errors of  the six list experiment items.} 
-
-% \label{tab:tablist}
-% \footnotesize
-% \begin{tabular}{l *{12}{C{0.6cm}}}
-%   \toprule
-%   & \multicolumn{4}{c}{\textbf{Control}} &
-%   \multicolumn{4}{c}{\textbf{APC}*}  &
-%   \multicolumn{4}{c}{\textbf{CoVideo}} \\ 
-%   \cmidrule(r){2-5}  \cmidrule(r){6-9} \cmidrule(r){10-13} 
-%   & \multicolumn{2}{c}{\textbf{Control}} & \multicolumn{2}{c}{\textbf{Treatment}}
-%   & \multicolumn{2}{c}{\textbf{Control}} & \multicolumn{2}{c}{\textbf{Treatment}}
-%   & \multicolumn{2}{c}{\textbf{Control}} & \multicolumn{2}{c}{\textbf{Treatment}} \\
-%   \cmidrule(r){2-3}  \cmidrule(r){4-5} \cmidrule(r){6-7} 
-%   \cmidrule(r){8-9} \cmidrule(r){10-11} \cmidrule(r){12-13}
-%   & \textbf{Mean} & \textbf{SE} 
-%   & \textbf{Mean} & \textbf{SE} 
-%   & \textbf{Mean} & \textbf{SE} 
-%   & \textbf{Mean} & \textbf{SE} 
-%   & \textbf{Mean} & \textbf{SE} 
-%   & \textbf{Mean} & \textbf{SE} \\
-%   \midrule
-%   \multicolumn{3}{l}{\textit{In the next week, I will...}$^\dagger$} \\
-% <<echo=FALSE, results='asis'>>=
-% rownames(tablist) <- sapply(bstate, function(x) x[1])
-% print(xtable(tablist, digits=c(1, rep(c(2, 2), 6))),
-%       include.rownames=TRUE,
-%       include.colnames=FALSE,
-%       sanitize.rownames.function=function(x) x,
-%       hline.after=NULL,
-%       only.contents=TRUE)
-% @
-% \bottomrule
-% \end{tabular}
-% \begin{tablenotes} 
-% \scriptsize
-% \item[*] Attention placebo control. 
-% \item[$^\dagger$] The exact english wording of the items: This week, I will$\dots$
-% Go out with my friends; Wash my hands frequently; Stock up on household supplies for a
-% month; Clean kitchen counters after use; Clean my dishes after use; Watch animated videos made
-% by health experts.
-% \end{tablenotes}
-% \end{threeparttable}
-% \end{table}
-
-% \clearpage
-
-
-
-
-% \begin{table}[h!]
-% \centering
-% \begin{threeparttable}
-
-% \caption{Regression estimates of COVID-19 knowledge (18 items) in the Control arm.} 
-
-% \label{tab:moda_ctrl}
-% \footnotesize
-% \begin{tabular}{l *{4}{C{1.3cm}}}
-% \toprule
-% & Estimate & SE  & t-value & p-value \\
-% \hline
-% <<echo=FALSE, results='asis'>>=
-% print(xtable(reg_all),
-%   include.colnames=FALSE,
-%   include.rownames=TRUE,
-%   hline.after=NULL,
-%   only.contents=TRUE)
-% @
-% \bottomrule
-% \end{tabular}
-% \begin{tablenotes} 
-% \scriptsize 
-% \end{tablenotes}
-% \end{threeparttable}
-% \end{table}
-
-
-\begin{table}[h!]
-\centering
-\begin{threeparttable}
-
-\caption{Regression estimates of combined COVID-19 knowledge (18 items) in the CoVideo arm
-($N = \Sexpr{fmt(dat_trt_n)}$).} 
-
-\label{tab:moda_trt}
-\footnotesize
-\begin{tabular}{l *{4}{C{1.3cm}}}
-\toprule
-& Estimate & SE  & t-value & p-value \\
-\hline
-<<echo=FALSE, results='asis'>>=
-print(xtable(reg_all_trt),
-  include.colnames=FALSE,
-  include.rownames=TRUE,
-  hline.after=NULL,
-  only.contents=TRUE)
-@
-\bottomrule
-\end{tabular}
-\begin{tablenotes} 
-\scriptsize 
-\end{tablenotes}
-\end{threeparttable}
-\end{table}
-
-
-\cleapage
-
-% \setlength{\tabcolsep}{5pt}
-
-% \begin{table}[h!]
-% \centering
-% \begin{threeparttable}
-
-% \caption{Regression estimates of clinic knowledge of COVID-19 (10 items) in the Control arm.} 
-
-% \label{tab:modc}
-% \footnotesize
-% \begin{tabular}{l *{4}{C{1.3cm}}}
-% \toprule
-% & Estimate & SE  & t-value & p-value \\
-% \hline
-% <<echo=FALSE, results='asis'>>=
-% print(xtable(reg_clinic),
-%   include.colnames=FALSE,
-%   include.rownames=TRUE,
-%   hline.after=NULL,
-%   only.contents=TRUE)
-% @
-% \bottomrule
-% \end{tabular}
-% \begin{tablenotes} 
-% \scriptsize 
-% \end{tablenotes}
-% \end{threeparttable}
-% \end{table}
-
-% \begin{table}[h!]
-% \centering
-% \begin{threeparttable}
-
-% \caption{Regression estimates of knowledge spread of COVID-19 (8 items) in the Control arm.} 
-
-% \label{tab:mods}
-% \footnotesize
-% \begin{tabular}{l *{4}{C{1.3cm}}}
-% \toprule
-% & Estimate & SE  & t-value & p-value \\
-% \hline
-% <<echo=FALSE, results='asis'>>=
-% print(xtable(reg_spread),
-%   include.colnames=FALSE,
-%   include.rownames=TRUE,
-%   hline.after=NULL,
-%   only.contents=TRUE)
-% @
-% \bottomrule
-% \end{tabular}
-% \begin{tablenotes} 
-% \scriptsize 
-% \end{tablenotes}
-% \end{threeparttable}
-% \end{table}
-
-\begin{table}[h!]
-\centering
-\begin{threeparttable}
-
-\caption{Regression estimates of basic clinica knowledge of COVID-19 (10 items) in the CoVideo arm
-($N = \Sexpr{fmt(dat_trt_n)}$).} 
-
-\label{tab:modc_trt}
-\footnotesize
-\begin{tabular}{l *{4}{C{1.3cm}}}
-\toprule
-& Estimate & SE  & t-value & p-value \\
-\hline
-<<echo=FALSE, results='asis'>>=
-print(xtable(reg_clinic_trt),
-  include.colnames=FALSE,
-  include.rownames=TRUE,
-  hline.after=NULL,
-  only.contents=TRUE)
-@
-\bottomrule
-\end{tabular}
-\begin{tablenotes} 
-\scriptsize 
-\end{tablenotes}
-\end{threeparttable}
-\end{table}
-
-
-\begin{table}[h!]
-\centering
-\begin{threeparttable}
-
-\caption{Regression estimates of knowledge spread of COVID-19 (8 items) in the CoVideo
-arm ($N = \Sexpr{fmt(dat_trt_n)}$).} 
-
-\label{tab:mods_trt}
-\footnotesize
-\begin{tabular}{l *{4}{C{1.3cm}}}
-\toprule
-& Estimate & SE  & t-value & p-value \\
-\hline
-<<echo=FALSE, results='asis'>>=
-print(xtable(reg_spread_trt),
-  include.colnames=FALSE,
-  include.rownames=TRUE,
-  hline.after=NULL,
-  only.contents=TRUE)
-@
-\bottomrule
-\end{tabular}
-\begin{tablenotes} 
-\scriptsize 
-\end{tablenotes}
-\end{threeparttable}
-\end{table}

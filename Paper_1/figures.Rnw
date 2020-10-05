@@ -27,31 +27,11 @@ the treatment difference in means between the CoVideo and the APC.  }
 \centering
 \includegraphics[scale=0.80]{KnowledgeAll.png}
 
-\caption{Mean score for the combined COVID-19 knowledge questions (18 items) by trial arm.   \note    }
+\caption{Mean score for the COVID-19 knowledge questions by trial arm.   \note    }
 
 \label{fig:knowall}
 \end{figure} 
 
-
-\begin{figure}[!ht]
-\centering
-\includegraphics[scale=0.75]{ClinicTotal.png}
-
-\caption{Mean scores for the clinical knowledge of COVID-19 questions (10 items) by trial arm. \note}
-
-\label{fig:clinic}
-\end{figure} 
-
-\clearpage
-
-\begin{figure}[!ht]
-\centering
-\includegraphics[scale=0.75]{SpreadTotal.png}
-
-\caption{Mean score for the knowledge spread of COVID-19 questions (8 items).  \note}
-
-\label{fig:spread}
-\end{figure} 
 
 \clearpage
 
