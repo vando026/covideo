@@ -403,12 +403,12 @@ pbrack <- function(x0, x1, y, h=0.01, pval="p < 0.05", CEX=1, ...) {
   segments(x0, y, x1, y, ...)
   segments(x0, y-h, x0, y, ...)
   segments(x1, y-h, x1, y, ...)
-  text((x0 + x1)/2, y + (h*0.8), pval, cex=CEX)
+  text((x0 + x1)/2, y + (h*1.2), pval, cex=CEX)
 }
 
 pfmt <- function(x) {
   x <- formatC(x, format="f", digits=3)
-  ifelse(x=="0.000", "p < 0.001", paste0("p = ", x))
+  ifelse(x=="0.001", "p < 0.001", paste0("p = ", x))
 }
 
 fmt <- function(x, y=2) formatC(x, format="f", digits=y)
@@ -439,10 +439,12 @@ getCTR <- function(LHS, dat) {
 }
 
 plotKnow <- function(LHS, Title="", yLim, ppos, H=0.01, plt=TRUE, write=TRUE, ...) {
-  cmod <- lm(as.formula(paste(LHS, " ~ -1 + VideoArm")),
-     data=dat_all)
+  cmod <- lm(as.formula(paste(LHS, " ~ -1 + VideoArm")), data=load_covideo())
   cpair <- pairwise.t.test(dat_all[[LHS]], dat_all[["VideoArm"]],
      p.adj = "none")
+  att <- lincom("1*VideoArmPlacebo - 1*VideoArmControl = 0", cmod)
+  cont <- lincom("1*VideoArmTreatment - 1*VideoArmPlacebo = 0", cmod)
+  tot <- lincom("1*VideoArmTreatment - 1*VideoArmControl = 0", cmod)
   y <- cmod$coefficients
   cis <- confint(cmod)
   lis <- y - cis[, 1] 
@@ -457,16 +459,23 @@ plotKnow <- function(LHS, Title="", yLim, ppos, H=0.01, plt=TRUE, write=TRUE, ..
         res=500, type="cairo")
     }
     plotCI(1:3, y, liw=lis, uiw=uis, main=Title, 
-      bty="n", ylim=yLim, lwd=3, pch=16, font.lab=2,
-      xlab="Trial arm", ylab="Mean score", xaxt="n", col=set3, ...)
+      bty="n", ylim=yLim, lwd=3, pch=16, font.lab=2, cex.lab=1.2,
+      xlab="Trial arm", ylab="", xaxt="n", col=set3, ...)
+    title(ylab="Mean score", line=3, cex.lab=1.2, font.lab=2)
     axis(1, 1:3, c("Control", "APC", "CoVideo"))
     text(c(1,2,2.75), y, pos=4, labels=formatC(y, format="f", digits=2))
-    pbrack(1, 2, ppos[1], H,
-      pval=paste0("Att. Diff. = ", fmt(y[2] - y[1]), ", ", pvals[1, 1]))
-    pbrack(2, 3, ppos[2], H,
-      pval=paste0("Trt. Diff. = ", fmt(y[3] - y[2]), ", ", pvals[2, 2]))
-    pbrack(1, 3, ppos[3], H,
-      pval=paste0("Tot. Diff. = ", fmt(y[3] - y[1]), ", ", pvals[2, 1]))
+    pbrack(1, 2, ppos[1], H, CEX=0.9,
+      pval=paste0("Attention Effect = ", att$diff,
+        ",\n 95% CI (", att$ci[1], ", ", att$ci[2], "), ", 
+        att$pval))
+    pbrack(2, 3, ppos[2], H, CEX=0.9,
+      pval=paste0("Content Effect = ", cont$diff,
+        ",\n 95% CI (", cont$ci[1], ", ", cont$ci[2], "), ", 
+        cont$pval))
+    pbrack(1, 3, ppos[3], H, CEX=0.9,
+      pval=paste0("Total Effect = ", tot$diff,
+        ",\n 95% CI (", tot$ci[1], ", ", tot$ci[2], "), ", 
+        tot$pval))
     if (write) dev.off()
   }
   return(list(means=y, se=se, cis=cis, pvals=pvals))
@@ -498,8 +507,10 @@ lincom <- function(EQ, mod, dig=2) {
   t1 <- attributes(lcom)
   tdiff <- t1$value[1]
   tse <- sqrt(t1$vcov[1])
+  tci <- tdiff + c(-1, 1) * (1.96 * tse)
   tpval <- lcom[2, 6]
-  c(diff=fmt(tdiff, dig), se=fmt(tse, dig), pval=pfmt(tpval))
+  list(diff=fmt(tdiff, dig), se=fmt(tse, dig), 
+    ci=fmt(tci, dig), pval=pfmt(tpval))
 }
 
 doDiffs <- function(LHS, dat=ldat) {
