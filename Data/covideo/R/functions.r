@@ -297,6 +297,7 @@ getData <- function(name) {
 #########################  Functions #################################
 ######################################################################
 # Function to wrap statements
+
 bwrap <- function(y, len=14) 
   paste(strwrap(bstate[y], len), collapse="\n")
 
@@ -438,9 +439,22 @@ getCTR <- function(LHS, dat) {
   xx
 }
 
+
+#' @title plotKnow
+#' 
+#' @description  Plot knowledge
+#' 
+#' @param  LHS
+#' @param  Title
+#' 
+#' @return 
+#'
+#' @export 
+
 plotKnow <- function(LHS, Title="", yLim, ppos, H=0.01, plt=TRUE, write=TRUE, ...) {
-  cmod <- lm(as.formula(paste(LHS, " ~ -1 + VideoArm")), data=load_covideo())
-  cpair <- pairwise.t.test(dat_all[[LHS]], dat_all[["VideoArm"]],
+  dat <- load_covideo()
+  cmod <- lm(as.formula(paste(LHS, " ~ -1 + VideoArm")), data=dat)
+  cpair <- pairwise.t.test(dat[[LHS]], dat[["VideoArm"]],
      p.adj = "none")
   att <- lincom("1*VideoArmPlacebo - 1*VideoArmControl = 0", cmod)
   cont <- lincom("1*VideoArmTreatment - 1*VideoArmPlacebo = 0", cmod)
