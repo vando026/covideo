@@ -13,8 +13,8 @@
 \renewcommand{\arraystretch}{1.0}% Tighter
 \setlength{\tabcolsep}{5pt}
 
-\begin{table}[h!]
-\centering
+% \begin{table}[h!]
+% \centering
 \begin{threeparttable}
 
 \caption{Correct response rates for clinical knowledge of COVID-19 and knowledge of
@@ -65,43 +65,7 @@ print(xtable(tabs[, c(1:9)]),
 \scriptsize  * Represents the percentage of items correctly answered.
 \end{tablenotes}
 \end{threeparttable}
-\end{table}
+% \end{table}
 
 
-
-\begin{table}[h!]
-\centering
-\begin{threeparttable}
-
-\caption{Shows the 18 COVID-19 knowledge items; all responses  required True/False responses. } 
-
-\label{tab:know}
-\footnotesize
-\begin{tabular}{p{14cm}}
-\toprule
-<<echo=FALSE, results='asis'>>=
-cknow = data.frame(sapply(cstate(), function(x) x[[1]]))
-print(xtable(cknow),
-  include.colnames=FALSE,
-  include.rownames=FALSE,
-  hline.after=NULL,
-  only.contents=TRUE)
-@
-<<echo=FALSE, results='asis'>>=
-sknow = data.frame(sapply(sstate(), function(x) x[[1]]))
-print(xtable(sknow),
-  include.colnames=FALSE,
-  include.rownames=FALSE,
-  hline.after=NULL,
-  only.contents=TRUE)
-@
-
-
-\bottomrule
-\end{tabular}
-\begin{tablenotes} 
-\scriptsize 
-\end{tablenotes}
-\end{threeparttable}
-\end{table}
 

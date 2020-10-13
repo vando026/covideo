@@ -36,20 +36,20 @@ trt <- sortDat(do.call(rbind, lapply(cnames, bindDat("VideoArmTreatment"))))
 png(file.path(output, "forestknow.png"), width=14, height=17, 
     units="cm", type = "cairo-png", pointsize=7, res=300)
 par(mar=c(5, 19, 4, 0.8) + 0.1, xpd = TRUE)
-plot(x = ctl[[2]], y = seq(nrow(ctl)), xlim=c(0.8, 1), col=set3[3],
+plot(x = ctl[[2]], y = seq(nrow(ctl)) - 0.15, xlim=c(0.8, 1), col=set3[3],
   yaxt="n", ylab="", xlab="", bty="n", pch=20)
 lapply(seq(nrow(ctl)), 
-  function(x) lines(ctl[x, 3:4],y=rep(x, 2), lwd=2, col=set3[3]))
+  function(x) lines(ctl[x, 3:4],y=rep(x - 0.15, 2), lwd=2, col=set3[3]))
 lapply(seq(nrow(plac)), 
-  function(x) lines(plac[x, 3:4],y=rep(x - 0.15, 2), lwd=2, col=set3[2]))
-points(x = plac[[2]],y=seq(nrow(plac))-0.15, col=set3[2], pch=20)
+  function(x) lines(plac[x, 3:4],y=rep(x, 2), lwd=2, col=set3[2]))
+points(x = plac[[2]],y=seq(nrow(plac)), col=set3[2], pch=20)
 lapply(seq(nrow(trt)), 
   function(x) lines(trt[x, 3:4],y=rep(x + 0.15, 2), lwd=2, col=set3[1]))
 points(x = trt[[2]],y=seq(nrow(trt)) + 0.15, col=set3[1], pch=20)
-title(xlab = "Percent correct")
+title(xlab = "Proportion correcty answered")
 lapply(seq(nrow(trt)), 
    function(x) text(x=0.66, y = x, kwrap(x, 50), cex=0.9, adj=0))
-legend("bottomright", c("E-E Video", "APC", "Control"), lty=1, col=set3,
+legend("bottomright", c("E-E Video", "APC", "Do-nothing"), lty=1, col=set3,
    bty="n", lwd=2, ncol=1, cex=1.0)
 dev.off()
 
@@ -99,4 +99,4 @@ dev.off()
 ######################################################################
 ######################### results ####################################
 ######################################################################
-save(know_res, file=file.path(output, "ResultsFigs.RData"))
+save(know_res, ctl, plac, trt, file=file.path(output, "ResultsFigs.RData"))

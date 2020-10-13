@@ -486,7 +486,7 @@ plotKnow <- function(LHS, Title="", yLim, ppos, H=0.01, plt=TRUE, write=TRUE, ..
     }
     plotCI(1:3, y, liw=lis, uiw=uis, main=Title, 
       bty="n", ylim=yLim, lwd=3, pch=16, font.lab=2, cex.lab=1.2,
-      xlab="Trial arm", ylab="", xaxt="n", col=set3, ...)
+      xlab="Trial arm", ylab="", xaxt="n", col=set3[c(3, 2, 1)], ...)
     title(ylab="Mean score", line=3, cex.lab=1.2, font.lab=2)
     axis(1, 1:3, c("Control", "APC", "CoVideo"))
     text(c(1,2,2.75), y, pos=4, labels=formatC(y, format="f", digits=2))

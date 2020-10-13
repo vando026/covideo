@@ -76,12 +76,6 @@ load(file.path(output, "ResultsFigs.RData"), envir=.GlobalEnv)
 @
 
 <<echo=FALSE>>=
-fmt <- function(x, d=0) formatC(x, format="f", digits=d, big.mark=",")
-@
-
-<<echo=FALSE>>=
-adiff <- know_res$means["VideoArmTreatment"] - know_res$means['VideoArmControl']
-adiff2 <- know_res$means["VideoArmTreatment"] - know_res$means['VideoArmPlacebo']
 an <- length(c(sstate(), cstate()))
 amax <- an - know_res$means["VideoArmControl"]
 amax2 <- an - know_res$means["VideoArmPlacebo"]
@@ -89,22 +83,7 @@ acorrect <- know_res$means["VideoArmControl"]/an*100
 @
 
 <<echo=FALSE>>=
-kdiff <- know_res$means["VideoArmTreatment"] - know_res$means['VideoArmControl']
-kdiff2 <- know_res$means["VideoArmTreatment"] - know_res$means['VideoArmPlacebo']
-kn <- length(cstate())
-kmax <- kn - know_res$means["VideoArmControl"]
-kmax2 <- kn - know_res$means["VideoArmPlacebo"]
-corrects <- know_res$means["VideoArmControl"]/kn*100
-@
-
-
-<<echo=FALSE, eval=FALSE>>=
-kns <- length(sstate())
-kmaxc <- kn - res_spr$means["VideoArmControl"]
-correctc <- res_spr$means["VideoArmControl"]/kns*100
-@
-
-<<echo=FALSE>>=
+fmt <- function(x, d=0) formatC(x, format="f", digits=d, big.mark=",")
 fmtCI <- function(x) {
   dd <- behav[rownames(behav) %in% x, ]
   ci <- paste0("95\\% CI: ", dd["LB"], "--", dd["UB"], "\\%")

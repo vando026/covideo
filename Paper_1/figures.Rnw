@@ -20,7 +20,7 @@
 \centering
 \includegraphics[scale=0.26]{forestknow.png}
 
-\caption{Shows the percentage of correct answers for each knowledge item by arm.}
+\caption{Shows the proportion of correct answers for each knowledge item by arm.}
 
 \label{fig:forest}
 \end{figure} 
