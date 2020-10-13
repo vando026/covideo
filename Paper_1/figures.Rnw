@@ -16,12 +16,21 @@
 
 \clearpage
 
+\begin{figure}[!ht]
+\centering
+\includegraphics[scale=0.26]{forestknow.png}
+
+\caption{Shows the percentage of correct answers for each knowledge item by arm.}
+
+\label{fig:forest}
+\end{figure} 
+
 \renewcommand{\note}{%
-Mean differences between the CoVideo, Attention Placebo Control (APC), and Control (no
-video) are reported with p-values ($N= $\Sexpr{fmt(flow$FinalN)}).  Tot.~Diff.~represents
-the total difference in means between the CoVideo and the Control; Att.~Diff.~represents
-the attention difference in means between the APC and Control; and Trt.~Diff.~represents
-the treatment difference in means between the CoVideo and the APC.  }
+Mean differences between the E-E video, Attention Placebo Control (APC), and Control (no
+video) are reported with p-values ($N= $\Sexpr{fmt(flow$FinalN)}).  Total effect represents
+the difference in means between the E-E video and the Control arm; Attention effect represents
+the difference in means between the APC and Control amd; and Content effect represents
+the difference in means between the E-E video and the APC arm.  }
 
 \begin{figure}[!ht]
 \centering
@@ -34,5 +43,6 @@ the treatment difference in means between the CoVideo and the APC.  }
 
 
 \clearpage
+
 
 

@@ -301,6 +301,19 @@ getData <- function(name) {
 bwrap <- function(y, len=14) 
   paste(strwrap(bstate[y], len), collapse="\n")
 
+#' @title kwrap
+#' 
+#' @description  Function to wrap know statements
+#' 
+#' @param y The know item
+#' 
+#' @return string
+#'
+#' @export 
+kwrap <- function(y, len=14) {
+  allknow = append(cstate(), sstate())
+  paste(strwrap(allknow[[y]][1], len), collapse="\n")
+}
 
 ######################################################################
 ######################### Analysis ###################################
@@ -464,7 +477,6 @@ plotKnow <- function(LHS, Title="", yLim, ppos, H=0.01, plt=TRUE, write=TRUE, ..
   lis <- y - cis[, 1] 
   uis <- cis[, 2] - y
   se <- summary(cmod)$coefficients[, "Std. Error"]
-  pvals <- pfmt(cpair$p.value)
   #
   if (plt) {
     if (write) {
@@ -492,12 +504,13 @@ plotKnow <- function(LHS, Title="", yLim, ppos, H=0.01, plt=TRUE, write=TRUE, ..
         tot$pval))
     if (write) dev.off()
   }
-  return(list(means=y, se=se, cis=cis, pvals=pvals))
+  return(list(means=y, se=se, cis=cis,
+    attdiff=att, contdiff=cont, totdiff=tot))
 }
 
 
 # Regressions for knowledge
-doRegKnow <- function(RHS, dat) {
+doRegKnow2 <- function(RHS, dat) {
   fmtp <- function(x) 
     ifelse(x <0.001, "<0.001", formatC(x, digits=3, format="f"))
   modc <- lm(as.formula(paste(RHS, "~ Age + Gender + Country + Educ2")),
@@ -511,6 +524,36 @@ doRegKnow <- function(RHS, dat) {
   rownames(modc) <- gsub("Educ2", "Education: ", rownames(modc))
   modc
 }
+
+#' @title doRegKnow
+#' 
+#' @description  Compute means for knowledge items
+#' 
+#' @param var Name of the know item
+#' 
+#' @return list
+#'
+#' @export 
+doRegKnow <- function(var, donorm = FALSE) {
+  allknow = append(cstate(), sstate())
+  answer <- allknow[[var]][2]
+  kdat[var][kdat[var] == "TimedOut"] <- NA
+  kdat[var] <- as.numeric(kdat[var] == answer)
+  Eq <- as.formula(paste(var, "~ -1 + VideoArm"))
+  mod <- lm(Eq, data = kdat)
+  cf = coef(mod)
+  if (donorm) {
+    cf <- cf - cf[1]
+    se <- summary(mod)$coefficients[, 2]
+    ci <- data.frame(rbind(
+     VideoArmPlacebo = cf[2] + c(-1, 1) * (1.96 * se[2]),
+     VideoArmTreatment = cf[3] + c(-1, 1) * (1.96 * se[3])))
+  } else {
+    ci = data.frame(confint(mod))
+  }
+  list(cf = cf, ci =ci)
+}
+
 
 
 ######################################################################

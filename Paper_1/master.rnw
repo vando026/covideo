@@ -72,6 +72,7 @@ home <- file.path(Sys.getenv("HOME"), "Seafile\\Heidelberg\\Projects\\CoVideo\\P
 output <- file.path(home, "output")
 dat_all <- load_covideo()
 load(file.path(output, "Results.RData"), envir=.GlobalEnv)
+load(file.path(output, "ResultsFigs.RData"), envir=.GlobalEnv)
 @
 
 <<echo=FALSE>>=
@@ -79,25 +80,25 @@ fmt <- function(x, d=0) formatC(x, format="f", digits=d, big.mark=",")
 @
 
 <<echo=FALSE>>=
-adiff <- res_all$means["VideoArmTreatment"] - res_all$means['VideoArmControl']
-adiff2 <- res_all$means["VideoArmTreatment"] - res_all$means['VideoArmPlacebo']
+adiff <- know_res$means["VideoArmTreatment"] - know_res$means['VideoArmControl']
+adiff2 <- know_res$means["VideoArmTreatment"] - know_res$means['VideoArmPlacebo']
 an <- length(c(sstate(), cstate()))
-amax <- an - res_all$means["VideoArmControl"]
-amax2 <- an - res_all$means["VideoArmPlacebo"]
-acorrect <- res_all$means["VideoArmControl"]/an*100
+amax <- an - know_res$means["VideoArmControl"]
+amax2 <- an - know_res$means["VideoArmPlacebo"]
+acorrect <- know_res$means["VideoArmControl"]/an*100
 @
 
 <<echo=FALSE>>=
-kdiff <- res_know$means["VideoArmTreatment"] - res_know$means['VideoArmControl']
-kdiff2 <- res_know$means["VideoArmTreatment"] - res_know$means['VideoArmPlacebo']
+kdiff <- know_res$means["VideoArmTreatment"] - know_res$means['VideoArmControl']
+kdiff2 <- know_res$means["VideoArmTreatment"] - know_res$means['VideoArmPlacebo']
 kn <- length(cstate())
-kmax <- kn - res_know$means["VideoArmControl"]
-kmax2 <- kn - res_know$means["VideoArmPlacebo"]
-corrects <- res_know$means["VideoArmControl"]/kn*100
+kmax <- kn - know_res$means["VideoArmControl"]
+kmax2 <- kn - know_res$means["VideoArmPlacebo"]
+corrects <- know_res$means["VideoArmControl"]/kn*100
 @
 
 
-<<echo=FALSE>>=
+<<echo=FALSE, eval=FALSE>>=
 kns <- length(sstate())
 kmaxc <- kn - res_spr$means["VideoArmControl"]
 correctc <- res_spr$means["VideoArmControl"]/kns*100

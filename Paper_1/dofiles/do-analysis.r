@@ -2,6 +2,7 @@
 ## Project: COVID-19
 ## Author: AV / Created: 20May2020 
 
+dat_all <- load_covideo()
 ######################################################################
 ######################### CONSORT ####################################
 ######################################################################
@@ -59,6 +60,34 @@ res$lan <- dtab(dat_all$Language)
 res$ctry <- dtab(dat_all$Country)
 res$educ <- dtab(dat_all$Educ2)
 
+######################################################################
+######################### KNow items #################################
+######################################################################
+getTot1 <- function(x, state) {
+  dat <- dat_all[c("VideoArm", x)]
+  correct <- state[[x]][2]
+  yy  <- ifelse(correct=="False", "True", "False")
+  dat[[x]][dat[[x]]=="TimedOut"] <- yy
+  xx <- table(dat)
+  xt <- prop.table(xx, 1)
+  xx <- format(xx, big.mark=",")
+  xt <- xt[, colnames(xt) == correct]
+  xt <- formatC(xt*100, 1, format="f")
+  xx <- data.frame(cbind(xx, pp=xt))
+  xx <- data.frame(xx[1, ], xx[2, ], xx[3, ])
+  xx
+}
+tabc <- data.frame(t(sapply(names(cstate()), getTot1, cstate())))
+tabc$Label <- names(cstate())
+rownames(tabc) <- unlist(Map(paste0,
+  c(seq(length(cstate()))), c(". "),  
+  sapply(names(cstate()), function(x) cstate()[[x]][1])))
+tabs <- data.frame(t(sapply(names(sstate()), getTot1, sstate())))
+tabs$Label <- names(sstate())
+rownames(tabs) <- unlist(Map(paste0,
+  c(seq(length(cstate()) + 1, length(c(cstate(), sstate())))), c(". "),  
+  sapply(names(sstate()), function(x) sstate()[[x]][1])))
+
 
 ######################################################################
 ######################### Video data #################################
@@ -72,8 +101,6 @@ less150 <-  prop.table(table(vdat$VideoTime_category))[1]
 vdat <- mutate(vdat, VideoTime = ifelse(VideoTime > 150, 150, VideoTime))
 meanwatch <- mean(vdat$VideoTime)
 
-save(tab0, flow, res, tabc, tabs, res_know, res_spr, res_all,
-  reg_clinic, reg_clinic_trt, reg_spread, reg_spread_trt, dat_trt_n, 
-  reg_all, reg_all_trt, agediff, agediffs, agediffa, watched, less150,
+save(tab0, tabc, flow, res, watched, less150,
   leftwatch, meanwatch, file=file.path(output, "Results.RData"))
 
