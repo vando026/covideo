@@ -148,7 +148,7 @@ Word count < 3,000
 \bibliographystyle{unsrtnat} % style of bibliography
 
 
-<<tabs, child='supp.Rnw', eval=TRUE>>=
+<<tabs, child='supp.Rnw', eval=FALSE>>=
 @
 
 

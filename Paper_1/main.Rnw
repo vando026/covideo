@@ -90,7 +90,7 @@ Richards2015}
 
 
 Participants answered 18 questions on preventive COVID-19 behaviors. All items required
-True/False responses and all participants received the knowledge items. To prevent online
+True or False responses and all participants received the knowledge items. To prevent online
 searching for answers, participants had a 30 second count-down to respond to each
 item. To ensure post-trial access to treatment,\citep{Doval2015} participants in the
 APC and do-nothing arm could choose to watch the E-E video at the end of the
@@ -174,8 +174,6 @@ an increase of \Sexpr{know_res$contdiff$diff}/\Sexpr{fmt(amax2, 2)} $=$
 ctl <- arrange(ctl, desc(est))
 @
 
-
-
 Figure \ref{fig:forest} shows the proportion of correct responses to each of the 18
 knowledge items (see also Table \ref{tab:tabk}).  The highest correctly answered item was
 \Sexpr{fmt(ctl[1, 2]*100, 1)}\%  (``An effective way to prevent COVID-19 spread is to wash
@@ -200,9 +198,6 @@ video. Of these participants, \Sexpr{fmt(leftwatch)} received the E-E video,
 
 
 \subsection*{Discussion}
-
-% There is a critical need for public health actors to disseminate scientific information
-% about the prevention of COVID-19. 
 
 We have designed a short, animated E-E video to disseminate information about
 preventive COVID-19 behaviors.\citep{Adam2020, Vandormael2020b} To evaluate the E-E
