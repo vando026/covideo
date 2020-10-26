@@ -26,8 +26,8 @@
 % \usepackage[natbib=true, style=nature, isbn=false, doi=false, url=false]{biblatex}
 % \addbibresource{library.bib}
 
-\graphicspath{{C:/Users/alainv/Seafile/Heidelberg/Projects/CoVideo/Paper_1/output/}
-{C:/Users/alain.vandormael/Seafile/Heidelberg/Projects/CoVideo/Paper_1/output/}}
+\graphicspath{{C:/Users/alainv/Seafile/Heidelberg/Projects/CoVideo/Paper_2/output/}
+{C:/Users/alain.vandormael/Seafile/Heidelberg/Projects/CoVideo/Paper_2/output/}}
  
 \titlespacing\subsection{0pt}{12pt plus 4pt minus 2pt}{0pt plus 2pt minus 2pt}
   
@@ -42,7 +42,6 @@
 
 <<echo=FALSE>>=
 library(covideo)
-library(xtable)
 library(tidyverse)
 knitr::opts_chunk$set(
   fig.width=5, fig.heigh=5,
@@ -53,11 +52,10 @@ knitr::opts_chunk$set(
 
 
 <<echo=FALSE>>=
-home <- file.path(Sys.getenv("HOME"), "Seafile\\Heidelberg\\Projects\\CoVideo\\Paper_1")
+home <- file.path(Sys.getenv("HOME"), "Seafile\\Heidelberg\\Projects\\CoVideo\\Paper_2")
 output <- file.path(home, "output")
 dat_all <- load_covideo()
 load(file.path(output, "Results.RData"), envir=.GlobalEnv)
-load(file.path(output, "ResultsFigs.RData"), envir=.GlobalEnv)
 @
 
 <<echo=FALSE>>=
@@ -83,8 +81,7 @@ arm_n <- tapply(dat_all$ID, dat_all$VideoArm, function(x) length(unique(x)))
 @
 
 
-\title{The effectiveness of an entertainment-education video on COVID-19 prevention
-knowledge: an online randomized controlled trial of \Sexpr{fmt(flow$In)} adults in the
+\title{List experiment and behavioral intent COVID-19: an online randomized controlled trial of \Sexpr{fmt(flow$In)} adults in the
 USA, Mexico, UK, Germany, and Spain.  }
 \date{\vspace{-8ex}}
 
@@ -132,10 +129,10 @@ Word count < 3,000
 <<results, child='main.Rnw', eval=TRUE>>=
 @
 
-<<tabs, child='tables.Rnw', eval=TRUE>>=
+<<tabs, child='tables.Rnw', eval=FALSE>>=
 @
 
-<<tabs, child='figures.Rnw', eval=TRUE>>=
+<<tabs, child='figures.Rnw', eval=FALSE>>=
 @
 
 % \subsection*{References}
@@ -148,7 +145,7 @@ Word count < 3,000
 \bibliographystyle{unsrtnat} % style of bibliography
 
 
-<<tabs, child='supp.Rnw', eval=TRUE>>=
+<<tabs, child='supp.Rnw', eval=FALSE>>=
 @
 
 

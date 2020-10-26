@@ -1,0 +1,19 @@
+% !Rnw root = master.Rnw
+%! TEX root = master.tex
+\Sexpr{knitr::set_parent('master.Rnw')}
+
+
+
+\subsection*{Abstract}
+
+
+\textbf{Background:} 
+
+\textbf{Methods:} 
+
+\textbf{Findings:} 
+
+
+\textbf{Interpretation:} 
+
+\clearpage

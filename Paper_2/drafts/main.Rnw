@@ -1,0 +1,159 @@
+% !Rnw root = master.Rnw
+%! TEX root = master.tex
+\Sexpr{knitr::set_parent('master.Rnw')}
+
+
+
+\subsection*{Introduction}
+
+A large amount of published health information about the novel coronavirus (COVID-19) has
+been disseminated by the traditional mass media since the outbreak of the
+pandemic.\citep{Cinelli2020,Kouzy2020,Mian2020a} However, it is not clear if this
+information has improved knowledge of preventive COVID-19 behaviours. By preventive
+behaviours, we mean the public's adoption of practices such as social distancing and hand
+sanitation (among others) that can reduce the spread of COVID-19. 
+
+Arguably, one possible limitation of mainstream mass media is that it is perceived
+as politicized and culturally localized, thus limiting the persuasiveness of health
+messages about COVID-19.\citep{Garfin2020a, Garrett2020} It is also likely that
+traditional mass media channels (e.g., local or national television networks) have missed
+key segments of the population, such as young people (18--35 years) who are
+disproportionately more likely to transmit the virus.\citep{Dowd2020, Harris2020,
+Zhao2020} An effective public health response could benefit from the rapid distribution of
+entertainment-education (E-E) approaches through social media channels to a diverse and
+global audience.\citep{Hahn2020, Block2020} 
+
+We have designed a short, wordless, and animated E-E video to improve knowledge of
+preventive COVID-19 behaviours.  The E-E video was released on Stanford Medicine's YouTube
+channel on March 21, 2020 and reached 332,000 views on YouTube, 220,000 views on
+Instagram, 294,000 views on Facebook, and 402,000 views on Twitter, with a cumulative
+count of 1.2 million views within 10 days.\citep{Adam2020} Using a randomized
+controlled trial (RCT), we evaluate the E-E video's effectiveness among online participants from
+the United States of America (USA), Mexico, the United Kingdom (UK), Germany, and Spain. 
+
+
+\subsection*{Methods}
+
+\paragraph{Study design and participants} 
+
+This was a multi-site, parallel group, RCT comparing the effectiveness of the E-E video
+against an attention placebo control (APC) video and do-nothing.\citep{Vandormael2020b} We
+used an online platform called Prolific Academic (\url{https://www.prolific.co}) to enroll
+participants on a ``first come, first served'' basis. Participant eligibility included
+being  18 to 59 years of age (male, female, or other), having residence in the USA, the UK,
+Germany, Spain, or Mexico, and having proficiency in English, German, or Spanish. The
+trial was hosted and deployed on Gorilla (\url{www.gorilla.sc}), which is a cloud platform
+that provides versatile tools to undertake online, experimental, and behavioural
+research.\citep{Anwyl-Irvine2020} The study and its outcomes were registered at the German
+Clinical Trials Register (www.drks.de) on May 12th, 2020: \#DRKS00021582. Ethical approval
+was obtained from the Stanford University IRB on April 12, 2020, \#55820.    
+
+\paragraph{Randomization and masking}
+
+Randomization was at a 1:1:1 ratio for the three arms of the trial.  Because Prolific
+Academic handled the interaction between the study investigators and participants, the
+participants were completely anonymous to the study investigators. Participants
+self-responded to the survey questions and self-submitted their responses anonymously on
+the Gorilla platform. The study investigators were blinded to the group
+allocation.\citep{Vandormael2020b} 
+
+
+\paragraph{Procedures}
+
+Participants began the online study on the Gorilla platform by answering basic demographic
+questions about their age, sex, primary language, country of residence, and highest
+education completed.
+
+Participants were  then randomly assigned by Gorilla to the E-E video, APC, or do-nothing.
+The E-E video describes how the novel coronavirus is spread (airborne, physical contact),
+and recommends best practices to prevent or reduce the spread of COVID-19 (staying at
+home, not congregating in public spaces, and sanitizing hands and surfaces). It also
+covers the mass media coverage of the epidemic and a subplot about the stockpiling of
+essential goods (\url{https://www.youtube.com/watch?v=rAj38E7vrS8}).\citep{Adam2020}
+
+
+The APC is also a wordless, animated video with the same duration as the E-E video.  Its
+content describes how small choices become actions, which become habits, which become a
+way of life (\url{https://www.youtube.com/watch?v=_HEnohs6yYw}).  We included an APC to
+account for possible attention effects elicited by the video medium. APC conditions should
+mimic the ``inactive'' components of an intervention—the effect of watching the
+video---while not containing any of the ``active'' intervention components---the content
+delivered by the video.\citep{Freedland2011} We did not make the assumption that the
+E-E video is better than nothing (i.e., no video). It is possible that the E-E video could
+motivate reactance to our COVID-19 prevention message.\citep{Dillard2005,Miller2007,
+Richards2015} 
+
+
+Participants answered 18 questions on preventive COVID-19 behaviors. All items required
+True or False responses and all participants received the knowledge items. To prevent online
+searching for answers, participants had a 30 second count-down to respond to each
+item. To ensure post-trial access to treatment,\citep{Doval2015} participants in the
+APC and do-nothing arm could choose to watch the E-E video at the end of the
+study. 
+
+
+\paragraph{Statistical analysis}
+
+
+The primary outcome was the average number of correct answers to the 18 knowledge
+questions.  For each participant, we created an overall knowledge score (minimum $=$ 0,
+maximum $=$ 18) by adding the correctly answered items. We used an ordinary least squares
+(OLS) regression to estimate the mean knowledge score by trial arm and to estimate the
+difference in knowledge scores between trial arms. We defined the difference in mean
+knowledge scores between the E-E video and do-nothing arms as the total effect, the
+difference between the APC and do-nothing arms as the attention effect, and the difference
+between the E-E video and APC arms as the content effect.  We also summarized the
+participant characteristics by obtaining means and standard deviations of age, gender,
+primary language, country of residence, and education status.  Statistical analyses were
+performed with R software version 4.2.
+
+
+\paragraph{Role of the funding source}
+
+The funder of the study had no role in study design, data collection, data analysis, data
+interpretation, or writing of the report. The corresponding author had full access to all
+the data in the study and had final responsibility for the decision to submit for
+publication.
+
+\subsection*{Results}
+
+
+Between \Sexpr{res$dates[1]} and \Sexpr{res$dates[2]}, we enrolled \Sexpr{fmt(flow$In)}
+participants through the Prolific Academic platform. A total of  \Sexpr{fmt(flow$In -
+flow$Start)} participants were randomly assigned to the E-E video
+(\Sexpr{fmt(flow$CoVidN)}), APC (\Sexpr{fmt(flow$APCN)}), and do-nothing
+(\Sexpr{fmt(flow$CtrlN)}) arms (Figure \ref{fig:dataflow}).  Between recruitment and
+randomization, \Sexpr{flow$Start} participants were lost and  after randomization another
+\Sexpr{flow$Ctrl} (do-nothing), \Sexpr{flow$APC} (APC), and \Sexpr{flow$Trt} (E-E video)
+were lost for unknown reasons (possibly due  technical reasons such as a lost
+internet connection, issues with linking to the video host, YouTube, server complications,
+etc).  A total of \Sexpr{fmt(flow$FinalN)} participants completed the trial and
+contributed data to the final analysis. 
+
+The majority of participants  reported their residence in the UK
+(\Sexpr{res$ctry["United Kingdom"]}\%) or the USA
+(\Sexpr{res$ctry["United States"]}\%), and \Sexpr{res$lan["EN"]}\% of participants reported English as their first
+language.  The sample was relatively well-educated, with \Sexpr{sum(res$educ[c(3,4)])}\%
+having some college education or higher (BA, MA equivalent or PhD).  Table \ref{tab:tab0}
+shows the percentage of participants in each arm by age, gender, country of residence,
+educational status, and primary language. 
+
+
+
+\subsection*{Discussion}
+
+
+
+\paragraph{Contributors}
+
+% AV wrote the paper and undertook the statistical analysis. TB, MA, MG, and JG provided
+% comments and feedback. MA designed, produced, and created the E-E video. TB and AV designed
+% the trial. AV, TB, MA, and MG contributed to the questionnaire development.
+
+
+\paragraph{Declaration of interests}
+We declare no competing interests. 
+
+\paragraph{Acknowledgments}
+TB is funded by the Alexander von Humboldt University Professor Prize.
+
