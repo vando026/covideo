@@ -2,9 +2,12 @@
 % !Rnw root = master.Rnw
 \Sexpr{knitr::set_parent('master.Rnw')}
 
+\clearpage
+
 
 \subsection*{Figures}
 \label{sub:Figures}
+
 
 \begin{figure}[!ht]
 \centering
@@ -26,17 +29,17 @@
 \end{figure} 
 
 \renewcommand{\note}{%
-Mean differences between the E-E video, Attention Placebo Control (APC), and Control (no
-video) are reported with p-values ($N= $\Sexpr{fmt(flow$FinalN)}).  Total effect represents
-the difference in means between the E-E video and the Control arm; Attention effect represents
-the difference in means between the APC and Control amd; and Content effect represents
+Mean differences between the E-E video, Attention Placebo Control (APC), and do-nothing
+arms are reported with p-values.  Total effect represents
+the difference in means between the E-E video and the do-nothing arm; Attention effect represents
+the difference in means between the APC and do-nothing arm; and Content effect represents
 the difference in means between the E-E video and the APC arm.  }
 
 \begin{figure}[!ht]
 \centering
 \includegraphics[scale=0.80]{KnowledgeAll.png}
 
-\caption{Mean score for the COVID-19 knowledge questions by trial arm.   \note    }
+\caption{Mean score for the COVID-19 knowledge questions by trial arm ($N= $\Sexpr{fmt(flow$FinalN)}).   \note    }
 
 \label{fig:knowall}
 \end{figure} 

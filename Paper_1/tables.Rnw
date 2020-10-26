@@ -7,6 +7,7 @@
 \subsection*{Tables}
 \label{sub:Tables}
 
+
 \newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
 \setlength{\tabcolsep}{5pt}
 \renewcommand{\arraystretch}{1.0}% Tighter
@@ -14,7 +15,6 @@
 
 \begin{table}[h!]
 \centering
-\begin{threeparttable}
 
 \caption{Shows the age, gender, country of residence, and education status, and primary language of
 participants by trial arm.} 
@@ -23,9 +23,9 @@ participants by trial arm.}
 \footnotesize
 \begin{tabular}{l *{6}{C{0.8cm}}}
   \toprule
-  & \multicolumn{2}{c}{\textbf{Control}} &
+  & \multicolumn{2}{c}{\textbf{Do-nothing}} &
   \multicolumn{2}{c}{\textbf{APC}}  &
-  \multicolumn{2}{c}{\textbf{CoVideo}} \\ 
+  \multicolumn{2}{c}{\textbf{E-E video}} \\ 
   \cmidrule(r){2-3}  \cmidrule(r){4-5} \cmidrule(r){6-7} 
   & \textbf{N} & \textbf{\%} 
   & \textbf{N} & \textbf{\%} 
@@ -91,10 +91,6 @@ print(xtable(Lang[, -1], digits=1),
 @
 \bottomrule
 \end{tabular}
-\begin{tablenotes} 
-\scriptsize  
-\end{tablenotes}
-\end{threeparttable}
 \end{table}
 
 

@@ -13,22 +13,21 @@
 \renewcommand{\arraystretch}{1.0}% Tighter
 \setlength{\tabcolsep}{5pt}
 
-% \begin{table}[h!]
-% \centering
+\begin{table}[h!]
+\centering
 \begin{threeparttable}
 
-\caption{Correct response rates for clinical knowledge of COVID-19 and knowledge of
-behaviors to prevent  COVID-19 spread by CoVideo, Attention
-Placebo Control (APC), and Control arms  ($N = $ \Sexpr{fmt(flow$FinalN)}).}
+\caption{Response rates for the knowledge of preventive COVID-19 behaviors by trial arm
+($N = $ \Sexpr{fmt(flow$FinalN)}).}
 
 \label{tab:tabk}
 \footnotesize
 
 \begin{tabular}{p{7.0cm} *{9}{C{0.75cm}}}
   \toprule
-  & \multicolumn{3}{c}{\textbf{Control}} &
+  \multicolumn{3}{c}{\textbf{E-E video}} &
   \multicolumn{3}{c}{\textbf{APC}}  &
-  \multicolumn{3}{c}{\textbf{CoVideo}} \\ 
+  \multicolumn{3}{c}{\textbf{Do-nothing}}  \\ 
   \cmidrule(r){2-4}  \cmidrule(r){5-7} \cmidrule(r){8-10} 
   & {\textbf{False}} &
    {\textbf{True}} &
@@ -40,7 +39,6 @@ Placebo Control (APC), and Control arms  ($N = $ \Sexpr{fmt(flow$FinalN)}).}
    {\textbf{True}} &
    {\textbf{\%\tnote{$*$}}} \\
   \midrule
-\multicolumn{2}{l}{\textit{Clinical knowledge of COVID-19 spread}} \\
 <<echo=FALSE, results='asis'>>=
 print(xtable(tabc[, 1:9]),
       include.rownames=TRUE,
@@ -50,7 +48,6 @@ print(xtable(tabc[, 1:9]),
       only.contents=TRUE)
 @
 \hline 
-\multicolumn{2}{l}{\textit{Knowledge of preventing COVID-19 spread}} \\
 <<echo=FALSE, results='asis'>>=
 print(xtable(tabs[, c(1:9)]),
       include.rownames=TRUE,
@@ -65,7 +62,7 @@ print(xtable(tabs[, c(1:9)]),
 \scriptsize  * Represents the percentage of items correctly answered.
 \end{tablenotes}
 \end{threeparttable}
-% \end{table}
+\end{table}
 
 
 

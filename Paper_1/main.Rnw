@@ -8,57 +8,50 @@
 
 A large amount of published health information about the novel coronavirus (COVID-19) has
 been disseminated by the traditional mass media since the outbreak of the
-pandemic.\autocite{Cinelli2020,Kouzy2020,Mian2020a} However, it is not clear if this
+pandemic.\citep{Cinelli2020,Kouzy2020,Mian2020a} However, it is not clear if this
 information has improved knowledge of preventive COVID-19 behaviours. By preventive
-behaviours, we mean the public's adoption of practices such as social distancing, reduced
-physical contact, and hand sanitation (among others) that can prevent the spread of
-COVID-19. 
+behaviours, we mean the public's adoption of practices such as social distancing and hand
+sanitation (among others) that can reduce the spread of COVID-19. 
 
-Arguably, one possible limitation of mainstream mass media is that it has been perceived
+Arguably, one possible limitation of mainstream mass media is that it is perceived
 as politicized and culturally localized, thus limiting the persuasiveness of health
-messages about COVID-19.\autocite{Garfin2020a, Garrett2020} It is also likely that
+messages about COVID-19.\citep{Garfin2020a, Garrett2020} It is also likely that
 traditional mass media channels (e.g., local or national television networks) have missed
 key segments of the population, such as young people (18--35 years) who are
-disproportionately more likely to transmit the virus to older people ($\geq$ 50
-years).\autocite{Dowd2020, Harris2020, Zhao2020} An effective public health response could
-therefore benefit from entertainment-education (E-E) approaches that reach a wide
-age-range and focus on behaviours to prevent COVID-19 spread.\autocite{Hahn2020, Block2020} 
+disproportionately more likely to transmit the virus.\citep{Dowd2020, Harris2020,
+Zhao2020} An effective public health response could benefit from the rapid distribution of
+entertainment-education (E-E) approaches through social media channels to a diverse and
+global audience.\citep{Hahn2020, Block2020} 
 
-To improve knowledge about preventive COVID-19 behaviours, we have designed a wordless,
-animated E-E video that can be rapidly distributed to a diverse and
-global audience through social media channels.\autocite{Adam2020} With a short duration
-(2.30 minutes), the E-E video contains no speech and minimizes cultural identifiers to
-increase universality and appeal. The E-E video was released on Stanford Medicine's YouTube
-channel on March 21, 2020, and accumulated a large number of views (`went viral') within
-24 hours.  After ten days, it had reached 332,000 views on YouTube, 220,000 views on
+We have designed a short, wordless, and animated E-E video to improve knowledge of
+preventive COVID-19 behaviours.  The E-E video was released on Stanford Medicine's YouTube
+channel on March 21, 2020 and reached 332,000 views on YouTube, 220,000 views on
 Instagram, 294,000 views on Facebook, and 402,000 views on Twitter, with a cumulative
-count of 1.2 million views.\autocite{Adam2020} 
+count of 1.2 million views within 10 days.\citep{Adam2020} Using a randomized
+controlled trial (RCT), we evaluate the E-E video's effectiveness among online participants from
+the United States of America (USA), Mexico, the United Kingdom (UK), Germany, and Spain. 
 
-Using a randomized controlled trial, we evaluate the E-E video's effectiveness to improve
-COVID-19 preventive knowledge   among online participants from the United States (US),
-Mexico, the United Kingdom (UK), Germany, and Spain. The comparators are an attention
-placebo control (APC) video and do-nothing.  Our study results will inform the design of
-future E-E videos to disseminate evidence-based health recommendations related to COVID-19
-as well as other public health emergencies.   
+
+% Our study results will inform the design of future E-E videos to disseminate
+% evidence-based health recommendations related to COVID-19 as well as other public health
+% emergencies.   
 
 
 \subsection*{Methods}
 
 \paragraph{Study design and participants} 
 
-This was a multi-site, parallel group, randomized controlled trial  comparing the
-effectiveness of the E-E video  against an APC video and
-do-nothing.\autocite{Vandormael2020b} We used an online platform called Prolific Academic
-(\url{https://www.prolific.co}) to recruit participants, who selected to enter the study
-on a ``first come, first served'' basis. Participants had to be between the ages of 18 and
-59 years (male, female, or other) and have current residence in the US, the UK, Germany,
-Spain, or Mexico.  Participants were excluded from the study if they could not speak
-English, German, or Spanish. The trial was hosted and deployed on Gorilla™
-(\url{www.gorilla.sc}), which is a cloud platform that provides versatile tools to
-undertake online, experimental, and behavioural research.\autocite{Anwyl-Irvine2020} The
-study and its outcomes were registered at the German Clinical Trials Register
-(www.drks.de) on May 12th, 2020: \#DRKS00021582. Ethical approval was obtained from the
-Stanford University IRB on April 12, 2020, \#55820.    
+This was a multi-site, parallel group, RCT comparing the effectiveness of the E-E video
+against an attention placebo control (APC) video and do-nothing.\citep{Vandormael2020b} We
+used an online platform called Prolific Academic (\url{https://www.prolific.co}) to enroll
+participants on a ``first come, first served'' basis. Participant eligibility included
+being  18 to 59 years of age (male, female, or other), having residence in the USA, the UK,
+Germany, Spain, or Mexico, and having proficiency in English, German, or Spanish. The
+trial was hosted and deployed on Gorilla (\url{www.gorilla.sc}), which is a cloud platform
+that provides versatile tools to undertake online, experimental, and behavioural
+research.\citep{Anwyl-Irvine2020} The study and its outcomes were registered at the German
+Clinical Trials Register (www.drks.de) on May 12th, 2020: \#DRKS00021582. Ethical approval
+was obtained from the Stanford University IRB on April 12, 2020, \#55820.    
 
 \paragraph{Randomization and masking}
 
@@ -66,8 +59,8 @@ Randomization was at a 1:1:1 ratio for the three arms of the trial.  Because Pro
 Academic handled the interaction between the study investigators and participants, the
 participants were completely anonymous to the study investigators. Participants
 self-responded to the survey questions and self-submitted their responses anonymously on
-the Gorilla platform. The study investigators and those involved in the data analyses 
-were blinded to the group  allocation.  
+the Gorilla platform. The study investigators were blinded to the group
+allocation.\citep{Vandormael2020b} 
 
 
 \paragraph{Procedures}
@@ -77,48 +70,47 @@ questions about their age, sex, primary language, country of residence, and high
 education completed.
 
 Participants were  then randomly assigned by Gorilla to the E-E video, APC, or do-nothing.
-The E-E video is a wordless, animated video about how the novel coronavirus is spread
-(airborne, physical contact), and recommends best practices to prevent or reduce the
-spread of COVID-19 (staying at home, not congregating in public spaces, and sanitizing
-hands/surfaces). It also covers the mass media coverage of the epidemic and a subplot
-about the stockpiling of essential goods
-(\url{https://www.youtube.com/watch?v=rAj38E7vrS8}). 
+The E-E video describes how the novel coronavirus is spread (airborne, physical contact),
+and recommends best practices to prevent or reduce the spread of COVID-19 (staying at
+home, not congregating in public spaces, and sanitizing hands and surfaces). It also
+covers the mass media coverage of the epidemic and a subplot about the stockpiling of
+essential goods (\url{https://www.youtube.com/watch?v=rAj38E7vrS8}).\citep{Adam2020}
 
 
-The APC is a wordless, animated video that has the same duration as the E-E video.  Its
-message is about how small choices become actions, which become habits, which become a way
-of life (\url{https://www.youtube.com/watch?v=_HEnohs6yYw}).  We included an APC to
+The APC is also a wordless, animated video with the same duration as the E-E video.  Its
+content describes how small choices become actions, which become habits, which become a
+way of life (\url{https://www.youtube.com/watch?v=_HEnohs6yYw}).  We included an APC to
 account for possible attention effects elicited by the video medium. APC conditions should
 mimic the ``inactive'' components of an intervention—the effect of watching the
-video---while not containing any of the ``active'' intervention components---the message
-delivered by the video.\autocite{Freedland2011} We did not make the assumption that the
+video---while not containing any of the ``active'' intervention components---the content
+delivered by the video.\citep{Freedland2011} We did not make the assumption that the
 E-E video is better than nothing (i.e., no video). It is possible that the E-E video could
-arouse reactance to the COVID-19 prevention message.\autocite{Dillard2005,Miller2007,
-Richards2015} Participants in the do-nothing arm received no video. 
+motivate reactance to our COVID-19 prevention message.\citep{Dillard2005,Miller2007,
+Richards2015} 
 
 
-Participants answered 18 COVID-19 knowledge questions. All items required True/False
-responses and all participants received the knowledge items. As a way to prevent online
-searchers for the answers, participants were given a count-down of 30 seconds to respond
-to each item To ensure post-trial access to treatment,\autocite{Doval2015} participants in
-the APC and do-nothing arm were given the option to watch the E-E video at the end of the
+Participants answered 18 questions on preventive COVID-19 behaviors. All items required
+True/False responses and all participants received the knowledge items. To prevent online
+searching for answers, participants had a 30 second count-down to respond to each
+item. To ensure post-trial access to treatment,\citep{Doval2015} participants in the
+APC and do-nothing arm could choose to watch the E-E video at the end of the
 study. 
 
 
 \paragraph{Statistical analysis}
 
 
-The primary outcome was the mean number of correct responses to the 18 knowledge items.
-For each participant, we created an overall knowledge score (minimum $=$ 0, maximum $=$
-18) by adding the correctly answered items. We used an ordinary least squares (OLS)
-regression to estimate the mean knowledge score by trial arm and to estimate the
-difference in knowledge scores between trial arms. We defined the difference in knowledge
-score between the E-E video and do-nothing arm as the total effect, the difference between
-the APC and do-nothing arm as the attention effect, and the difference between the E-E video
-and APC arm as the content effect.  We also summarized the participant characteristics
-by obtaining means and standard deviations of age, gender, primary
-language, country of residence, and education status.  Statistical analyses were performed
-with R software version 4.2.
+The primary outcome was the average number of correct answers to the 18 knowledge
+questions.  For each participant, we created an overall knowledge score (minimum $=$ 0,
+maximum $=$ 18) by adding the correctly answered items. We used an ordinary least squares
+(OLS) regression to estimate the mean knowledge score by trial arm and to estimate the
+difference in knowledge scores between trial arms. We defined the difference in mean
+knowledge scores between the E-E video and do-nothing arms as the total effect, the
+difference between the APC and do-nothing arms as the attention effect, and the difference
+between the E-E video and APC arms as the content effect.  We also summarized the
+participant characteristics by obtaining means and standard deviations of age, gender,
+primary language, country of residence, and education status.  Statistical analyses were
+performed with R software version 4.2.
 
 
 \paragraph{Role of the funding source}
@@ -143,29 +135,40 @@ internet connection, issues with linking to the video host, YouTube, server comp
 etc).  A total of \Sexpr{fmt(flow$FinalN)} participants completed the trial and
 contributed data to the final analysis. 
 
-The majority of participants  reported their residence in the United Kingdom
-(\Sexpr{res$ctry["United Kingdom"]}\%) or the United States (\Sexpr{res$ctry["United States"]}\%), and \Sexpr{res$lan["EN"]}\% of participants reported English as their first
+The majority of participants  reported their residence in the UK
+(\Sexpr{res$ctry["United Kingdom"]}\%) or the USA
+(\Sexpr{res$ctry["United States"]}\%), and \Sexpr{res$lan["EN"]}\% of participants reported English as their first
 language.  The sample was relatively well-educated, with \Sexpr{sum(res$educ[c(3,4)])}\%
 having some college education or higher (BA, MA equivalent or PhD).  Table \ref{tab:tab0}
 shows the percentage of participants in each arm by age, gender, country of residence,
 educational status, and primary language. 
 
-The E-E video significantly increased our primary endpoint, with higher knowledge in the
-E-E video arm compared with the APC and do-nothing arms (Figure \ref{fig:knowall}). In the
-do-nothing arm, \Sexpr{fmt(know_res$means["VideoArmControl"], 2)} out of the \Sexpr{an}
-items (\Sexpr{fmt(know_res$means["VideoArmControl"]/an*100, 2)}\%) were correctly
-answered.  With this high baseline score, the E-E video could therefore only increase
-knowledge by a maximum of \Sexpr{fmt(amax, 2)} points.  Relative to the do-nothing arm,
-the E-E video increased knowledge by \Sexpr{know_res$totdiff$diff} points
-(\Sexpr{(know_res$totdiff$pval)}), which represents a \Sexpr{fmt(know_res$totdiff$diff,
-2)}/\Sexpr{fmt(amax, 2)} $=$ \Sexpr{fmt(as.numeric(know_res$totdiff$diff)/amax*100, 2)}
-percentage point increase. The average score for the APC arm was
-\Sexpr{fmt(know_res$means["VideoArmPlacebo"],2)}, a correct response rate of
+The E-E video significantly increased knowledge of preventive COVID-19 behaviors when
+compared with the APC and do-nothing arms (Figure \ref{fig:knowall}). In the do-nothing
+arm, participants correctly answered \Sexpr{fmt(know_res$means["VideoArmControl"], 2)}
+(95\% confidence interval (CI): 
+\Sexpr{fmt(know_res$cis["VideoArmControl", "2.5 %"], 2)} --
+\Sexpr{fmt(know_res$cis["VideoArmControl", "97.5 %"], 2)}}) 
+out of the \Sexpr{an} items, which is a
+\Sexpr{fmt(know_res$means["VideoArmControl"]/an*100, 2)}\% correct response rate.  With
+this high baseline score, the E-E video could therefore only increase knowledge by a
+maximum of \Sexpr{fmt(amax, 2)} points.  Relative to the do-nothing arm, the E-E video
+increased knowledge by \Sexpr{know_res$totdiff$diff} points
+(Mean $=$ \Sexpr{fmt(know_res$means["VideoArmTreatment"], 2)}, 
+95\% CI: \Sexpr{fmt(know_res$cis["VideoArmTreatment", "2.5 %"], 2)} --
+\Sexpr{fmt(know_res$cis["VideoArmTreatment", "97.5 %"], 2)}}; 
+\Sexpr{(know_res$totdiff$pval)}), which represents an increase of
+\Sexpr{fmt(know_res$totdiff$diff, 2)}/\Sexpr{fmt(amax, 2)} $=$
+\Sexpr{fmt(as.numeric(know_res$totdiff$diff)/amax*100, 2)}\%. The average score for the
+APC arm was \Sexpr{fmt(know_res$means["VideoArmPlacebo"],2)} 
+(95\% CI: \Sexpr{fmt(know_res$cis["VideoArmPlacebo", "2.5 %"], 2)},
+\Sexpr{fmt(know_res$cis["VideoArmPlacebo", "97.5 %"], 2)}}),
+ a correct response rate of
 \Sexpr{fmt(know_res$means["VideoArmPlacebo"]/an*100, 2)}\%.  When we removed the attention
 effect of the video format, the E-E video increased overall knowledge by
-\Sexpr{know_res$contdiff$diff} points (\Sexpr{know_res$contdiff$pval}), which represents a
-\Sexpr{know_res$contdiff$diff}/\Sexpr{fmt(amax2, 2)} $=$
-\Sexpr{fmt(as.numeric(know_res$contdiff$diff)/amax2*100, 2)} percentage point increase. 
+\Sexpr{know_res$contdiff$diff} points (\Sexpr{know_res$contdiff$pval}), which represents
+an increase of \Sexpr{know_res$contdiff$diff}/\Sexpr{fmt(amax2, 2)} $=$
+\Sexpr{fmt(as.numeric(know_res$contdiff$diff)/amax2*100, 2)}\%.
 
 <<echo=FALSE>>=
 ctl <- arrange(ctl, desc(est))
@@ -174,10 +177,9 @@ ctl <- arrange(ctl, desc(est))
 
 
 Figure \ref{fig:forest} shows the proportion of correct responses to each of the 18
-knowledge items (see also Table \ref{tab:tabk}).  Baseline levels  of COVID-19 prevention
-knowledge were high in the do-nothing arm. The highest correctly answered item was
-\Sexpr{fmt(ctl[1, 2]*100, 1)}\%  (an effective way to prevent COVID-19 spread is to wash
-your hands frequently with soap and water), with most of the remaining items having a
+knowledge items (see also Table \ref{tab:tabk}).  The highest correctly answered item was
+\Sexpr{fmt(ctl[1, 2]*100, 1)}\%  (``An effective way to prevent COVID-19 spread is to wash
+your hands frequently with soap and water''), with most items having a
 $>90\%$ correct response rate. 
 
 
@@ -191,60 +193,62 @@ getMin <- function(x, Lab) {
 As post-access to treatment, participants in the APC and do-nothing arms ($n =
 \Sexpr{fmt(sum(table(dat_all$VideoArm)[-3]))}$) were given the choice to watch the E-E
 video. Of these participants, \Sexpr{fmt(leftwatch)} received the E-E video,
-\Sexpr{round(watched*100, 1)}\% chose to watch the E-E video, and
-\Sexpr{round(less150*100, 1)}\% watched to the end.
+\Sexpr{round(watched*100, 1)}\% chose to view the E-E video, and
+\Sexpr{round(less150*100, 1)}\% viewed the E-E video to the end.
 
 
 
 
 \subsection*{Discussion}
 
+% There is a critical need for public health actors to disseminate scientific information
+% about the prevention of COVID-19. 
 
-There is a critical need for public health actors to disseminate scientific information
-about the prevention of COVID-19. For this purpose, we produced a short, animated E-E
-video that went viral in the first week of release on social media.\autocite{Adam2020} To
-evaluate the E-E video's effectiveness, we enrolled \Sexpr{fmt(flow$In)} online
-participants from the USA, Mexico, UK, Spain, and Germany into a randomized
-controlled trial and compared mean knowledge scores in the E-E arm with an APC
-and a do-nothing arm.  
+We have designed a short, animated E-E video to disseminate information about
+preventive COVID-19 behaviors.\citep{Adam2020, Vandormael2020b} To evaluate the E-E
+video's effectiveness, we enrolled \Sexpr{fmt(flow$In)} online participants from the USA,
+Mexico, UK, Spain, and Germany into a randomized controlled trial.  The primary outcome of
+the study was to compare differences in COVID-19 prevention knowledge between the E-E
+video, an APC video, and a do-nothing trial arms. 
 
 
 
 
 Our results show that the E-E video boosted knowledge of preventive COVID-19 behaviors.
-The baseline knowledge score in the do-nothing arm was
-\Sexpr{fmt(know_res$means["VideoArmControl"], 2)} correct answers out of 18 questions.
-Therefore, another \Sexpr{fmt(amax, 2)} points were needed to achieve a perfect knowledge
-score. The E-E video increased the baseline score by \Sexpr{know_res$totdiff$diff} points,
-which represents a \Sexpr{fmt(as.numeric(know_res$totdiff$diff)/amax*100, 2)}\% increase.
-When we adjusted for the attention effects of the video format, the increase in knowledge
-was \Sexpr{fmt(as.numeric(know_res$contdiff$diff)/amax2*100, 2)}\%.  These gains in
-knowledge, even with already high baseline levels, demonstrate the effectiveness of our
-E-E video to disseminate information about preventive COVID-19 practices. 
+Baseline knowledge in the do-nothing arm was already high, with an average
+\Sexpr{fmt(know_res$means["VideoArmControl"], 1)} of the 18 questions correctly answered
+(\Sexpr{fmt(know_res$means["VideoArmControl"]/an*100, 1)}\%).  Therefore, another
+\Sexpr{fmt(amax, 2)} points were needed to achieve a 100\% score. The E-E video increased
+the baseline score by \Sexpr{know_res$totdiff$diff} points, which represents a knowledge
+increase of \Sexpr{fmt(as.numeric(know_res$totdiff$diff)/amax*100, 1)}\%.  When we
+adjusted for the attention effects of the video format, the increase in knowledge was
+\Sexpr{fmt(as.numeric(know_res$contdiff$diff)/amax2*100, 1)}\%.  These gains in knowledge,
+even with already high baseline levels, demonstrate the effectiveness of our E-E video to
+improve knowledge of preventive COVID-19 behaviors. 
 
 
 Overall, participants in the do-nothing arm correctly answered \Sexpr{fmt(acorrect, 1)}\%
 of the knowledge questions.  The highest correctly answered item was \Sexpr{fmt(ctl[1,
-2]*100, 1)}\%  (an effective way to prevent COVID-19 spread is to wash your hands
-frequently with soap and water), with most of the remaining items having a $>90\%$ correct
-response rate.  These high scores could reflect the relatively well educated status of our
-online sample, with \Sexpr{sum(res$educ[c(3,4)])}\% having some college education or
-higher (BA, MA equivalent It is possible that our sample was more educated than the
-general populations of the United States, the United Kingdom, Germany, Spain, and Mexico.
-Nevetheless, our study shows a similar educational composition to a recent study on
-COVID-19 knowledge in the United States and Great Britain, where 76\% of the online sample
-had some college education or higher.\autocite{Geldsetzer2020}
+2]*100, 1)}\%  (``An effective way to prevent COVID-19 spread is to wash your hands
+frequently with soap and water''), with most of the remaining items having a $>90\%$
+correct response rate.  These high scores could reflect the relatively well educated
+status of our online sample, with \Sexpr{sum(res$educ[c(3,4)])}\% having some college
+education or higher (BA, MA, PhD equivalent).  It is possible that our sample was more
+educated than the general populations of the USA, the UK, Germany, Spain, and Mexico.
+Nevertheless, our study shows a similar educational composition to a recent study on
+COVID-19 knowledge in the USA and UK, where 76\% of the online sample had some college
+education or higher.\citep{Geldsetzer2020}
 
 
 
 
 Our study has several strengths.  We  used state-of-the-art online technology to implement
-our randomized controlled trial.\autocite{Vandormael2020b} Through the Prolific Academic
+our randomized controlled trial.\citep{Vandormael2020b} Through the Prolific Academic
 platform, we rapidly  recruited a large number of participants who speak different
 languages and live in different countries in Europe, North America, and Latin America.  We
 also hosted our study on the Gorilla platform, which provides services for the design,
 implementation, and management of  online trials in behavioural
-research.\autocite{Anwyl-Irvine2020} Gorilla has ready-made tools for randomization to the
+research.\citep{Anwyl-Irvine2020} Gorilla has ready-made tools for randomization to the
 trial arms, blinding, prevention of repeat or duplicate participants, bot checks,
 questionnaire builders, and count-downs (time limits), which we used to prevent
 respondents from searching for online answers to the knowledge questions. Together, these
@@ -258,7 +262,7 @@ participants in the APC and do-nothing arms the option to watch the E-E video.  
 tools to  record whether participants' clicked ``End the study'' or ``Watch the video''
 and also recorded the time spent watching the E-E video.  Our preliminary results show a
 relatively high engagement with the E-E video: of the \Sexpr{round(watched*100)}\%
-participants that chose to watch, \Sexpr{round(less150*100, 1)}\% watched to the end.
+participants that chose to watch, \Sexpr{round(less150*100, 0)}\% watched to the end.
 This engagement is interesting given that respondents already knew most of the COVID-19
 facts featured in the E-E video. It is plausible that the APC and do-nothing arm participants
 believed they could benefit from watching the E-E video and gain further COVID-19 information.
@@ -274,8 +278,8 @@ format that can  be rapidly and comprehensively distributed to improve knowledge
 important public health topic.  We expect that our study will make important contributions
 to the E-E literature.  These lessons can improve the design of E-E videos to disseminate
 public health information for future pandemics.  Our results will also guide future E-E
-strategies to support the long-term COVID-19 response as countries begin to ease lock-down
-restrictions.
+strategies to support the long-term COVID-19 response as countries begin to ease or renew
+lock-down restrictions.
 
 
 \paragraph{Contributors}
@@ -289,6 +293,5 @@ the trial. AV, TB, MA, and MG contributed to the questionnaire development.
 We declare no competing interests. 
 
 \paragraph{Acknowledgments}
-This study is funded by the Alexander von Humboldt University Professor Prize, awarded to
-TB.
+TB is funded by the Alexander von Humboldt University Professor Prize.
 

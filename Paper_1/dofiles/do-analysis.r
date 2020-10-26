@@ -74,7 +74,7 @@ getTot1 <- function(x, state) {
   xt <- xt[, colnames(xt) == correct]
   xt <- formatC(xt*100, 1, format="f")
   xx <- data.frame(cbind(xx, pp=xt))
-  xx <- data.frame(xx[1, ], xx[2, ], xx[3, ])
+  xx <- data.frame(xx[3, ], xx[2, ], xx[1, ])
   xx
 }
 tabc <- data.frame(t(sapply(names(cstate()), getTot1, cstate())))
@@ -101,6 +101,6 @@ less150 <-  prop.table(table(vdat$VideoTime_category))[1]
 vdat <- mutate(vdat, VideoTime = ifelse(VideoTime > 150, 150, VideoTime))
 meanwatch <- mean(vdat$VideoTime)
 
-save(tab0, tabc, flow, res, watched, less150,
+save(tab0, tabc, tabs, flow, res, watched, less150,
   leftwatch, meanwatch, file=file.path(output, "Results.RData"))
 
