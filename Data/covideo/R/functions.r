@@ -253,26 +253,13 @@ mkName <- function(code="", type, datapath) {
 
 #' @title getData
 #' 
-#' @description  Main function to get data
-#' 
-#' @param name Name of csv file
-#' 
-#' @return data.frame
-#'
-#' @export 
-
-
-#' @title getData
-#' 
 #' @description  Function to bring in all the data
 #' 
 #' @param name Name of csv file
 #' 
 #' @return data.frame
 #' @import dplyr
-#' @export 
-
-
+#' @export
 getData <- function(name) {
   Dem <- getDem(name$Dem)
   ListTrt <- getList(name$ListTrt)
@@ -349,65 +336,24 @@ getListData <- function(dat=dat_all) {
     VideoArm = as.factor(VideoArm), TreatList = as.factor(TreatList))
 }
 
-lmMN <- mkMod(RHS = " ~ -1 + VideoArm:TreatList")
-glmMN <- mkMod(model=glm, RHS = " ~ -1 + VideoArm:TreatList", 
-  family=poisson)
-lmDiffDiff <- mkMod(RHS = " ~ VideoArm*TreatList")
-glmDiffDiff <- mkMod(model=glm, RHS = " ~ VideoArm*TreatList", 
-  family=poisson)
-lmDiff <- mkMod(RHS = "~ VideoArm")
-glmDiff <- mkMod(model=glm, RHS = "~ VideoArm", 
-  family=poisson)
+# lmMN <- mkMod(RHS = " ~ -1 + VideoArm:TreatList")
+# glmMN <- mkMod(model=glm, RHS = " ~ -1 + VideoArm:TreatList", 
+#   family=poisson)
+# lmDiffDiff <- mkMod(RHS = " ~ VideoArm*TreatList")
+# glmDiffDiff <- mkMod(model=glm, RHS = " ~ VideoArm*TreatList", 
+#   family=poisson)
+# lmDiff <- mkMod(RHS = "~ VideoArm")
+# glmDiff <- mkMod(model=glm, RHS = "~ VideoArm", 
+#   family=poisson)
 
-doEffects <- function(getMn, getDiff, getDiffDiff) {
-  function(y, dat=ldat, model) {
-    # For now focus on Treatment effect = Total - Attention effects
-    trt_dat <- filter(dat, VideoArm != "Control")
-    trt_dat$VideoArm <- droplevels(trt_dat$VideoArm)
-    trt_dat2 <- filter(trt_dat, TreatList==1)
-    # For now focus on Total effect = Total - Control effects
-    tot_dat <- filter(dat, VideoArm != "Placebo")
-    tot_dat$VideoArm <- droplevels(tot_dat$VideoArm)
-    tot_dat2 <- filter(tot_dat, TreatList==1)
-
-    cat("\n-------------------------- Total Effects -----------------------------------\n")
-    # Get Means
-    cat("\n===> Shows the means and standard errors of each trial condition\n")
-    mntot = getMn(y, tot_dat)
-    print(mntot)
-
-    # Total Effects
-    cat("\n===> Shows the total effect for TreatList, CoVid vs Control\n")
-    ddat <- getDiff(y, tot_dat2)
-    print(ddat)
-
-    cat("\n===> Shows difference in difference for total effect, CoVid vs Control\n")
-    did_tot <- getDiffDiff(y, tot_dat)
-    print(did_tot)
-
-    cat("\n --------------------------- Treatment Effect --------------------------------\n")
-
-    cat("\n===> Shows the means and standard errors of each trial condition\n")
-    mntrt = getMn(y, trt_dat)
-    print(mntrt)
-
-    cat("\n===> Shows the treatment effect for TreatList, CoVid vs APC\n")
-    tdat <- getDiff(y, trt_dat2)
-    print(tdat)
-
-    cat("\n===> Shows difference in difference for treatment effect, CoVid vs APC\n")
-    did_trt <- getDiffDiff(y, trt_dat)
-    print(did_trt)
-
-    # invisible(list(means=mns, treatdiff=tdat, totdiff=ddat, diff_trt=did_trt, diff_tot=did_tot))
-  }
-}
-
-# Run linear models only on list questionsll
-lmEffects <- doEffects(lmMN, lmDiff, lmDiffDiff)
-# Run poisson models on direct behavioral questions
-glmEffects <- doEffects(glmMN, glmDiff, glmDiffDiff)
-
+# # For now focus on Treatment effect = Total - Attention effects
+# trt_dat <- filter(dat, VideoArm != "Control")
+# trt_dat$VideoArm <- droplevels(trt_dat$VideoArm)
+# trt_dat2 <- filter(trt_dat, TreatList==1)
+# # For now focus on Total effect = Total - Control effects
+# tot_dat <- filter(dat, VideoArm != "Placebo")
+# tot_dat$VideoArm <- droplevels(tot_dat$VideoArm)
+# tot_dat2 <- filter(tot_dat, TreatList==1)
 
 
 ######################################################################
@@ -491,17 +437,17 @@ plotKnow <- function(LHS, Title="", yLim, ppos, H=0.01, plt=TRUE, write=TRUE, ..
     axis(1, 1:3, c("Control", "APC", "CoVideo"))
     text(c(1,2,2.75), y, pos=4, labels=formatC(y, format="f", digits=2))
     pbrack(1, 2, ppos[1], H, CEX=0.9,
-      pval=paste0("Attention Effect = ", att$diff,
-        ",\n 95% CI (", att$ci[1], ", ", att$ci[2], "), ", 
-        att$pval))
+      pval=paste0("Attention Effect = ", fmt(att$diff, 2),
+        ",\n 95% CI (", fmt(att$lb, 2), ", ", fmt(att$ub, 2), "), ", 
+        fmt(att$pval, 2)))
     pbrack(2, 3, ppos[2], H, CEX=0.9,
-      pval=paste0("Content Effect = ", cont$diff,
-        ",\n 95% CI (", cont$ci[1], ", ", cont$ci[2], "), ", 
-        cont$pval))
+      pval=paste0("Content Effect = ", fmt(cont$diff, 2),
+        ",\n 95% CI (", fmt(cont$lb, 2), ", ", fmt(cont$ub, 2), "), ", 
+        fmt(cont$pval, 2)))
     pbrack(1, 3, ppos[3], H, CEX=0.9,
-      pval=paste0("Total Effect = ", tot$diff,
-        ",\n 95% CI (", tot$ci[1], ", ", tot$ci[2], "), ", 
-        tot$pval))
+      pval=paste0("Total Effect = ", fmt(tot$diff, 2),
+        ",\n 95% CI (", fmt(tot$lb, 2), ", ", fmt(tot$ub, 2), "), ", 
+        fmt(tot$pval, 2)))
     if (write) dev.off()
   }
   return(list(means=y, se=se, cis=cis,
@@ -559,34 +505,74 @@ doRegKnow <- function(var, donorm = FALSE) {
 ######################################################################
 ######################### Diff and Diff ##############################
 ######################################################################
-lincom <- function(EQ, mod, dig=2) {
+lincom <- function(EQ, mod) {
   lcom <- car::linearHypothesis(mod, EQ)
   t1 <- attributes(lcom)
   tdiff <- t1$value[1]
   tse <- sqrt(t1$vcov[1])
   tci <- tdiff + c(-1, 1) * (1.96 * tse)
   tpval <- lcom[2, 6]
-  list(diff=fmt(tdiff, dig), se=fmt(tse, dig), 
-    ci=fmt(tci, dig), pval=pfmt(tpval))
+  list(diff=tdiff, se=tse, 
+    lb=tci[1], ub=tci[2],
+    pval=pfmt(tpval))
 }
 
-doDiffs <- function(LHS, dat=ldat) {
+doDiffs <- function(LHS, dat) {
+  dat <- mutate(dat, VideoArm = as.factor(VideoArm),
+    TreatList = as.factor(TreatList))
   mod <- lm(as.formula(paste(LHS, "~ -1 + VideoArm:TreatList")), data=dat)
-  data.frame(lapply(eqs, lincom, mod))
+  data.frame(sapply(eqs, lincom, mod))
 }
 
+#' @title diffplot
+#' 
+#' @description  Plot diff and diff analysis for list experiments
+#' 
+#' @param  dat
+#' @param  LHS
+#' @param  ylim
+#' 
+#' @return  NULL
+#'
+#' @export 
+diffPlot <- function(dat, LHS="", yLim, yvals=NULL, H=1) {
+  nm <- names(dat); dat <- dat[[1]]
+  y <- unlist(dat[1, 1:3]) * 100
+  se <- unlist(dat[2, 1:3]) * 100
+  plotCI(1:3, y, se, cex.lab=1.2,
+    bty="n", ylim=yLim, xaxt="n", xlab="", ylab="Prevalence ",
+    lwd=3, pch=16, col=set3, font.lab=2, cex.axis=1.15)
+  # title(paste("This week I will", unlist(btitle[nm])), cex.main=1.3)
+  axis(1, at=1:3, label=c("Control", "APC", "CoVideo"), cex.axis=1.2, font=2)
+  text(x = c(1, 2, 2.80) + 0.025, y=y + 0.5, 
+    label=formatC(y, format="f", digits=1),
+    adj=c(0, 0), cex=1.0)
+  abline(h=y[1], lwd=1, lty=2, col="grey70")
+  pbrack(1, 3, yvals[1], h=H, CEX=0.9,
+    pval=paste0("Total effect = ", 
+      fmt(dat["diff", "toteq"][[1]], 3), ",\n 95% CI (", 
+      fmt(dat["lb", "toteq"][[1]], 2), ", ", 
+      fmt(dat["ub", "toteq"][[1]], 2), "), ", 
+      fmt(dat["pval", "toteq"][[1]], 2)))
+  pbrack(2, 3, yvals[2], h=H, CEX=0.9,
+    pval=paste0("Content effect = ", 
+      fmt(dat["diff", "trteq"][[1]], 3), ",\n 95% CI (", 
+      fmt(dat["lb", "trteq"][[1]], 2), ", ", 
+      fmt(dat["ub", "trteq"][[1]], 2), "), ", 
+      fmt(dat["pval", "trteq"][[1]], 2)))
+}
 
 
 ######################################################################
 ######################### Diffs ######################################
 ######################################################################
 
-# eqs <- list(
-#   ctrdif = "1*VideoArmControl:TreatList1 - 1*VideoArmControl:TreatList0 = 0",
-#   apcdif = "1*VideoArmPlacebo:TreatList1 - 1*VideoArmPlacebo:TreatList0 = 0",
-#   trtdif = "1*VideoArmTreatment:TreatList1 - 1*VideoArmTreatment:TreatList0 = 0",
-#   toteq = "1*VideoArmTreatment:TreatList1 - 1*VideoArmTreatment:TreatList0 -
-#     1*VideoArmControl:TreatList1 + 1*VideoArmControl:TreatList0 = 0",
-#   trteq = "1*VideoArmTreatment:TreatList1 - 1*VideoArmTreatment:TreatList0 -
-#     1*VideoArmPlacebo:TreatList1 + 1*VideoArmPlacebo:TreatList0 = 0")
+eqs <- list(
+  ctrdif = "1*VideoArmControl:TreatList1 - 1*VideoArmControl:TreatList0 = 0",
+  apcdif = "1*VideoArmPlacebo:TreatList1 - 1*VideoArmPlacebo:TreatList0 = 0",
+  trtdif = "1*VideoArmTreatment:TreatList1 - 1*VideoArmTreatment:TreatList0 = 0",
+  toteq = "1*VideoArmTreatment:TreatList1 - 1*VideoArmTreatment:TreatList0 -
+    1*VideoArmControl:TreatList1 + 1*VideoArmControl:TreatList0 = 0",
+  trteq = "1*VideoArmTreatment:TreatList1 - 1*VideoArmTreatment:TreatList0 -
+    1*VideoArmPlacebo:TreatList1 + 1*VideoArmPlacebo:TreatList0 = 0")
 
