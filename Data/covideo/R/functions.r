@@ -286,7 +286,7 @@ getData <- function(name) {
 # Function to wrap statements
 
 bwrap <- function(y, len=14) 
-  paste(strwrap(bstate[y], len), collapse="\n")
+  paste(strwrap(bstate()[y], len), collapse="\n")
 
 #' @title kwrap
 #' 
@@ -326,9 +326,15 @@ mkMod <- function(model=lm, RHS, ...) {
   }
 }
 
-######################################################################
-######################### Behav intent ###############################
-######################################################################
+#' @title getListData
+#' 
+#' @description  Selects list experiment vars
+#' 
+#' @param dat
+#' 
+#' @return data.frame
+#'
+#' @export
 getListData <- function(dat=dat_all) {
   ldat <- dplyr::select(dat_all, VideoArm, TreatList, 
     SocialDist, Wash, StockPile, CleanDishes, CleanSurfaces, UseMedia)
@@ -542,19 +548,19 @@ diffPlot <- function(dat, LHS="", yLim, yvals=NULL, H=1) {
   plotCI(1:3, y, se, cex.lab=1.2,
     bty="n", ylim=yLim, xaxt="n", xlab="", ylab="Prevalence ",
     lwd=3, pch=16, col=set3, font.lab=2, cex.axis=1.15)
-  # title(paste("This week I will", unlist(btitle[nm])), cex.main=1.3)
+  title(paste("This week I will", bwrap(nm, 34)), cex.main=1.3)
   axis(1, at=1:3, label=c("Control", "APC", "CoVideo"), cex.axis=1.2, font=2)
   text(x = c(1, 2, 2.80) + 0.025, y=y + 0.5, 
     label=formatC(y, format="f", digits=1),
     adj=c(0, 0), cex=1.0)
   abline(h=y[1], lwd=1, lty=2, col="grey70")
-  pbrack(1, 3, yvals[1], h=H, CEX=0.9,
+  pbrack(1, 3, yvals[1], h=H, CEX=1.0,
     pval=paste0("Total effect = ", 
       fmt(dat["diff", "toteq"][[1]], 3), ",\n 95% CI (", 
       fmt(dat["lb", "toteq"][[1]], 2), ", ", 
       fmt(dat["ub", "toteq"][[1]], 2), "), ", 
       fmt(dat["pval", "toteq"][[1]], 2)))
-  pbrack(2, 3, yvals[2], h=H, CEX=0.9,
+  pbrack(2, 3, yvals[2], h=H, CEX=1.0,
     pval=paste0("Content effect = ", 
       fmt(dat["diff", "trteq"][[1]], 3), ",\n 95% CI (", 
       fmt(dat["lb", "trteq"][[1]], 2), ", ", 

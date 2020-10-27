@@ -16,17 +16,22 @@
 \begin{table}[h!]
 \centering
 
-\caption{Shows the age, gender, country of residence, and education status, and primary language of
-participants by trial arm.} 
+\caption{Shows the age, gender, country of residence, and education status, and primary
+language of participants by trial arm and list experiment ($N =
+\Sexpr{fmt(flow$FinalN)}$).}
 
-\label{tab:tab0}
+\label{tab:tab1}
 \footnotesize
-\begin{tabular}{l *{6}{C{0.8cm}}}
+\begin{tabular}{l *{12}{C{0.8cm}}}
   \toprule
-  & \multicolumn{2}{c}{\textbf{Do-nothing}} &
-  \multicolumn{2}{c}{\textbf{APC}}  &
-  \multicolumn{2}{c}{\textbf{E-E video}} \\ 
+  & \multicolumn{4}{c}{\textbf{Do-nothing}} &
+  \multicolumn{4}{c}{\textbf{APC}}  &
+  \multicolumn{4}{c}{\textbf{E-E video}} \\ 
   \cmidrule(r){2-3}  \cmidrule(r){4-5} \cmidrule(r){6-7} 
+  \cmidrule(r){8-9}  \cmidrule(r){10-11} \cmidrule(r){12-13} 
+  & \textbf{N} & \textbf{\%} 
+  & \textbf{N} & \textbf{\%} 
+  & \textbf{N} & \textbf{\%} 
   & \textbf{N} & \textbf{\%} 
   & \textbf{N} & \textbf{\%} 
   & \textbf{N} & \textbf{\%} \\
@@ -34,7 +39,7 @@ participants by trial arm.}
   \multicolumn{2}{l}{\textit{Age}} \\
 <<echo=FALSE, results='asis'>>=
 hs <- "\\hspace{0.5em}"
-age <- tab0[[1]]
+age <- tab1[[1]]
 rownames(age)  <- paste(hs, age$Age)
 print(xtable(age[, -1], digits=1),
       include.rownames=TRUE,
@@ -45,7 +50,7 @@ print(xtable(age[, -1], digits=1),
 @
 \multicolumn{2}{l}{\textit{Gender}} \\
 <<echo=FALSE, results='asis'>>=
-sex <- tab0[[2]]
+sex <- tab1[[2]]
 rownames(sex)  <- paste(hs, sex$Gender)
 print(xtable(sex[, -1], digits=1),
       include.rownames=TRUE,
@@ -56,7 +61,7 @@ print(xtable(sex[, -1], digits=1),
 @
 \multicolumn{2}{l}{\textit{Country of residence}} \\
 <<echo=FALSE, results='asis'>>=
-ctry <- tab0[[3]]
+ctry <- tab1[[3]]
 rownames(ctry) <- paste(hs, c("Germany", "Mexico", "Spain", "UK", "US"))
 print(xtable(ctry[, -1], digits=1),
       include.rownames=TRUE,
@@ -67,7 +72,7 @@ print(xtable(ctry[, -1], digits=1),
 @
 \multicolumn{2}{l}{\textit{Education status}} \\
 <<echo=FALSE, results='asis'>>=
-educ <- tab0[[4]]
+educ <- tab1[[4]]
 educ$Educ2  <- factor(educ$Educ2, 
   levels=c("Primary or less", "Completed High", "College, BA", "MA,PhD"))
 rownames(educ) <- paste(hs, c("Primary school", "High school", "BA, Some college", "MA/PhD"))
@@ -80,7 +85,7 @@ print(xtable(educ[, -1], digits=1),
 @
 \multicolumn{2}{l}{\textit{First language}} \\
 <<echo=FALSE, results='asis'>>=
-Lang <- tab0[[5]]
+Lang <- tab1[[5]]
 rownames(Lang) <- paste(hs, c("German", "English", "Spanish (Mexico)", "Spanish"))
 print(xtable(Lang[, -1], digits=1),
       include.rownames=TRUE,

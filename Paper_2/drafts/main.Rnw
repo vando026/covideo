@@ -6,30 +6,32 @@
 
 \subsection*{Introduction}
 
-A large amount of published health information about the novel coronavirus (COVID-19) has
-been disseminated by the traditional mass media since the outbreak of the
-pandemic.\citep{Cinelli2020,Kouzy2020,Mian2020a} However, it is not clear if this
-information has improved knowledge of preventive COVID-19 behaviours. By preventive
-behaviours, we mean the public's adoption of practices such as social distancing and hand
-sanitation (among others) that can reduce the spread of COVID-19. 
+In the absence of a vaccine, behaviours such as social distancing and hand sanitation
+(among others) are critical for reducing the spread of the novel coronavirus (COVID-19).
+To this end, we have designed a short, animated entertainment-education (E-E) video to
+improve intent toward preventive COVID-19 behaviours.\citep{Vandormael2020b} The E-E video
+describes how the novel coronavirus is spread (airborne, physical contact), and recommends
+best practices to prevent or reduce the spread of COVID-19 (staying at home, not
+congregating in public spaces, and sanitizing hands and surfaces). It also covers the mass
+media coverage of the epidemic and a subplot about the stockpiling of essential goods
+(\url{https://www.youtube.com/watch?v=rAj38E7vrS8}).\citep{Adam2020} An effective public
+health response to COVID-19 could benefit from the rapid distribution of E-E material
+through social media channels to a global audience.\citep{Hahn2020, Block2020} 
 
-Arguably, one possible limitation of mainstream mass media is that it is perceived
-as politicized and culturally localized, thus limiting the persuasiveness of health
-messages about COVID-19.\citep{Garfin2020a, Garrett2020} It is also likely that
-traditional mass media channels (e.g., local or national television networks) have missed
-key segments of the population, such as young people (18--35 years) who are
-disproportionately more likely to transmit the virus.\citep{Dowd2020, Harris2020,
-Zhao2020} An effective public health response could benefit from the rapid distribution of
-entertainment-education (E-E) approaches through social media channels to a diverse and
-global audience.\citep{Hahn2020, Block2020} 
 
-We have designed a short, wordless, and animated E-E video to improve knowledge of
-preventive COVID-19 behaviours.  The E-E video was released on Stanford Medicine's YouTube
-channel on March 21, 2020 and reached 332,000 views on YouTube, 220,000 views on
-Instagram, 294,000 views on Facebook, and 402,000 views on Twitter, with a cumulative
-count of 1.2 million views within 10 days.\citep{Adam2020} Using a randomized
-controlled trial (RCT), we evaluate the E-E video's effectiveness among online participants from
-the United States of America (USA), Mexico, the United Kingdom (UK), Germany, and Spain. 
+The E-E video was released on Stanford Medicine's YouTube channel on March 21, 2020 and
+reached 332,000 views on YouTube, 220,000 views on Instagram, 294,000 views on Facebook,
+and 402,000 views on Twitter, with a cumulative count of 1.2 million views within 10
+days.\citep{Adam2020} Using a randomized controlled trial (RCT), we evaluate the E-E
+video's effectiveness to improve behavioral intent toward preventive COVID-19 practices.
+We randomized \Sexpr{fmt(flow$In)} online participants from the United States of America
+(USA), Mexico, the United Kingdom (UK), Germany, and Spain to the E-E video, an attention
+placebo control (APC), and do-nothing (no video). We also nested a list randomization
+experiment in each trial arm to remove social desirability bias from the behavioral intent
+responses.  Our study results will inform the design of future E-E videos to disseminate
+evidence-based health recommendations related to COVID-19 as well as other public health
+emergencies.   
+
 
 
 \subsection*{Methods}
@@ -50,7 +52,8 @@ was obtained from the Stanford University IRB on April 12, 2020, \#55820.
 
 \paragraph{Randomization and masking}
 
-Randomization was at a 1:1:1 ratio for the three arms of the trial.  Because Prolific
+Randomization was at a 1:1:1 ratio for the three arms of the trial. In each arm,
+randomization was  at a 1:1 ratio to the treatment and control lists.  Because Prolific
 Academic handled the interaction between the study investigators and participants, the
 participants were completely anonymous to the study investigators. Participants
 self-responded to the survey questions and self-submitted their responses anonymously on
@@ -64,30 +67,34 @@ Participants began the online study on the Gorilla platform by answering basic d
 questions about their age, sex, primary language, country of residence, and highest
 education completed.
 
-Participants were  then randomly assigned by Gorilla to the E-E video, APC, or do-nothing.
-The E-E video describes how the novel coronavirus is spread (airborne, physical contact),
-and recommends best practices to prevent or reduce the spread of COVID-19 (staying at
-home, not congregating in public spaces, and sanitizing hands and surfaces). It also
-covers the mass media coverage of the epidemic and a subplot about the stockpiling of
-essential goods (\url{https://www.youtube.com/watch?v=rAj38E7vrS8}).\citep{Adam2020}
+Participants were  then randomly assigned by Gorilla to the E-E video, APC video, or
+do-nothing arm.  The APC is also a wordless, animated video with the same duration as the
+E-E video.  Its content describes how small choices become actions, which become habits,
+which become a way of life (\url{https://www.youtube.com/watch?v=_HEnohs6yYw}).  We
+included an APC to account for possible attention effects elicited by the video medium.
+APC conditions should mimic the ``inactive'' components of an intervention—the effect of
+watching the video---while not containing any of the ``active'' intervention
+components---the content delivered by the video.\citep{Freedland2011} We did not make the
+assumption that the E-E video is better than nothing (i.e., no video). It is possible that
+the E-E video could motivate reactance to our COVID-19 prevention
+message.\citep{Dillard2005,Miller2007, Richards2015} 
 
 
-The APC is also a wordless, animated video with the same duration as the E-E video.  Its
-content describes how small choices become actions, which become habits, which become a
-way of life (\url{https://www.youtube.com/watch?v=_HEnohs6yYw}).  We included an APC to
-account for possible attention effects elicited by the video medium. APC conditions should
-mimic the ``inactive'' components of an intervention—the effect of watching the
-video---while not containing any of the ``active'' intervention components---the content
-delivered by the video.\citep{Freedland2011} We did not make the assumption that the
-E-E video is better than nothing (i.e., no video). It is possible that the E-E video could
-motivate reactance to our COVID-19 prevention message.\citep{Dillard2005,Miller2007,
-Richards2015} 
+After completing the intervention (E-E video, APC, do-nothing), Gorilla then randomized
+participants to five list experiments.\citep{Vandormael2020b} We used a list experiment to
+reduce socially desirable answers to the behavioural intent questions.\citep{Kramon2019,
+Corstange2009, Glynn2013} For each experiment, the control group received a list of five
+items that were unrelated to COVID-19. For example, in the first list experiment we asked:
+``How many of the five statements do you agree with? We don't want to know which ones,
+just answer how many: 1. Spend time watching TV, 2. Do the vacuuming, 3.  Pick a fight
+with my partner, 4. Eat a low sugar diet, 5. Rinse my nose with salt water daily.''  The
+treatment group received the same five items and one additional `sensitive' item: ``Go out
+with my friends'', which indicates behavioral intent to social distance (or not) during
+lockdown resitrictions. The other four list experiments covered the topics of washing
+hands, cleaning surfaces, sharing utensils, and stockpiling essential goods. We designed
+the list experiments in line with best practices.\citep{Glynn2013}
 
-
-Participants answered 18 questions on preventive COVID-19 behaviors. All items required
-True or False responses and all participants received the knowledge items. To prevent online
-searching for answers, participants had a 30 second count-down to respond to each
-item. To ensure post-trial access to treatment,\citep{Doval2015} participants in the
+To ensure post-trial access to treatment,\citep{Doval2015} participants in the
 APC and do-nothing arm could choose to watch the E-E video at the end of the
 study. 
 
@@ -95,14 +102,18 @@ study.
 \paragraph{Statistical analysis}
 
 
-The primary outcome was the average number of correct answers to the 18 knowledge
-questions.  For each participant, we created an overall knowledge score (minimum $=$ 0,
-maximum $=$ 18) by adding the correctly answered items. We used an ordinary least squares
-(OLS) regression to estimate the mean knowledge score by trial arm and to estimate the
-difference in knowledge scores between trial arms. We defined the difference in mean
-knowledge scores between the E-E video and do-nothing arms as the total effect, the
-difference between the APC and do-nothing arms as the attention effect, and the difference
-between the E-E video and APC arms as the content effect.  We also summarized the
+The primary outcome was the difference in between in behavioral intent between the trial
+arms.  For each list experiment, we calculated the mean score for the control list,
+denoted by \(\bar{C}_i \), and the mean score for the treatment list, denoted by
+\(\bar{T}_i \), for the \(i\)th list experiment \((i=1,\dots, 5)\). We then estimated the
+difference between the treatment and control list for each trial arm, denoted by \(D_{ik}=
+\bar{T}_{ik}- \bar{C}_{ik}\), for the ith treatment list and \(k\)th trial arm, where \(k
+\in [v,a,c]\). Let \(DD_i^T\) denote the total effect, which is estimated by
+\(D_{iv}-D_{ic}\); let \(DD_i^C\) denote the content effect, which is estimated by
+\(D_{iv}-D_{ia}\); and let \(DD_i^A\) denote the attention effect, which is estimated by
+\(D_{ia}-D_{ic}\).  These analyses are analogous to difference-in-difference analyses,
+which can be implemented by specifying the appropriate main and interaction terms in an
+ordinary least squares (OLS) regression.  We also summarized the
 participant characteristics by obtaining means and standard deviations of age, gender,
 primary language, country of residence, and education status.  Statistical analyses were
 performed with R software version 4.2.

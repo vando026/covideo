@@ -9,22 +9,14 @@
 \usepackage{paralist}
 \usepackage{enumitem}
 \usepackage{booktabs}
-% \usepackage{verbatim}
 \usepackage{graphicx}
 \usepackage{array}
-% \usepackage[flushleft]{threeparttable}
 \usepackage{titlesec}
 \usepackage[font=small]{caption}
 \usepackage[footskip=0.3in,margin=1in]{geometry} 
 \usepackage[draft]{hyperref}
 \usepackage[numbers,sort&compress,super]{natbib}
-% \usepackage{xcolor}
-% \usepackage[modulo]{lineno}
-% \linenumbers
 
-
-% \usepackage[natbib=true, style=nature, isbn=false, doi=false, url=false]{biblatex}
-% \addbibresource{library.bib}
 
 \graphicspath{{C:/Users/alainv/Seafile/Heidelberg/Projects/CoVideo/Paper_2/output/}
 {C:/Users/alain.vandormael/Seafile/Heidelberg/Projects/CoVideo/Paper_2/output/}}
@@ -52,17 +44,11 @@ knitr::opts_chunk$set(
 
 
 <<echo=FALSE>>=
-home <- file.path(Sys.getenv("HOME"), "Seafile\\Heidelberg\\Projects\\CoVideo\\Paper_2")
-output <- file.path(home, "output")
+home <- file.path(Sys.getenv("HOME"), "Seafile\\Heidelberg\\Projects\\CoVideo")
+output <- file.path(home, "Paper_2/output")
 dat_all <- load_covideo()
-load(file.path(output, "Results.RData"), envir=.GlobalEnv)
-@
-
-<<echo=FALSE>>=
-an <- length(c(sstate(), cstate()))
-amax <- an - know_res$means["VideoArmControl"]
-amax2 <- an - know_res$means["VideoArmPlacebo"]
-acorrect <- know_res$means["VideoArmControl"]/an*100
+load(file.path(home, "Paper_1/output/Results.RData"), envir=.GlobalEnv)
+load(file.path(home, "Paper_2/output/Results.RData"), envir=.GlobalEnv)
 @
 
 <<echo=FALSE>>=
@@ -81,8 +67,10 @@ arm_n <- tapply(dat_all$ID, dat_all$VideoArm, function(x) length(unique(x)))
 @
 
 
-\title{List experiment and behavioral intent COVID-19: an online randomized controlled trial of \Sexpr{fmt(flow$In)} adults in the
-USA, Mexico, UK, Germany, and Spain.  }
+\title{Effect of entertainment-education on preventive COVID-19 behaviors: an online randomized
+controlled trial of \Sexpr{fmt(flow$In)} adults in the USA, Mexico, UK, Germany, and
+Spain.  }
+
 \date{\vspace{-8ex}}
 
 
@@ -94,7 +82,9 @@ USA, Mexico, UK, Germany, and Spain.  }
 {Alain Vandormael, PhD}$^{1*}$,
 {Maya Adam, PhD}$^2$,
 {Merlin Greuel, MSc}$^1$, \\
-{Jennifer Gates, BSc}$^3$
+% Caterina Favaretti, MSc$^1$
+% Violetta Hachaturyan, MSc$^1$
+% {Jennifer Gates, BSc}$^3$
 \& {Till B\"arnighausen, PhD}$^{1,4,5}$
 \end{center}
 
@@ -129,10 +119,10 @@ Word count < 3,000
 <<results, child='main.Rnw', eval=TRUE>>=
 @
 
-<<tabs, child='tables.Rnw', eval=FALSE>>=
+<<tabs, child='tables.Rnw', eval=TRUE>>=
 @
 
-<<tabs, child='figures.Rnw', eval=FALSE>>=
+<<tabs, child='figures.Rnw', eval=TRUE>>=
 @
 
 % \subsection*{References}

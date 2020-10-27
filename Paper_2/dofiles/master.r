@@ -15,9 +15,9 @@ library(covideo)
 # Paths
 home <- file.path(Sys.getenv("HOME"),
   "Seafile/Heidelberg/Projects/CoVideo")
-dofiles <- file.path(home, "Paper_1/dofiles")
+dofiles <- file.path(home, "Paper_2/dofiles")
 datapath <- file.path(home, "Data")
-output <- file.path(home, "Paper_1/output")
+output <- file.path(home, "Paper_2/output")
 
 # Colors
 set3 <- RColorBrewer::brewer.pal(3, "Set2")
