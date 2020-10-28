@@ -27,6 +27,9 @@ tab1 <- lapply(dat1, doStat)
 
 save(tab1, file=file.path(output, "Results.RData"))
 
+
+
+
 ldat <- getListData(load_covideo())
 behav = data.frame(t(sapply(names(bstate()), getCTR, ldat)))
 rownames(behav) <- sapply(rownames(behav), function(x) bstate()[[x]])
