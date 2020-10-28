@@ -113,10 +113,10 @@ difference between the treatment and control list for each trial arm, denoted by
 \(D_{iv}-D_{ia}\); and let \(DD_i^A\) denote the attention effect, which is estimated by
 \(D_{ia}-D_{ic}\).  These analyses are analogous to difference-in-difference analyses,
 which can be implemented by specifying the appropriate main and interaction terms in an
-ordinary least squares (OLS) regression.  We also summarized the
-participant characteristics by obtaining means and standard deviations of age, gender,
-primary language, country of residence, and education status.  Statistical analyses were
-performed with R software version 4.2.
+ordinary least squares (OLS) regression.  We also summarized the participant
+characteristics by obtaining means and standard deviations of age, gender, primary
+language, country of residence, and education status.  Statistical analyses were performed
+with R software version 4.2.
 
 
 \paragraph{Role of the funding source}
@@ -145,11 +145,41 @@ The majority of participants  reported their residence in the UK
 (\Sexpr{res$ctry["United Kingdom"]}\%) or the USA
 (\Sexpr{res$ctry["United States"]}\%), and \Sexpr{res$lan["EN"]}\% of participants reported English as their first
 language.  The sample was relatively well-educated, with \Sexpr{sum(res$educ[c(3,4)])}\%
-having some college education or higher (BA, MA equivalent or PhD).  Table \ref{tab:tab0}
-shows the percentage of participants in each arm by age, gender, country of residence,
+having some college education or higher (BA, MA equivalent or PhD).  Table \ref{tab:tab1}
+shows the percentage of participants in each arm and treatment list by age, gender, country of residence,
 educational status, and primary language. 
 
+<<echo=FALSE>>=
+wash <- behav["Wash", ]
+dish <- behav["CleanDishes", ]
+kitch <- behav["CleanSurfaces", ]
+stock <- behav["StockPile", ]
+soc <- behav["SocialDist", ]
+@
 
+
+Figure \ref{fig:behavmeans} shows the means scores for the five list experiments by trial
+arm and treatment group.  To measure baseline intent toward preventive COVID-19 behaviors,
+we obtained the difference between the treatment and control list for the do-nothing arm.
+Figure \ref{fig:behav} shows these results.  Participants had high intent to wash their
+hands frequently (\Sexpr{wash$Est}\%, 95\% CI: \Sexpr{wash$LB}--\Sexpr{wash$UB}\%), with
+lower intent to clean dishes after use (\Sexpr{dish$Est}\%, 95\% CI:
+\Sexpr{dish$LB}-\Sexpr{dish$UB}\%) and clean kitchen counters after use
+(\Sexpr{kitch$Est}\%, 95\% CI: \Sexpr{kitch$LB}--\Sexpr{kitch$UB}\%). Despite advice not
+to, \Sexpr{stock$Est}\% of participants intended to stockpile household supplies for a month
+(95\% CI: \Sexpr{stock$LB}--\Sexpr{stock$UB}\%) and \Sexpr{soc$Est}\% said they would go
+out with friends under lockdown restrictions (95\% CI:
+\Sexpr{soc$LB}--\Sexpr{soc$UB}\%).
+
+
+
+(Figure 6) shows the di?erences in behaviora intent by age and gender for each of the ?ve statements.
+For the social distancing statement, younger men (aged 18-24 years) and older men (aged 45-59
+years) were more likely than their female counterparts to go out with friends . With the exception 205
+of the 45?54 year age group, more men intended to stockpile household supplies for the next month
+when compared with women. Older men and women were more likely to clean their dishes after
+use to prevent the spread of COVID-19. Most participants agreed that they will wash their hands
+frequently in the next week.
 
 \subsection*{Discussion}
 

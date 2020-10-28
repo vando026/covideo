@@ -34,6 +34,7 @@
 
 <<echo=FALSE>>=
 library(covideo)
+library(xtable)
 library(tidyverse)
 knitr::opts_chunk$set(
   fig.width=5, fig.heigh=5,
@@ -49,6 +50,7 @@ output <- file.path(home, "Paper_2/output")
 dat_all <- load_covideo()
 load(file.path(home, "Paper_1/output/Results.RData"), envir=.GlobalEnv)
 load(file.path(home, "Paper_2/output/Results.RData"), envir=.GlobalEnv)
+load(file.path(home, "Paper_2/output/ResultsFigs.RData"), envir=.GlobalEnv)
 @
 
 <<echo=FALSE>>=

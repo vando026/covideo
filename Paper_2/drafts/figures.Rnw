@@ -33,7 +33,11 @@ the treatment difference in means between the CoVideo and the APC.  }
 \includegraphics[scale=0.30]{BehavMeans.png}
 
 \caption{Shows the mean scores for each list experiment by trial arm (CoVideo, APC,
-no-video). }
+do-nothing) and by control list (Ctrl) and treatment list (Trt). Scores for the treatment
+list (Trt) are naturally higher because the treatment list had six items compared with the
+five items in the control list. The difference in means between the treatment and control
+list represents the prevalence of intent to undertake (or not) the preventive COVID-19
+behavior.}
 
 \label{fig:behavmeans}
 \end{figure} 
@@ -46,10 +50,12 @@ no-video). }
 \centering
 \includegraphics[scale=0.73]{BehavIntent.png}
 
-\caption{Shows the percentage of participants in the Control arm that agreed with
-statements about COVID-19 behaviors ($n = $ \Sexpr{fmt(flow$CtrlN - flow$Ctrl)}).  Results
-were obtained from  list randomization expriment, which was used to remove social
-desirability bias.}
+\caption{Shows the prevalence of intent to undertake preventive
+COVID-19 behaviors. Results are shown only for the do-nothing arm ($n = $
+\Sexpr{fmt(flow$CtrlN - flow$Ctrl)}), which is a baseline measure of behavioral intent
+with social desirability bias removed. For example, for the first list experiment (social
+distancing), as shown in Figure \ref{fig:behavmeans}, the treatment list mean is XXXX and
+the control list is XXXX for the do-nothing arm. The difference is XXX * 100, which is XXXX\%.} 
 
 \label{fig:behav}
 \end{figure} 
@@ -71,12 +77,12 @@ flow$Ctrl)}).}
 
 \clearpage
 
-% \begin{figure}[!ht]
-% \centering
-% \includegraphics[scale=0.73]{BehavDiffs.png}
-% \caption{Test}
-% \end{figure} 
-% \clearpage
+\begin{figure}[!ht]
+\centering
+\includegraphics[scale=0.93]{List_1.png}
+\label{listreg}
+\caption{List experiment adjusting for age group}
+\end{figure} 
 
 \clearpage
 

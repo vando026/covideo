@@ -6,35 +6,24 @@
 
 \subsection*{Introduction}
 
-A large amount of published health information about the novel coronavirus (COVID-19) has
-been disseminated by the traditional mass media since the outbreak of the
-pandemic.\citep{Cinelli2020,Kouzy2020,Mian2020a} However, it is not clear if this
-information has improved knowledge of preventive COVID-19 behaviours. By preventive
-behaviours, we mean the public's adoption of practices such as social distancing and hand
-sanitation (among others) that can reduce the spread of COVID-19. 
+In the absence of a vaccine, behaviours such as social distancing and hand sanitation
+(among others) are critical for reducing the spread of the novel coronavirus (COVID-19).
+To this end, we have designed a short, animated entertainment-education (E-E) video to
+improve intent toward preventive COVID-19 behaviours.\citep{Vandormael2020b}  An effective public
+health response could benefit from the rapid distribution of E-E approaches through social
+media channels to a diverse and global audience.\citep{Hahn2020, Block2020} 
 
-Arguably, one possible limitation of mainstream mass media is that it is perceived
-as politicized and culturally localized, thus limiting the persuasiveness of health
-messages about COVID-19.\citep{Garfin2020a, Garrett2020} It is also likely that
-traditional mass media channels (e.g., local or national television networks) have missed
-key segments of the population, such as young people (18--35 years) who are
-disproportionately more likely to transmit the virus.\citep{Dowd2020, Harris2020,
-Zhao2020} An effective public health response could benefit from the rapid distribution of
-entertainment-education (E-E) approaches through social media channels to a diverse and
-global audience.\citep{Hahn2020, Block2020} 
-
-We have designed a short, wordless, and animated E-E video to improve knowledge of
-preventive COVID-19 behaviours.  The E-E video was released on Stanford Medicine's YouTube
-channel on March 21, 2020 and reached 332,000 views on YouTube, 220,000 views on
-Instagram, 294,000 views on Facebook, and 402,000 views on Twitter, with a cumulative
-count of 1.2 million views within 10 days.\citep{Adam2020} Using a randomized
-controlled trial (RCT), we evaluate the E-E video's effectiveness among online participants from
-the United States of America (USA), Mexico, the United Kingdom (UK), Germany, and Spain. 
+The E-E video was released on Stanford Medicine's YouTube channel on March 21, 2020 and
+reached 332,000 views on YouTube, 220,000 views on Instagram, 294,000 views on Facebook,
+and 402,000 views on Twitter, with a cumulative count of 1.2 million views within 10
+days.\citep{Adam2020} Using a randomized controlled trial (RCT), we evaluate the E-E
+video's effectiveness among online participants from the United States of America (USA),
+Mexico, the United Kingdom (UK), Germany, and Spain. 
 
 
-% Our study results will inform the design of future E-E videos to disseminate
-% evidence-based health recommendations related to COVID-19 as well as other public health
-% emergencies.   
+Our study results will inform the design of future E-E videos to disseminate
+evidence-based health recommendations related to COVID-19 as well as other public health
+emergencies.   
 
 
 \subsection*{Methods}

@@ -335,8 +335,8 @@ mkMod <- function(model=lm, RHS, ...) {
 #' @return data.frame
 #'
 #' @export
-getListData <- function(dat=dat_all) {
-  ldat <- dplyr::select(dat_all, VideoArm, TreatList, 
+getListData <- function(dat=load_covideo()) {
+  ldat <- dplyr::select(dat, VideoArm, TreatList, 
     SocialDist, Wash, StockPile, CleanDishes, CleanSurfaces, UseMedia)
   mutate(ldat, 
     VideoArm = as.factor(VideoArm), TreatList = as.factor(TreatList))
@@ -386,24 +386,6 @@ doRegDirect <- function(LHS, dat) {
     ci <- round(confint(mod)[2, ]*100, 1) 
     return(c(cf, ci))
 }
-
-doRegIndirect <- function(LHS, dat) {
-  mod <- lm(as.formula(paste(LHS, "~ -1 + VideoArm:TreatList")), data=dat)
-  out <- data.frame(summary(mod)$coefficients[, c(1, 2)])
-  colnames(out) <- c("Mn", "SE")
-  out$Arm  <- gsub("VideoArm|:TreatF", "", rownames(out))
-  out$Mn <- round(out$Mn, 3)
-  out$SE  <- round(out$SE, 3)
-  out[c(1, 4, 2, 5, 3, 6), ]
-}
-
-getCTR <- function(LHS, dat) {
-  xx <- doRegIndirect(LHS, dat)
-  xx <- cbind(xx[1, 1:2], xx[2, 1:2])
-  colnames(xx) <- c("Ctr_Mn", "Ctr_SE", "Trt_Mn", "Trt_SE")
-  xx
-}
-
 
 #' @title plotKnow
 #' 
@@ -518,13 +500,14 @@ lincom <- function(EQ, mod) {
   tse <- sqrt(t1$vcov[1])
   tci <- tdiff + c(-1, 1) * (1.96 * tse)
   tpval <- lcom[2, 6]
-  list(diff=tdiff, se=tse, 
+  data.frame(est=tdiff, se=tse, 
     lb=tci[1], ub=tci[2],
-    pval=pfmt(tpval))
+    pval=tpval)
 }
 
 doDiffs <- function(LHS, dat) {
-  dat <- mutate(dat, VideoArm = as.factor(VideoArm),
+  dat <- mutate(dat, 
+    VideoArm = as.factor(VideoArm),
     TreatList = as.factor(TreatList))
   mod <- lm(as.formula(paste(LHS, "~ -1 + VideoArm:TreatList")), data=dat)
   data.frame(sapply(eqs, lincom, mod))
@@ -568,17 +551,25 @@ diffPlot <- function(dat, LHS="", yLim, yvals=NULL, H=1) {
       fmt(dat["pval", "trteq"][[1]], 2)))
 }
 
+eqs <- list(
+  ctrctr = "1*VideoArmControl:TreatList0 = 0",
+  ctrtrt = "1*VideoArmControl:TreatList1 = 0",
+  apcctr = "1*VideoArmPlacebo:TreatList0 = 0",
+  apctrt = "1*VideoArmPlacebo:TreatList1 = 0",
+  trtctr = "1*VideoArmTreatment:TreatList0 = 0",
+  trttrt = "1*VideoArmTreatment:TreatList1 = 0",
+  ctrdif = "1*VideoArmControl:TreatList1 - 1*VideoArmControl:TreatList0 = 0",
+  apcdif = "1*VideoArmPlacebo:TreatList1 - 1*VideoArmPlacebo:TreatList0 = 0",
+  trtdif = "1*VideoArmTreatment:TreatList1 - 1*VideoArmTreatment:TreatList0 = 0",
+  atteq = "1*VideoArmPlacebo:TreatList1 - 1*VideoArmPlacebo:TreatList0  -
+     1*VideoArmControl:TreatList1 + 1*VideoArmControl:TreatList0  = 0",
+  trteq = "1*VideoArmTreatment:TreatList1 - 1*VideoArmTreatment:TreatList0 -
+    1*VideoArmPlacebo:TreatList1 + 1*VideoArmPlacebo:TreatList0 = 0",
+  toteq = "1*VideoArmTreatment:TreatList1 - 1*VideoArmTreatment:TreatList0 -
+    1*VideoArmControl:TreatList1 + 1*VideoArmControl:TreatList0 = 0")
+
 
 ######################################################################
 ######################### Diffs ######################################
 ######################################################################
-
-eqs <- list(
-  ctrdif = "1*VideoArmControl:TreatList1 - 1*VideoArmControl:TreatList0 = 0",
-  apcdif = "1*VideoArmPlacebo:TreatList1 - 1*VideoArmPlacebo:TreatList0 = 0",
-  trtdif = "1*VideoArmTreatment:TreatList1 - 1*VideoArmTreatment:TreatList0 = 0",
-  toteq = "1*VideoArmTreatment:TreatList1 - 1*VideoArmTreatment:TreatList0 -
-    1*VideoArmControl:TreatList1 + 1*VideoArmControl:TreatList0 = 0",
-  trteq = "1*VideoArmTreatment:TreatList1 - 1*VideoArmTreatment:TreatList0 -
-    1*VideoArmPlacebo:TreatList1 + 1*VideoArmPlacebo:TreatList0 = 0")
 
