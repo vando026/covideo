@@ -32,14 +32,52 @@ the treatment difference in means between the CoVideo and the APC.  }
 \centering
 \includegraphics[scale=0.30]{BehavMeans.png}
 
-\caption{Shows the mean scores for each list experiment by trial arm (CoVideo, APC,
-do-nothing) and by control list (Ctrl) and treatment list (Trt). Scores for the treatment
-list (Trt) are naturally higher because the treatment list had six items compared with the
-five items in the control list. The difference in means between the treatment and control
-list represents the prevalence of intent to undertake (or not) the preventive COVID-19
-behavior.}
+\caption{Shows the mean scores for each list experiment by trial arm (E-E video, APC
+video, do-nothing) and by control list (Ctrl) and treatment list (Trt). Scores for the treatment
+list are higher because the treatment list has six items and the
+control list has five items. The difference between the treatment and control
+means represents the prevalence of intent to undertake  the preventive COVID-19
+behavior.  For example, for the first list experiment
+ in the E-E video arm (`this week I will go out with friends'), let 
+\(\bar{T}^{ee}\) $=$ \Sexpr{fmt(ddat[["SocialDist"]][["est", "trttrt"]], 2)}  be the
+treatment mean and let 
+\(\bar{C}^{ee}\) $=$ \Sexpr{fmt(ddat[["SocialDist"]][["est", "trtctr"]], 2)} be the
+control mean. The prevalence is then
+\(P^{ee} = (\bar{T}^{ee} - \bar{C}^{ee}) \times 100 = 
+(\Sexpr{fmt(ddat[["SocialDist"]][["est", "trttrt"]], 2)} -
+\Sexpr{fmt(ddat[["SocialDist"]][["est", "trtctr"]], 2)}) \times 100 = 
+\Sexpr{fmt(ddat[["SocialDist"]][["est", "trtdif"]]*100, 1)} \).   
+Similarly, the prevalence for the APC arm is \(P^{apc} = (\bar{T}^{apc} - \bar{C}^{apc}) \times 100 =
+(\Sexpr{fmt(ddat[["SocialDist"]][["est", "apctrt"]], 2)} -
+\Sexpr{fmt(ddat[["SocialDist"]][["est", "apcctr"]], 2)}) \times 100 = 
+\Sexpr{fmt(ddat[["SocialDist"]][["est", "apcdif"]]*100, 1)} \).}   
 
 \label{fig:behavmeans}
+\end{figure} 
+
+
+
+
+
+\clearpage
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[scale=0.72]{BehavDiffs.png}
+
+\caption{Shows the prevalence of behavioral intent for each of the five list experiments
+with 95\% CIs. Included is the total and content effects of the E-E video, along with
+their 95\% CIs and p-values. 
+Using the example from Figure \ref{fig:behavmeans}, the content effect is calculated as
+\(\bar{D}^{Cont} = P^{ee} - P^{apc} = 
+\Sexpr{fmt(ddat[["SocialDist"]][["est", "trtdif"]]*100, 1)} -
+\Sexpr{fmt(ddat[["SocialDist"]][["est", "apcdif"]]*100, 1)} = 
+\Sexpr{fmt(ddat[["SocialDist"]][["est", "trteq"]]*100, 1)} \).   
+}
+
+
+
+\label{fig:soc}
 \end{figure} 
 
 
@@ -65,21 +103,6 @@ distancing norms.}
 \end{figure} 
 
 
-\clearpage
-
-\begin{figure}[!ht]
-\centering
-\includegraphics[scale=0.72]{BehavDiffs.png}
-
-\caption{Shows the proportion of participants by age and gender that agreed with
-statements about COVID-19 behaviors. The proportion represents the difference between the mean
-scores in the control list and treatment list of the Control arm ($n = $ \Sexpr{fmt(flow$CtrlN -
-flow$Ctrl)}).}
-
-\label{fig:soc}
-\end{figure} 
-
-\clearpage
 
 \begin{figure}[!ht]
 \centering

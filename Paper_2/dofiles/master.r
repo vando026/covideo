@@ -4,9 +4,7 @@
 
 rm(list = ls())
 library(tidyverse)
-library(reshape2)
 library(list)
-library(plotrix)
 library(covideo)
 
 ######################################################################

@@ -82,7 +82,7 @@ par(mai=c(0.4,0.6,0.8,0.2))
 diffPlot(ddat["SocialDist"], yLim=c(14, 42), yvals=c(40, 35), H=1.4)
 diffPlot(ddat["Wash"], yLim=c(82, 104), yvals=c(102, 98), H=1.2)
 diffPlot(ddat["StockPile"], yLim=c(22, 48), yvals=c(46, 41), H=1.3)
-diffPlot(ddat["CleanDishes"], yLim=c(81, 104), yvals=c(102, 98), H=1.1)
+diffPlot(ddat["CleanDishes"], yLim=c(81, 104), yvals=c(102, 97), H=1.1)
 diffPlot(ddat["CleanSurfaces"], yLim=c(67, 93), yvals=c(90, 85), H=1.2)
 dev.off()
 
@@ -147,13 +147,13 @@ save(behav, ddat, file=file.path(output, "ResultsFigs.RData"))
 ######################### Behave Direct ##############################
 ######################################################################
 # Get baseline measure of behav intent, remove social desire
-ldat <- getListData(load_covideo())
-bdat <- filter(ldat, VideoArm=="Control") 
-behav = data.frame(t(sapply(names(bstate()), doRegDirect, bdat)))
-names(behav) <- c("Est", "LB", "UB")
-behav <- arrange(behav, Est) 
-behav <- behav[!(rownames(behav) %in% "UseMedia"), ]
-bnames <- lapply(rownames(behav), bwrap)
+# ldat <- getListData(load_covideo())
+# bdat <- filter(ldat, VideoArm=="Control") 
+# behav = data.frame(t(sapply(names(bstate()), doRegDirect, bdat)))
+# names(behav) <- c("Est", "LB", "UB")
+# behav <- arrange(behav, Est) 
+# behav <- behav[!(rownames(behav) %in% "UseMedia"), ]
+# bnames <- lapply(rownames(behav), bwrap)
   
 
 # png(file.path(output, "BehavIntent.png"),

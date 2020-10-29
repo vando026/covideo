@@ -267,7 +267,7 @@ getData <- function(name) {
   List <- rbind(ListCtrl, ListTrt)
   # May be duplicates in arms
   List <- dropDups(List)
-  List <- doCast(List )
+  List <- doCast(List)
   Know <- getKnow(name$Know)
   Behav <- getBehav(name$Behav)
   dat <- suppressMessages(Reduce(left_join, list(Dem, List, Behav, Know)))
@@ -356,6 +356,15 @@ pbrack <- function(x0, x1, y, h=0.01, pval="p < 0.05", CEX=1, ...) {
   text((x0 + x1)/2, y + (h*1.2), pval, cex=CEX)
 }
 
+#' @title pfmt
+#' 
+#' @description  format pvalues
+#' 
+#' @param x
+#' 
+#' @return string
+#'
+#' @export 
 pfmt <- function(x) {
   x <- formatC(x, format="f", digits=3)
   ifelse(x=="0.001", "p < 0.001", paste0("p = ", x))
@@ -539,7 +548,9 @@ diffPlot <- function(dat, LHS="", yLim, yvals=NULL, H=1) {
   nm <- names(dat); dat <- dat[[1]]
   y <- unlist(dat["est", c("ctrdif", "apcdif", "trtdif")]) * 100
   se <- unlist(dat["se", c("ctrdif", "apcdif", "trtdif")]) * 100
-  plotCI(1:3, y, se, cex.lab=1.2,
+  toteq <- dat[["toteq"]]
+  trteq <- dat[["trteq"]]
+  plotrix::plotCI(1:3, y, se, cex.lab=1.2,
     bty="n", ylim=yLim, xaxt="n", xlab="", ylab="Prevalence ",
     lwd=3, pch=16, col=set3, font.lab=2, cex.axis=1.15)
   title(paste("This week I will", bwrap(nm, 34)), cex.main=1.3)
@@ -550,15 +561,15 @@ diffPlot <- function(dat, LHS="", yLim, yvals=NULL, H=1) {
   abline(h=y[1], lwd=1, lty=2, col="grey70")
   pbrack(1, 3, yvals[1], h=H, CEX=1.0,
     pval=paste0("Total effect = ", 
-      fmt(dat["est", "toteq"][[1]], 3), ",\n 95% CI (", 
-      fmt(dat["lb", "toteq"][[1]], 2), ", ", 
-      fmt(dat["ub", "toteq"][[1]], 2), "), ", 
-      pfmt(dat["pval", "toteq"][[1]])))
+      fmt(toteq$est*100, 1), ",\n 95% CI (", 
+      fmt(toteq$lb*100, 1), ", ", 
+      fmt(toteq$ub*100, 1), "), ", 
+      pfmt(toteq$pval)))
   pbrack(2, 3, yvals[2], h=H, CEX=1.0,
     pval=paste0("Content effect = ", 
-      fmt(dat["est", "trteq"][[1]], 3), ",\n 95% CI (", 
-      fmt(dat["lb", "trteq"][[1]], 2), ", ", 
-      fmt(dat["ub", "trteq"][[1]], 2), "), ", 
-      pfmt(dat["pval", "trteq"][[1]])))
+      fmt(trteq$est*100, 1), ",\n 95% CI (", 
+      fmt(trteq$lb*100, 1), ", ", 
+      fmt(trteq$ub*100, 1), "), ", 
+      pfmt(trteq$pval)))
 }
 
