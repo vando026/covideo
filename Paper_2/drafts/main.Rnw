@@ -191,7 +191,7 @@ soc <- behav["SocialDist", ]
 
 Figure \ref{fig:behavmeans} shows the means scores for the five list experiments by trial
 arm and treatment group.  These mean scores can be used to calculate the prevalence of
-behavioral intent (with 95\% confidence intervals [CI]) for the five preventive COVID-19
+intent (with 95\% confidence intervals [CI]) for the five preventive COVID-19
 behaviors. In addition, the mean scores can be used to estimate the total effect (the
 difference between the E-E video and do-nothing) and content effect (the difference
 between the E-E video and the APC) along with their 95\% CIs and p-values. These results are
@@ -216,7 +216,7 @@ on behavioral intent to prevent COVID-19 spread by cleaning kitchen counters aft
 
 
 
-Figure 6 shows the di?erences in behaviora intent by age and gender for each of the ?ve statements.
+Figure 6 shows the di?erences in behavioral intent by age and gender for each of the ?ve statements.
 For the social distancing statement, younger men (aged 18-24 years) and older men (aged 45-59
 years) were more likely than their female counterparts to go out with friends . With the exception 205
 of the 45?54 year age group, more men intended to stockpile household supplies for the next month
@@ -225,20 +225,29 @@ use to prevent the spread of COVID-19. Most participants agreed that they will w
 frequently in the next week.
 
 
-To measure baseline intent toward preventive COVID-19 behaviors,
-we obtained the difference between the treatment and control list for the do-nothing arm.
-Figure \ref{fig:behav} shows these results.  Participants had high intent to wash their
-hands frequently (\Sexpr{wash$ctrdif.est}\%, 95\% CI: \Sexpr{wash$ctrdif.lb}--\Sexpr{wash$ctrdif.ub}\%), with
-lower intent to clean dishes after use (\Sexpr{dish$ctrdif.est}\%, 95\% CI:
-\Sexpr{dish$ctrdif.lb}-\Sexpr{dish$ctrdif.ub}\%) and clean kitchen counters after use
-(\Sexpr{kitch$ctrdif.est}\%, 95\% CI: \Sexpr{kitch$ctrdif.lb}--\Sexpr{kitch$ctrdif.ub}\%). Despite advice not
-to, \Sexpr{stock$ctrdif.est}\% of participants intended to stockpile household supplies for a month
-(95\% CI: \Sexpr{stock$ctrdif.lb}--\Sexpr{stock$ctrdif.ub}\%) and \Sexpr{soc$ctrdif.est}\% said they would go
-out with friends under lockdown restrictions (95\% CI:
-\Sexpr{soc$ctrdif.lb}--\Sexpr{soc$ctrdif.ub}\%).
+To measure baseline intent toward preventive COVID-19 behaviors, we obtained the
+difference between the treatment and control list for the do-nothing arm.  Figure
+\ref{fig:behav} shows these results.  Participants had high intent to wash their hands
+frequently (\Sexpr{wash$ctrdif.est}\%, 95\% CI:
+\Sexpr{wash$ctrdif.lb}--\Sexpr{wash$ctrdif.ub}\%), with lower intent to clean dishes after
+use (\Sexpr{dish$ctrdif.est}\%, 95\% CI: \Sexpr{dish$ctrdif.lb}-\Sexpr{dish$ctrdif.ub}\%)
+and clean kitchen counters after use (\Sexpr{kitch$ctrdif.est}\%, 95\% CI:
+\Sexpr{kitch$ctrdif.lb}--\Sexpr{kitch$ctrdif.ub}\%). Despite advice not to,
+\Sexpr{stock$ctrdif.est}\% of participants intended to stockpile household supplies for a
+month (95\% CI: \Sexpr{stock$ctrdif.lb}--\Sexpr{stock$ctrdif.ub}\%) and
+\Sexpr{soc$ctrdif.est}\% said they would go out with friends under lockdown restrictions
+(95\% CI: \Sexpr{soc$ctrdif.lb}--\Sexpr{soc$ctrdif.ub}\%).
 
-
-
+Shows the prevalence of behavioral intent to undertake preventive COVID-19
+practices in the do-nothing arm.  The list
+experiment results are shown in the left bar (red), and represent the indirect method of
+measuring baseline behavioral intent. The direct question results are shown in the right bar
+(navy), and represents the baseline prevalence of participants that agreed with the statement when
+asked directly.  The difference between the indirect and direct results represents the
+magnitude of social desirability bias elicited by the direct question. The social
+desirability bias can be clearly seen in the results. When asked directly, on average,
+participants said they were less likely to go out with friends and stockpile household
+supplies, and more likely to clean hands, surfaces, and kitchen counters to prevent COVID-10 spread.
 
 \subsection*{Discussion}
 

@@ -109,9 +109,6 @@ png(file.path(output, paste0("List_", "1", ".png")),
          ncol=1, bty="n", lwd=2, cex=1.2, seg.len=3 )
 dev.off()
 
-
-
-
 ######################################################################
 ######################### Bias #######################################
 ######################################################################
@@ -122,6 +119,7 @@ behav <- data.frame(t(sapply(names(ddat), getEst)))
 behav <- behav[!(rownames(behav) %in% "UseMedia"), ]
 behav[] <- lapply(behav[], function(x) round(x*100, 1))
 behav <- arrange(behav, est) 
+bnames <- lapply(rownames(behav), bwrap)
 idb1 = t(behav["est"])
 rownames(idb1) <- "Indirect"
 
@@ -133,37 +131,38 @@ colnames(bdat) <- gsub("BE", "", colnames(bdat))
 dbehav = data.frame(t(sapply(names(bstate()), doRegDirect, bdat)))
 names(dbehav) <- c("est", "lb", "ub")
 dbehav <- dbehav[!(rownames(dbehav) %in% "UseMedia"), ]
-dbehav <- arrange(dbehav, est)
 db1 = t(dbehav["est"])
+db1 <- db1[, rownames(behav), drop=FALSE]
 rownames(db1) <- "Direct"
 
-
-jbehav <- rbind(idb1, db1)
-barplot(jbehav, 
-        col=c(set3[2], set3[3]),
-        beside=TRUE, 
-        font.lab=2)  
-  
 save(behav, dbehav, ddat, file=file.path(output, "ResultsFigs.RData"))
 
 
-# png(file.path(output, "BehavIntent.png"),
-  # units="in", width=6.5, height=5.0, pointsize=10, 
-  # res=500, type="cairo")
-  bp <- barplot(jbehav, xaxt="n", ylim=c(0, 100),
+png(file.path(output, "BehavIntent.png"),
+  units="in", width=6.5, height=5.0, pointsize=10, 
+  res=500, type="cairo")
+  jbehav <- rbind(idb1, db1)
+  bp <- barplot(jbehav, xaxt="n", ylim=c(0, 104), beside=TRUE,
     main="This week, I will ...", ylab="Prevalence", font.lab=2,
-    col="darkslategray3", border="darkslategray4")
-
-  text(x = bp, y=-1, label=unlist(bnames), xpd=TRUE, 
-       adj=c(0.5, 1), cex=0.8, srt=0)
-
-  # text(x = bp-0.05, y=behav$ctrdif.est+1, label=behav$ctrdif.est,
-       # adj=c(1, 0), offset=0.5, cex=0.8)
-  # plotCI(bp, behav$ctrdif.est, li=behav$ctrdif.lb, ui=behav$ctrdif.ub, 
-    # main="Behavioral Intent", bty="n", add=TRUE,
-    # ylim=c(0, 100), lwd=1, pch=16, 
-    # xlab="Trial arm", xaxt="n", col="gray30")
-# dev.off()
+    col=c(set3[2], set3[3]), border="darkslategray4")
+  mid <- (bp[1, ]+ bp[2,])/2
+  text(x = mid, y=-1, label=unlist(bnames), xpd=TRUE, 
+       adj=c(0.5, 1), cex=0.9, srt=0)
+  text(x = bp[1, ]-0.0, y=jbehav[1, ]+1, label=jbehav[1, ],
+       adj=c(0.5, 0), offset=0.5, cex=0.8)
+  text(x = bp[2, ]+0.05, y=jbehav[2, ]+1, label=jbehav[2, ],
+       adj=c(0.5, 0), offset=0.5, cex=0.8)
+  # plotrix::plotCI(bp[1, ], behav$est, li=behav$lb, ui=behav$ub, 
+  #   main="", bty="n", add=TRUE,
+  #   ylim=c(0, 100), lwd=1, pch=16, 
+  #   xlab="", xaxt="n", col="gray30")
+  # plotrix::plotCI(bp[2, ], dbehav$est, li=dbehav$lb, ui=dbehav$ub, 
+  #   main="", bty="n", add=TRUE,
+  #   ylim=c(0, 100), lwd=1, pch=16, 
+  #   xlab="", xaxt="n", col="gray30")
+   legend("topleft", legend=c("List experiment (indirect)", "Direct question"), pch=15, 
+    col=c(set3[2], set3[3]), bty="n", ncol=1, cex=1.1)
+dev.off()
 
 
 

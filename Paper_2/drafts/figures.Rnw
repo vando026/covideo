@@ -46,7 +46,8 @@ control mean. The prevalence is then
 \(P^{ee} = (\bar{T}^{ee} - \bar{C}^{ee}) \times 100 = 
 (\Sexpr{fmt(ddat[["SocialDist"]][["est", "trttrt"]], 2)} -
 \Sexpr{fmt(ddat[["SocialDist"]][["est", "trtctr"]], 2)}) \times 100 = 
-\Sexpr{fmt(ddat[["SocialDist"]][["est", "trtdif"]]*100, 1)} \).   
+\Sexpr{fmt(ddat[["SocialDist"]][["est", "trtdif"]]*100, 1)} \), as shown in Figure
+\ref{fig:soc}.
 Similarly, the prevalence for the APC arm is \(P^{apc} = (\bar{T}^{apc} - \bar{C}^{apc}) \times 100 =
 (\Sexpr{fmt(ddat[["SocialDist"]][["est", "apctrt"]], 2)} -
 \Sexpr{fmt(ddat[["SocialDist"]][["est", "apcctr"]], 2)}) \times 100 = 
@@ -89,20 +90,21 @@ Using the example from Figure \ref{fig:behavmeans}, the content effect is calcul
 \includegraphics[scale=0.73]{BehavIntent.png}
 
 \caption{Shows the prevalence of behavioral intent to undertake preventive COVID-19
-practices.  Results are shown only for the do-nothing arm ($n = $ \Sexpr{fmt(flow$CtrlN -
-flow$Ctrl)}), which is a baseline measure of behavioral intent with social desirability
-bias removed. For example, for the first list experiment (social distancing) in the
-do-nothing arm (see Figure \ref{fig:behavmeans}), the difference between the treatment list
-(mean $=$ \Sexpr{fmt(ddat[["SocialDist"]][["est", "ctrtrt"]], 2)}) and the control list
-(mean $=$ \Sexpr{fmt(ddat[["SocialDist"]][["est", "ctrctr"]], 2)}) is
-\Sexpr{fmt(ddat[["SocialDist"]][["est", "ctrdif"]], 3)}, which (after multiplying by 100) is
-the prevalence of participants that intended to go out with friends despite social
-distancing norms.}
+practices in the do-nothing arm ($n = $ \Sexpr{fmt(flow$CtrlN - flow$Ctrl)}).  The list
+experiment results are shown in the left bar (red), and represent the indirect method of
+measuring baseline behavioral intent. The direct question results are shown in the right bar
+(navy), and represents the baseline prevalence of participants that agreed with the statement when
+asked directly.  The difference between the indirect and direct results represents the
+magnitude of social desirability bias elicited by the direct question. The social
+desirability bias can be clearly seen in the results. When asked directly, on average,
+participants said they were less likely to go out with friends and stockpile household
+supplies, and more likely to clean hands, surfaces, and kitchen counters to prevent COVID-10 spread. }
 
 \label{fig:behav}
 \end{figure} 
 
 
+\clearpage
 
 \begin{figure}[!ht]
 \centering
