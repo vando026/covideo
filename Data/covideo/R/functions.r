@@ -372,11 +372,23 @@ pfmt <- function(x) {
 
 fmt <- function(x, y=2) formatC(x, format="f", digits=y)
 
+
+
+#' @title doRegDirect
+#' 
+#' @description  get direct behave means
+#' 
+#' @param LHS
+#' @param dat
+#' 
+#' @return NULL
+#'
+#' @export 
 # Function to get means and cis for direct behav intent
 doRegDirect <- function(LHS, dat) {
-    mod <- lm(as.formula(paste(LHS, " ~ TreatList")), data=dat)
-    cf <- round(coef(mod)[2]*100, 1)
-    ci <- round(confint(mod)[2, ]*100, 1) 
+    mod <- lm(as.formula(paste(LHS, " ~ 1")), data=dat)
+    cf <- round(coef(mod)[1]*100, 1)
+    ci <- round(confint(mod)*100, 1) 
     return(c(cf, ci))
 }
 

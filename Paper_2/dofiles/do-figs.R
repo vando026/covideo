@@ -41,36 +41,6 @@ legend("topleft", legend=c("Do-nothing", "APC", "CoVideo"),
 dev.off()
 
 ######################################################################
-######################### Behave Indirect ##############################
-######################################################################
-getEst <- function(Var, dat=ddat)
-  unlist(dat[[Var]]["ctrdif"])
-behav <- data.frame(t(sapply(names(ddat), getEst)))
-behav <- behav[!(rownames(behav) %in% "UseMedia"), ]
-behav[1:4] <- lapply(behav[1:4], function(x) round(x*100, 1))
-behav <- arrange(behav, ctrdif.est)
-bnames <- lapply(rownames(behav), bwrap)
-
-
-png(file.path(output, "BehavIntent.png"),
-  units="in", width=6.5, height=5.0, pointsize=10, 
-  res=500, type="cairo")
-  bp <- barplot(behav$ctrdif.est, xaxt="n", ylim=c(0, 100),
-    main="This week, I will ...", ylab="Prevalence", font.lab=2,
-    col="darkslategray3", border="darkslategray4")
-  text(x = bp, y=-1, label=unlist(bnames), xpd=TRUE, 
-       adj=c(0.5, 1), cex=0.8, srt=0)
-  text(x = bp-0.05, y=behav$ctrdif.est+1, label=behav$ctrdif.est,
-       adj=c(1, 0), offset=0.5, cex=0.8)
-  plotCI(bp, behav$ctrdif.est, li=behav$ctrdif.lb, ui=behav$ctrdif.ub, 
-    main="Behavioral Intent", bty="n", add=TRUE,
-    ylim=c(0, 100), lwd=1, pch=16, 
-    xlab="Trial arm", xaxt="n", col="gray30")
-dev.off()
-
-
-
-######################################################################
 ######################### Diff and Diff ##############################
 ######################################################################
 mat <- matrix(c(1:6), 3, 2, byrow=TRUE)
@@ -139,22 +109,64 @@ png(file.path(output, paste0("List_", "1", ".png")),
          ncol=1, bty="n", lwd=2, cex=1.2, seg.len=3 )
 dev.off()
 
-save(behav, ddat, file=file.path(output, "ResultsFigs.RData"))
 
 
 
 ######################################################################
-######################### Behave Direct ##############################
+######################### Bias #######################################
 ######################################################################
+# get indirect behave 
+getEst <- function(Var, dat=ddat)
+  unlist(dat[[Var]][["ctrdif"]][c(1, 3, 4)])
+behav <- data.frame(t(sapply(names(ddat), getEst)))
+behav <- behav[!(rownames(behav) %in% "UseMedia"), ]
+behav[] <- lapply(behav[], function(x) round(x*100, 1))
+behav <- arrange(behav, est) 
+idb1 = t(behav["est"])
+rownames(idb1) <- "Indirect"
+
 # Get baseline measure of behav intent, remove social desire
-# ldat <- getListData(load_covideo())
-# bdat <- filter(ldat, VideoArm=="Control") 
-# behav = data.frame(t(sapply(names(bstate()), doRegDirect, bdat)))
-# names(behav) <- c("Est", "LB", "UB")
-# behav <- arrange(behav, Est) 
-# behav <- behav[!(rownames(behav) %in% "UseMedia"), ]
-# bnames <- lapply(rownames(behav), bwrap)
+bdat <- load_covideo() %>%
+  select(ID, VideoArm, TreatList, starts_with("BE")) %>% 
+  filter(VideoArm=="Control") 
+colnames(bdat) <- gsub("BE", "", colnames(bdat))
+dbehav = data.frame(t(sapply(names(bstate()), doRegDirect, bdat)))
+names(dbehav) <- c("est", "lb", "ub")
+dbehav <- dbehav[!(rownames(dbehav) %in% "UseMedia"), ]
+dbehav <- arrange(dbehav, est)
+db1 = t(dbehav["est"])
+rownames(db1) <- "Direct"
+
+
+jbehav <- rbind(idb1, db1)
+barplot(jbehav, 
+        col=c(set3[2], set3[3]),
+        beside=TRUE, 
+        font.lab=2)  
   
+save(behav, dbehav, ddat, file=file.path(output, "ResultsFigs.RData"))
+
+
+# png(file.path(output, "BehavIntent.png"),
+  # units="in", width=6.5, height=5.0, pointsize=10, 
+  # res=500, type="cairo")
+  bp <- barplot(jbehav, xaxt="n", ylim=c(0, 100),
+    main="This week, I will ...", ylab="Prevalence", font.lab=2,
+    col="darkslategray3", border="darkslategray4")
+
+  text(x = bp, y=-1, label=unlist(bnames), xpd=TRUE, 
+       adj=c(0.5, 1), cex=0.8, srt=0)
+
+  # text(x = bp-0.05, y=behav$ctrdif.est+1, label=behav$ctrdif.est,
+       # adj=c(1, 0), offset=0.5, cex=0.8)
+  # plotCI(bp, behav$ctrdif.est, li=behav$ctrdif.lb, ui=behav$ctrdif.ub, 
+    # main="Behavioral Intent", bty="n", add=TRUE,
+    # ylim=c(0, 100), lwd=1, pch=16, 
+    # xlab="Trial arm", xaxt="n", col="gray30")
+# dev.off()
+
+
+
 
 # png(file.path(output, "BehavIntent.png"),
 #   units="in", width=6.5, height=5.0, pointsize=10, 
