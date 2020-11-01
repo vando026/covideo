@@ -28,8 +28,8 @@ randomized controlled trial (RCT) is that, in the era of COVID-19, participants 
 primed to give socially desirable responses to questions on the behavioral prevention of
 the coronavirus.  To remove social desirability bias, we nested a list randomization
 experiment in each trial arm and asked participants to indirectly agree (or disagree) with
-statements about their behavioral intent toward preventive COVID-19 practices. We also asked
-direct verions of these statements, thereby enabling us to quantify the magnitude of
+statements about their behavioral intent toward preventive COVID-19 practices. We also
+asked direct verions of these statements, thereby enabling us to quantify the magnitude of
 social desirability bias.  Our study results will inform the design of future E-E videos
 to disseminate evidence-based health recommendations related to COVID-19 as well as other
 public health emergencies.   
@@ -67,20 +67,13 @@ allocation.\citep{Vandormael2020b}
 
 Participants began the online study on the Gorilla platform by answering basic demographic
 questions about their age, sex, primary language, country of residence, and highest
-education completed.
-
-Participants were  then randomly assigned by Gorilla to the E-E video, APC video, or
-the do-nothing arm. We have The APC is also a wordless, animated video with the same duration as the
-E-E video.  Its content describes how small choices become actions, which become habits,
-which become a way of life (\url{https://www.youtube.com/watch?v=_HEnohs6yYw}).  We
-included an APC to account for possible attention effects elicited by the video medium.
-APC conditions should mimic the ``inactive'' components of an intervention—the effect of
-watching the video---while not containing any of the ``active'' intervention
-components---the content delivered by the video.\citep{Freedland2011} We did not make the
-assumption that the E-E video is better than nothing (i.e., no video). It is possible that
-the E-E video could motivate reactance to our COVID-19 prevention
-message.\citep{Dillard2005,Miller2007, Richards2015} 
-
+education completed.  Participants were  then randomly assigned by Gorilla to the E-E
+video, APC video, or the do-nothing arm.  The E-E video has been described in greater
+detail elsewhere and can be viewed at
+\url{https://www.youtube.com/watch?v=rAj38E7vrS8}.\citep{Adam2020, Vandormael2020} The APC is
+also a wordless, animated video with the same duration as the E-E video.  Its content
+describes how small choices become actions, which become habits, which become a way of
+life (\url{https://www.youtube.com/watch?v=_HEnohs6yYw}).  
 
 After completing the intervention (E-E video, APC, do-nothing), Gorilla then randomized
 participants to five list experiments.\citep{Vandormael2020b} We used a list experiment to
@@ -89,18 +82,19 @@ Corstange2009, Glynn2013} For each experiment, the control group received a list
 items that were unrelated to COVID-19. For example, in the first list experiment we asked:
 ``How many of the five statements do you agree with? We don't want to know which ones,
 just answer how many: 1. Spend time watching TV, 2. Do the vacuuming, 3.  Pick a fight
-with my partner, 4. Eat a low sugar diet, 5. Rinse my nose with salt water daily.''  The
+with my partner, 4.  Eat a low sugar diet, 5. Rinse my nose with salt water daily.''  The
 treatment group received the same five items and one additional `sensitive' item: ``Go out
 with my friends'', which indicates behavioral intent to social distance (or not) during
 lockdown resitrictions. The other four list experiments covered the topics of washing
 hands, cleaning surfaces, sharing utensils, and stockpiling essential goods. We designed
-the list experiments in line with best practices.\citep{Glynn2013}
+the list experiments in line with best practices.\citep{Glynn2013} After the list
+experiments, participants were asked the five sensitive items directly. For example,
+``Please answer True or False if you agree with the following statement: This week I will
+go out with my friends.'' 
 
-After the list experiments, participants were asked the five sensitive items directly. For
-example, ``Please answer True or False if you agree with the following statement: This
-week I will go out with my friends.'' To ensure post-trial access to
-treatment,\citep{Doval2015} participants in the APC and do-nothing arm could choose to
-watch the E-E video at the end of the study. 
+To ensure post-trial access to treatment,\citep{Doval2015}
+participants in the APC and do-nothing arm could choose to watch the E-E video at the end
+of the study. 
 
 
 \paragraph{Statistical analysis}
@@ -112,19 +106,19 @@ The primary outcome was the difference in behavioral intent toward preventive CO
 behaviors. For each list experiment, we calculated the mean score for the control list
 (min. $=$ 0, max. $=$ 5), denoted by \(\bar{C}_i \), and the mean score for the treatment
 list (min.~$=$ 0, max. $=$ 6), denoted by \(\bar{T}_i \), for the \(i\)th list experiment
-\((i=1,\dots, 5)\). Let the superscripts \(^{ee}\) denote the E-E CoVideo, \(^{apc}\)
+\((i=1,\dots, 5)\). Let the superscripts \(^{ee}\) denote the E-E video, \(^{apc}\)
 denote the APC, and \(^{no}\) denote the do-nothing arms, and let \(k\) denote the \(k\)th
 trial arm (\(k \in [^\text{ee,} ^\text{apc,} ^\text{no}]\)).  For list experiment $i$ and
 trial arm $k$,  we then estimated the prevalence of behavioral intent, denoted by
 \(P_{i}^k\), as the difference between the treatment and control, such that  \(P_{i}^k=
 (\bar{T}_{i}^k- \bar{C}_{i}^k) \times 100\). From these estimates, we calculated the
-total, content, and attention effects of the CoVideo.  Let \(D_i^{Tot}\) denote the total effect,
-which is estimated by \(P_{i}^{ee}-P_{i}^{no}\); let \(D_i^{Cont}\) denote the content
-effect, which is estimated by \(P_{i}^{ee}-P_{i}^{apc}\); and let \(D_i^{Att}\) denote
-the attention effect, which is estimated by \(P_{i}^{apc}-P_{i}^{no}\).  These analyses
-are analogous to difference-in-difference analyses, which we implemented by specifying
-the main and interaction terms in an ordinary least squares (OLS) regression model.
-The OLS equation for the \(i\)th list experiment is given as: 
+total, content, and attention effects of the E-E video.  Let \(D_i^{Tot}\) denote the total
+effect, which is estimated by \(P_{i}^{ee}-P_{i}^{no}\); let \(D_i^{Cont}\) denote the
+content effect, which is estimated by \(P_{i}^{ee}-P_{i}^{apc}\); and let \(D_i^{Att}\)
+denote the attention effect, which is estimated by \(P_{i}^{apc}-P_{i}^{no}\).  These
+analyses are analogous to difference-in-difference analyses, which we implemented by
+specifying the main and interaction terms in an ordinary least squares (OLS) regression
+model.  The OLS equation for the \(i\)th list experiment is given as: 
 
 \begin{equation}
 y = b_0 + b_1 \text{VideoArm} + b_2 \text{TreatList} + b_3 (\text{VideoArm} \times
@@ -136,14 +130,16 @@ VideoArm indicates the \(k\)th arm, and TreatList indicates assignment to the tr
 control list. We calculated  standard errors, 95\% confidence interals, and p-values for
 linear combinations of coefficients from the OLS model. 
 
-To evaluate how behavioral intent varies by age, we used a nonlinear least-squares
-estimator for the list experiment response and covariate data. Designed by Blaire
-and Imai,\citep{Blair2012} the model assumes that the response has a Poisson-Binomial
-distribution. In addition, we calculated the magnitude of social desirability bias. We did
-this first by calculating the prevalence of True responses to the five sensitive
-questions, which we asked directlt. We then obtained the difference of the indirect and
-direct responses, which is the bias. 
+For the secondary outcome, we measured the magnitude of social bias as follows. Let
+\(b_{ij}^k\) denote the \(j\)th participant's True or False response to the \(i\)th direct
+question in the \(k\)th trial, and let \(B^k_i\) denote the percentage of participants
+that responded True, where \(B^k_i = \frac{\sum_{j=1}^n I(b_j = True)}{n_k} \times 100\),
+where \(I(\cdot)\) is an indicator function. The baseline magnitude of social desirability
+bias  (in the do-nothing arm) is therefore 
 
+\begin{equation}
+\text{bias}_i^{no} = P^{no}_i\) - \(B^{no}_i.
+\end{equation}
 
 Statistical analyses were performed with R software version 4.2, using the
 \texttt{lm}, \texttt{linearHypothesis}, \texttt{ictreg} commands from the \texttt{stats},
@@ -172,13 +168,36 @@ internet connection, issues with linking to the video host, YouTube, server comp
 etc).  A total of \Sexpr{fmt(flow$FinalN)} participants completed the trial and
 contributed data to the final analysis. 
 
-The majority of participants  reported their residence in the UK
-(\Sexpr{res$ctry["United Kingdom"]}\%) or the USA
-(\Sexpr{res$ctry["United States"]}\%), and \Sexpr{res$lan["EN"]}\% of participants reported English as their first
-language.  The sample was relatively well-educated, with \Sexpr{sum(res$educ[c(3,4)])}\%
-having some college education or higher (BA, MA equivalent or PhD).  Table \ref{tab:tab1}
-shows the percentage of participants in each arm and treatment list by age, gender, country of residence,
-educational status, and primary language. 
+The majority of participants  reported their residence in the UK 
+(\Sexpr{res$ctry["United Kingdom"]}\%) or the USA (\Sexpr{res$ctry["United States"]}\%), and
+\Sexpr{res$lan["EN"]}\% of participants reported English as their first language.  The
+sample was relatively well-educated, with \Sexpr{sum(res$educ[c(3,4)])}\% having some
+college education or higher (BA, MA equivalent or PhD).  Table \ref{tab:tab1} shows the
+percentage of participants in each arm and treatment list by age, gender, country of
+residence, educational status, and primary language. 
+
+Figure \ref{fig:behavmeans} shows the means scores for the five list experiments by trial
+arm and treatment group.  These mean scores were used to calculate the prevalence of
+intent for each preventive COVID-19 behavior, including the total and content effects with
+95\% CIs and p-values, as shown in Figure \ref{fig:soc}.  For our primary outcome, we
+report  that participants in the E-E video arm had lower behavioral intent to go out with
+friends when compared with the APC (content effect $=$
+\Sexpr{fmt(ddat[["SocialDist"]][["est", "trteq"]], 3)},
+\Sexpr{pfmt(ddat[["SocialDist"]][["pval", "trteq"]])}) and do-nothing (total effect
+$=$\Sexpr{fmt(ddat[["SocialDist"]][["est", "toteq"]], 3)},
+\Sexpr{pfmt(ddat[["SocialDist"]][["pval", "toteq"]])}) arms. Participants in the E-E video
+arm also had lower behavioral intent to stockpile goods, when compared with the APC
+(content effect $=$ \Sexpr{fmt(ddat[["StockPile"]][["est", "trteq"]], 3)},
+\Sexpr{pfmt(ddat[["StockPile"]][["pval", "trteq"]])}) and do-nothing (total effect
+$=$\Sexpr{fmt(ddat[["StockPile"]][["est", "toteq"]], 3)},
+\Sexpr{pfmt(ddat[["StockPile"]][["pval", "toteq"]])}) arms. For cleaning dishes after use,
+participants in the E-E video arm had a higher behavioral intent than the APC (content
+effect $=$ \Sexpr{fmt(ddat[["CleanDishes"]][["est", "trteq"]], 3)},
+\Sexpr{pfmt(ddat[["CleanDishes"]][["pval", "trteq"]])}) and do-nothing (total effect
+$=$\Sexpr{fmt(ddat[["CleanDishes"]][["est", "toteq"]], 3)},
+\Sexpr{pfmt(ddat[["CleanDishes"]][["pval", "toteq"]])}) arms. However,  the E-E video had no
+impact on behavioral intent to prevent COVID-19 spread by cleaning kitchen counters after
+use. 
 
 <<echo=FALSE>>=
 wash <- behav["Wash", ]
@@ -188,76 +207,143 @@ stock <- behav["StockPile", ]
 soc <- behav["SocialDist", ]
 @
 
+For our secondary outcome, we show the baseline magnitude of social desirability bias in
+Figure \ref{fig:behav}. We first comment on the prevalence of behavioral intent in the
+five list experiments (the indirect questions, red bars).  Overall, participants had high
+intent to wash their hands frequently (\Sexpr{wash$est}\%, 95\% CI:
+\Sexpr{wash$lb}--\Sexpr{wash$ub}\%), with lower intent to clean dishes after use
+(\Sexpr{dish$est}\%, 95\% CI: \Sexpr{dish$lb}-\Sexpr{dish$ub}\%) and clean kitchen
+counters after use (\Sexpr{kitch$est}\%, 95\% CI: \Sexpr{kitch$lb}--\Sexpr{kitch$ub}\%).
+Despite public health advice not to, \Sexpr{stock$est}\% of participants intended to
+stockpile household supplies for a month (95\% CI: \Sexpr{stock$lb}--\Sexpr{stock$ub}\%)
+and \Sexpr{soc$est}\% said they would go out with friends under lockdown restrictions
+(95\% CI: \Sexpr{soc$lb}--\Sexpr{soc$ub}\%).
 
-Figure \ref{fig:behavmeans} shows the means scores for the five list experiments by trial
-arm and treatment group.  These mean scores can be used to calculate the prevalence of
-intent (with 95\% confidence intervals [CI]) for the five preventive COVID-19
-behaviors. In addition, the mean scores can be used to estimate the total effect (the
-difference between the E-E video and do-nothing) and content effect (the difference
-between the E-E video and the APC) along with their 95\% CIs and p-values. These results are
-shown in Figure \ref{fig:behav}, which includes an example calculation.  Results show that
-participants in the CoVideo arm had lower behavioral intent to go out with friends when
-compared with the APC (content effect $=$ \Sexpr{fmt(ddat[["SocialDist"]][["est",
-"trteq"]], 3)}, \Sexpr{pfmt(ddat[["SocialDist"]][["pval", "trteq"]])}) and do-nothing
-(total effect $=$\Sexpr{fmt(ddat[["SocialDist"]][["est", "toteq"]], 3)},
-\Sexpr{pfmt(ddat[["SocialDist"]][["pval", "toteq"]])}) arms. Participants in the CoVideo
-arm also had lower behavioral intent to stockpile goods, when compared with the APC
-(content effect $=$ \Sexpr{fmt(ddat[["StockPile"]][["est", "trteq"]], 3)},
-\Sexpr{pfmt(ddat[["StockPile"]][["pval", "trteq"]])}) and do-nothing (total effect
-$=$\Sexpr{fmt(ddat[["StockPile"]][["est", "toteq"]], 3)},
-\Sexpr{pfmt(ddat[["StockPile"]][["pval", "toteq"]])}) arms. For cleaning dishes after use,
-participants in the CoVideo arm had a higher behavioral intent than the APC (content
-effect $=$ \Sexpr{fmt(ddat[["CleanDishes"]][["est", "trteq"]], 3)},
-\Sexpr{pfmt(ddat[["CleanDishes"]][["pval", "trteq"]])}) and do-nothing (total effect
-$=$\Sexpr{fmt(ddat[["CleanDishes"]][["est", "toteq"]], 3)},
-\Sexpr{pfmt(ddat[["CleanDishes"]][["pval", "toteq"]])}) arms. The E-E video had no impact
-on behavioral intent to prevent COVID-19 spread by cleaning kitchen counters after use. 
+<<echo=FALSE>>=
+bias <- jbehav[2, ] - jbehav[1, ]
+@
 
 
-
-
-Figure 6 shows the di?erences in behavioral intent by age and gender for each of the ?ve statements.
-For the social distancing statement, younger men (aged 18-24 years) and older men (aged 45-59
-years) were more likely than their female counterparts to go out with friends . With the exception 205
-of the 45?54 year age group, more men intended to stockpile household supplies for the next month
-when compared with women. Older men and women were more likely to clean their dishes after
-use to prevent the spread of COVID-19. Most participants agreed that they will wash their hands
-frequently in the next week.
-
-
-To measure baseline intent toward preventive COVID-19 behaviors, we obtained the
-difference between the treatment and control list for the do-nothing arm.  Figure
-\ref{fig:behav} shows these results.  Participants had high intent to wash their hands
-frequently (\Sexpr{wash$ctrdif.est}\%, 95\% CI:
-\Sexpr{wash$ctrdif.lb}--\Sexpr{wash$ctrdif.ub}\%), with lower intent to clean dishes after
-use (\Sexpr{dish$ctrdif.est}\%, 95\% CI: \Sexpr{dish$ctrdif.lb}-\Sexpr{dish$ctrdif.ub}\%)
-and clean kitchen counters after use (\Sexpr{kitch$ctrdif.est}\%, 95\% CI:
-\Sexpr{kitch$ctrdif.lb}--\Sexpr{kitch$ctrdif.ub}\%). Despite advice not to,
-\Sexpr{stock$ctrdif.est}\% of participants intended to stockpile household supplies for a
-month (95\% CI: \Sexpr{stock$ctrdif.lb}--\Sexpr{stock$ctrdif.ub}\%) and
-\Sexpr{soc$ctrdif.est}\% said they would go out with friends under lockdown restrictions
-(95\% CI: \Sexpr{soc$ctrdif.lb}--\Sexpr{soc$ctrdif.ub}\%).
-
-Shows the prevalence of behavioral intent to undertake preventive COVID-19
-practices in the do-nothing arm.  The list
-experiment results are shown in the left bar (red), and represent the indirect method of
-measuring baseline behavioral intent. The direct question results are shown in the right bar
-(navy), and represents the baseline prevalence of participants that agreed with the statement when
-asked directly.  The difference between the indirect and direct results represents the
-magnitude of social desirability bias elicited by the direct question. The social
-desirability bias can be clearly seen in the results. When asked directly, on average,
-participants said they were less likely to go out with friends and stockpile household
-supplies, and more likely to clean hands, surfaces, and kitchen counters to prevent COVID-10 spread.
+Figure \ref{fig:behav} shows the prevalence of behavioral intent for the direct questions
+about preventive COVID-19 practices (navy bars). The social desirability bias can be
+clearly seen in the results. When asked directly, on average, participants said they were
+less likely to go out with friends and stockpile household supplies, and more likely to
+clean hands, surfaces, and kitchen counters to prevent COVID-10 spread. The bias ranged
+from a minimum of \Sexpr{min(abs(bias))}\% (`\Sexpr{bstate()[names(which(abs(bias) ==
+min(abs(bias))))]}') to a maximum of \Sexpr{max(abs(bias))}\%
+(`\Sexpr{bstate()[names(which(abs(bias) == max(abs(bias))))]}'). For each of the five direct questions,
+there were no differences in mean scores between  the E-E video, APC video, and do-nothing
+arms (results not shown).
 
 \subsection*{Discussion}
 
+A large amount of information about COVID-19 has been disseminated by the traditional mass
+media since the outbreak of the pandemic.\citep{Cinelli2020, Mian2020a, Kouzy2020}
+However, it is not clear if this dissemination has improved intent toward preventive
+COVID-19 behaviors. By preventive behaviors, we mean the public's adoption of practices,
+such as social distancing, reduced physical contact, and hand/surface sanitization (among
+others), to reduce the spread of COVID-19. An effective public health response could
+therefore benefit from entertainment-education (E-E) approaches that increase COVID-19
+prevention outcomes.\citep{Hahn2020} 
+
+
+
+We have produced a short, animated E-E video to promote behavioral intent toward
+preventive COVID-19 practices.\citep{Adam2020, Vandormael2020b} To evaluate the E-E
+video's effectiveness, we enrolled \Sexpr{fmt(flow$In)} online participants from the USA,
+Mexico, UK, Spain, and Germany into a randomized controlled trial.  The primary outcome of
+the study was to compare differences in behavioral intent between participants randomized
+to the E-E video, APC video, and do-nothing trial arm. For the secondary outcome, we
+measured the magnitude of social desirability bias in the participants intent to undertake
+preventive COVID-19 practices. Our assumption is that participants, at the time of
+enrollment, would be primed to give socially desirable responses to questions about
+preventive COVID-19 behaviors. To address this bias, we nested a list experiment in each
+trial arm to remove social desirability bias. In addition, we also asking participants
+directly about their intent to undertake preventive COVID-19 behaviors, thus enabling us
+to measure the magnitude of social desirability bias between the list experiment responses
+(indirect questions) and the direct questions. 
+
+
+Another innovative feature of our study was the use of an attention placebo control (APC).
+We included an APC to account for possible attention effects elicited by the video medium.
+APC conditions should mimic the ``inactive'' components of an intervention—the effect of
+watching the video---while not containing any of the ``active'' intervention
+components---the content delivered by the video.\citep{Freedland2011} We included an APC
+comparator because we wanted to  be sure that the effectiveness of the E-E video was due
+to its active component, that is, the content about COVID-19 prevention. Otherwise,
+differences in behavioral intent could be attributed to the inactive effect of watching a
+video even if its content is unrelated to COVID-19. For this reason, we made the following
+decompositions: we defined the difference between the E-E video and the APC video as the
+content effect (the active component), the difference between the APC video and do-nothing
+as the attention effect (the inactive component), and the difference between the E-E video
+and do-nothing arm as the total effect (the inactive component $+$ the active component).
+In this study, we did not make the assumption that the E-E video is better than nothing
+(i.e., no video). It is possible that the E-E video could motivate reactance to our
+COVID-19 prevention message.\citep{Dillard2005,Miller2007, Richards2015} 
+
+
+
+For our primary outcome, we report on the results on the five list experiments, which
+removed social desirability bias and included the APC and do-nothing comparators. The
+first list experiment measured whether participants were likely to follow social
+distancing guidelines during lockdown restrictions. Results show that participants that
+received the E-E video arm had a statistically significantly lower behavioral intent to go
+out with friends when compared with the APC video.  Behavioral intent in the E-E video arm
+was lower than the do-nothing arm but not statistically significantly different. As Figure
+\ref{fig:soc} shows, it is possible that the content of the APC video may have motivated
+participants to go out with their friends despite lockdown restrictions, which would
+explain the difference between the APC and E-E video. 
+
+For the second list experiment,  participants randomized to the E-E video had less
+behavioral intent to wash their hands frequently, although this result was not
+statistically different from the APC and do-nothing arms. For the third list experiment,
+participants assigned to the E-E video arm had lower behavioral intent to stockpile goods,
+although this difference was not significantly different from the APC  and do-nothing
+arms.  For cleaning dishes after use, participants in the E-E video arm had a
+significantly higher behavioral intent than the do-nothing  arms. For the fifth list
+experiment, the E-E video had no impact on behavioral intent to prevent COVID-19 spread by
+cleaning kitchen counters after use. 
+
+
+For our secondary primary outcome, we found evidence of social desirability bias in
+participant responses to the five behavioral intent questions about COVID-19 prevention
+(see Figure \ref{fig:behav}).   Compared with the list experiment results in the
+do-nothing arm, participants who were asked the same question directly  reported that they
+were less likely to go out with friends (bias $=$ \Sexpr{bias["SocialDist"]} percentage
+points) and stockpile household supplies (bias $=$ \Sexpr{bias["StockPile"]} percentage
+points). These results are expected:  participants do not want to be seen as contravening
+norms about social distancing and stockpiling, so there average direct responses are lower
+than the indirect responses.  When asked directly, participants had higher behavioral
+intent to to clean their hands (bias $=$ \Sexpr{bias["Wash"]} percentage points),  clean
+kitchen dishes (bias $=$ \Sexpr{bias["CleanDishes"]} percentage points), and clean kitchen
+surfaces (bias $=$ \Sexpr{bias["CleanSurfaces"]} percentage points) when compared with the
+indirect versions from the list experiment. These results are again expected: participants
+would like to be seen as adhering to behaviors that prevent COVID-19 spread.  These
+findings justify our use of the list experiment to remove social desirability bias in our
+evaluation of the effectiveness of the E-E video on COVID-19 prevention. 
+
+In summary, we found that the E-E video had no impact on behavioral intent toward
+preventive COVID-19 practices. Nevertheless, our study demontrates several innovative
+features that could inform the design of future E-E videos to disseminate public health
+information for future pandemics. First, when evaluating the effectiveness of E-E
+material, we recommend the use of APC material to account for the active and inactive
+components of the intervention, Second, our study shows that social desirability can bias
+the point estimates. Social desirability can be adressed by list experiment methods, as we
+did here. In a previos systematic review, Shen \& Han \citep{Shen2014} identify a lack of
+experimental methods to evaluate the effectiveness of E-E media, with most studies also
+having small sample sizes.  A strength of our study, therefore, is the use of experimental
+methods to evaluate the effectiveness of the E-E video across \Sexpr{fmt(flow$In)} participants
+from five different countries.  In this regard, we expect that our study will make
+important contributions to the E-E literature.
+
+\clearpage
 
 
 \paragraph{Contributors}
 
-% AV wrote the paper and undertook the statistical analysis. TB, MA, MG, and JG provided
-% comments and feedback. MA designed, produced, and created the E-E video. TB and AV designed
-% the trial. AV, TB, MA, and MG contributed to the questionnaire development.
+AV wrote the paper and undertook the statistical analysis. TB, MA, MG provided
+comments and feedback. MA designed, produced, and created the E-E video. TB and AV designed
+the trial. AV, TB, MA, and MG contributed to the questionnaire development.
 
 
 \paragraph{Declaration of interests}

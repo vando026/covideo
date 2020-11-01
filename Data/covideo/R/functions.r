@@ -346,6 +346,20 @@ getListData <- function(dat=load_covideo()) {
     VideoArm = as.factor(VideoArm), TreatList = as.factor(TreatList))
 }
 
+#' @title getBehavData
+#' 
+#' @description  Selects direct behave questions
+#' 
+#' @param dat
+#' 
+#' @return data.frame
+#'
+#' @export 
+getBehavData <- function(dat=load_covideo()) {
+  dat <- select(dat, ID, VideoArm, TreatList, starts_with("BE"))
+  mutate(dat, VideoArm = as.factor(VideoArm))
+}
+
 ######################################################################
 ######################### Plots ######################################
 ######################################################################
@@ -427,7 +441,7 @@ plotKnow <- function(LHS, Title="", yLim, ppos, H=0.01, plt=TRUE, write=TRUE, ..
       bty="n", ylim=yLim, lwd=3, pch=16, font.lab=2, cex.lab=1.2,
       xlab="Trial arm", ylab="", xaxt="n", col=set3[c(3, 2, 1)], ...)
     title(ylab="Mean score", line=3, cex.lab=1.2, font.lab=2)
-    axis(1, 1:3, c("Control", "APC", "CoVideo"))
+    axis(1, 1:3, c("Do-nothing", "APC video", "E-E video"))
     text(c(1,2,2.75), y, pos=4, labels=formatC(y, format="f", digits=2))
     pbrack(1, 2, ppos[1], H, CEX=0.9,
       pval=paste0("Attention Effect = ", fmt(att$diff, 2),
@@ -566,7 +580,7 @@ diffPlot <- function(dat, LHS="", yLim, yvals=NULL, H=1) {
     bty="n", ylim=yLim, xaxt="n", xlab="", ylab="Prevalence ",
     lwd=3, pch=16, col=set3, font.lab=2, cex.axis=1.15)
   title(paste("This week I will", bwrap(nm, 34)), cex.main=1.3)
-  axis(1, at=1:3, label=c("Control", "APC", "CoVideo"), cex.axis=1.2, font=2)
+  axis(1, at=1:3, label=c("Do-nothing", "APC video", "E-E video"), cex.axis=1.2, font=2)
   text(x = c(1, 2, 2.80) + 0.025, y=y + 0.5, 
     label=formatC(y, format="f", digits=1),
     adj=c(0, 0), cex=1.0)

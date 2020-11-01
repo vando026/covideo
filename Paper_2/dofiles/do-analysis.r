@@ -25,6 +25,20 @@ dat1 <- lapply(c("Age", "Gender", "Country", "Educ2", "Language"),
 tab1 <- lapply(dat1, doStat)
 
 
+######################################################################
+######################### Direct Behave comparisons ##################
+######################################################################
+bdat <- getBehavData() %>% filter(TreatList == 0)
+
+doBehavReg <- function(Var, dat = bdat) {
+  mod <- lm(as.formula(paste(Var, '~ VideoArm')), data = dat)
+  summary(mod)
+}
+
+bnames <- names(bdat)[grepl("^BE", names(bdat))][bnames != "BEUseMedia"]
+lapply(setNames(bnames, bnames), doBehavReg)
+
+
 save(tab1, file=file.path(output, "Results.RData"))
 
 

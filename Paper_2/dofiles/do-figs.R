@@ -14,6 +14,10 @@ plotBar <- function(Var, dat=ddat) {
   bp <- barplot(dat, ylim=c(0, max(dat)*1.1), names.arg="", 
     ylab="Mean ", font.lab=2, cex.axis=1.1,  cex.lab=1.2,
     main=paste("This week, I will", bwrap(Var, 25)), cex.main=1.2,
+    border=c(
+      c(adjustcolor(set3[1], alpha.f=0.5), set3[1]),
+      c(adjustcolor(set3[2], alpha.f=0.5), set3[2]),
+      c(adjustcolor(set3[3], alpha.f=0.5), set3[3])),
     col=c(
       c(adjustcolor(set3[1], alpha.f=0.5), set3[1]),
       c(adjustcolor(set3[2], alpha.f=0.5), set3[2]),
@@ -35,7 +39,7 @@ plotBar("StockPile")
 plotBar("CleanDishes")
 plotBar("CleanSurfaces")
 plot.new()
-legend("topleft", legend=c("Do-nothing", "APC", "CoVideo"), 
+legend("topleft", legend=c("Do-nothing", "APC", "E-E video"), 
   bty="n", ncol=1, cex=1.1, fill=c(set3[1], set3[2], set3[3]), 
   text.width=0.15)
 dev.off()
@@ -61,7 +65,7 @@ dev.off()
 ######################################################################
 plotList <- function(LHS, yLim=c(0, 1.0), dat=load_covideo()) {
 
-  dat_ctrl <- filter(dat_all, VideoArm=="Control")
+  dat_ctrl <- filter(load_covideo(), VideoArm=="Control")
   dat_ctrl <- mutate(dat_ctrl, 
     Treat  = as.numeric(dat_ctrl$ListArm=="List Treatment"),
     EducNum = as.numeric(as.factor(Educ2)))
@@ -124,9 +128,7 @@ idb1 = t(behav["est"])
 rownames(idb1) <- "Indirect"
 
 # Get baseline measure of behav intent, remove social desire
-bdat <- load_covideo() %>%
-  select(ID, VideoArm, TreatList, starts_with("BE")) %>% 
-  filter(VideoArm=="Control") 
+bdat <- getBehavData() %>% filter(VideoArm=="Control")
 colnames(bdat) <- gsub("BE", "", colnames(bdat))
 dbehav = data.frame(t(sapply(names(bstate()), doRegDirect, bdat)))
 names(dbehav) <- c("est", "lb", "ub")
@@ -135,16 +137,17 @@ db1 = t(dbehav["est"])
 db1 <- db1[, rownames(behav), drop=FALSE]
 rownames(db1) <- "Direct"
 
-save(behav, dbehav, ddat, file=file.path(output, "ResultsFigs.RData"))
+jbehav <- rbind(idb1, db1)
+
+save(behav, jbehav, ddat, file=file.path(output, "ResultsFigs.RData"))
 
 
 png(file.path(output, "BehavIntent.png"),
   units="in", width=6.5, height=5.0, pointsize=10, 
   res=500, type="cairo")
-  jbehav <- rbind(idb1, db1)
   bp <- barplot(jbehav, xaxt="n", ylim=c(0, 104), beside=TRUE,
     main="This week, I will ...", ylab="Prevalence", font.lab=2,
-    col=c(set3[2], set3[3]), border="darkslategray4")
+    col=c(set3[2], set3[3]), border=c(set3[2], set3[3]))
   mid <- (bp[1, ]+ bp[2,])/2
   text(x = mid, y=-1, label=unlist(bnames), xpd=TRUE, 
        adj=c(0.5, 1), cex=0.9, srt=0)

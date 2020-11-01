@@ -8,11 +8,22 @@
 
 
 \textbf{Background:} 
+The promotion of preventive COVID-19 behaviors is critical for epidemic control
+in the absence of a vaccine. To improve COVID-19 preventive behaviors, we have designed a short,
+animated entertainment-education (E-E) video that can be rapidly distributed through social media
+channels to a global audience. We measure the effectiveness of the E-E video in an online setting
+using a randomized controlled trial (RCT).
+
+
+
 
 \textbf{Methods:} 
 
 \textbf{Findings:} 
 
+
+For our primary outcome, we report that the E-E video had no impact on behavioral intent
+toward preventive COVID-19 practices. 
 
 \textbf{Interpretation:} 
 

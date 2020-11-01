@@ -28,3 +28,7 @@ set3 <- RColorBrewer::brewer.pal(3, "Set2")
 
 # dat_all <- load_covideo()
 # readr::write_csv(dat_all, path=file.path(datapath, "Derived/dat_all.csv"))
+
+setwd('~/Seafile/Heidelberg/Projects/CoVideo/Data/covideo/')
+devtools::install(dependencies=FALSE)
+
