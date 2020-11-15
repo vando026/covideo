@@ -463,14 +463,19 @@ plotKnow <- function(LHS, Title="", yLim, ppos, H=0.01, plt=TRUE, write=TRUE, ..
 
 
 # Regressions for knowledge
-doRegKnow2 <- function(RHS, dat) {
-  fmtp <- function(x) 
-    ifelse(x <0.001, "<0.001", formatC(x, digits=3, format="f"))
-  modc <- lm(as.formula(paste(RHS, "~ Age + Gender + Country + Educ2")),
-    data=dat)
+
+#' @title doRegKnow2
+#' @description  Add covariates to regression analysis of knowledge
+#' @param dat The data from \code{load_covideo}
+#' @return list
+#' @export
+
+doRegKnow2 <- function(dat = load_covideo()) {
+  modc <- lm(KnowledgeAll ~ Age + Gender + Country + Educ2,
+    data = dat)
   modc <- summary(modc)$coefficients
   modc <- as.data.frame(modc)
-  modc[4] <- sapply(modc[4], function(x) fmtp(x))
+  modc[4] <- sapply(modc[4], function(x) pfmt(x))
   rownames(modc) <- gsub("Age", "Age: ", rownames(modc))
   rownames(modc) <- gsub("Gender", "Gender: ", rownames(modc))
   rownames(modc) <- gsub("Country", "Residence: ", rownames(modc))
