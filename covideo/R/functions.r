@@ -575,39 +575,62 @@ doDiffReg <- function(LHS, dat, eqs) {
 #' @description  Plot diff and diff analysis for list experiments
 #' 
 #' @param  dat
-#' @param  LHS
+#' @param  difname 
+#' @param  eqname 
 #' @param  ylim
 #' 
 #' @return  NULL
 #'
 #' @export 
-diffPlot <- function(dat, LHS="", yLim, yvals=NULL, H=1) {
-  nm <- names(dat); dat <- dat[[1]]
-  y <- unlist(dat["est", c("ctrdif", "apcdif", "trtdif")]) * 100
-  se <- unlist(dat["se", c("ctrdif", "apcdif", "trtdif")]) * 100
-  toteq <- dat[["toteq"]]
-  trteq <- dat[["trteq"]]
+
+diffPlot <- function(dat, difname, eqname, axis_labels,
+    yLim=c(0, 40), yvals=NULL, H=1) {
+  if(class(dat)!="list") stop("Data must be of class list")
+  lname <- names(dat)
+  dat <- dat[[1]] 
+  y <- unlist(dat["est", difname]) * 100
+  se <- unlist(dat["se", difname]) * 100
   plotrix::plotCI(1:3, y, se, cex.lab=1.2,
-    bty="n", ylim=yLim, xaxt="n", xlab="", ylab="Prevalence ",
+    bty="n", ylim=yLim, xaxt="n", xlab="", ylab="Prevalence (%)",
     lwd=3, pch=16, col=set3, font.lab=2, cex.axis=1.15)
-  title(paste("This week I will", bwrap(nm, 34)), cex.main=1.3)
-  axis(1, at=1:3, label=c("Do-nothing", "APC video", "CoVideo"), cex.axis=1.2, font=2)
+  title(lnames[lname][[1]], cex.main=1.3)
+  axis(1, at=1:3, label=axis_labels, cex.axis=1.2, font=2)
   text(x = c(1, 2, 2.80) + 0.025, y=y + 0.5, 
-    label=formatC(y, format="f", digits=1),
-    adj=c(0, 0), cex=1.0)
-  abline(h=y[1], lwd=1, lty=2, col="grey70")
-  pbrack(1, 3, yvals[1], h=H, CEX=1.0,
-    pval=paste0("Total effect = ", 
-      fmt(toteq$est*100, 1), ",\n 95% CI (", 
-      fmt(toteq$lb*100, 1), ", ", 
-      fmt(toteq$ub*100, 1), "), ", 
-      pfmt(toteq$pval)))
-  pbrack(2, 3, yvals[2], h=H, CEX=1.0,
-    pval=paste0("Content effect = ", 
-      fmt(trteq$est*100, 1), ",\n 95% CI (", 
-      fmt(trteq$lb*100, 1), ", ", 
-      fmt(trteq$ub*100, 1), "), ", 
-      pfmt(trteq$pval)))
+    label=formatC(y, format="f", digits=1), adj=c(0, 0), cex=1.0)
+  # abline(h=y[1], lwd=1, lty=2, col="grey70")
+  pbrack(1, 3, yvals[3], h=H, pval=set_pval(dat[[eqname[1]]]))
+  pbrack(2, 3, yvals[2], h=H, pval=set_pval(dat[[eqname[2]]]))
+  if (length(eqname) == 3)
+    pbrack(1, 2, yvals[1], h=H, pval=set_pval(dat[[eqname[3]]]))
 }
+
+# diffPlot <- function(dat, LHS="", yLim, yvals=NULL, H=1) {
+#   nm <- names(dat); dat <- dat[[1]]
+#   y <- unlist(dat["est", c("ctrdif", "apcdif", "trtdif")]) * 100
+#   se <- unlist(dat["se", c("ctrdif", "apcdif", "trtdif")]) * 100
+#   toteq <- dat[["toteq"]]
+#   trteq <- dat[["trteq"]]
+#   plotrix::plotCI(1:3, y, se, cex.lab=1.2,
+#     bty="n", ylim=yLim, xaxt="n", xlab="", ylab="Prevalence ",
+#     lwd=3, pch=16, col=set3, font.lab=2, cex.axis=1.15)
+#   title(paste("This week I will", bwrap(nm, 34)), cex.main=1.3)
+#   axis(1, at=1:3, label=c("Do-nothing", "APC video", "CoVideo"), cex.axis=1.2, font=2)
+#   text(x = c(1, 2, 2.80) + 0.025, y=y + 0.5, 
+#     label=formatC(y, format="f", digits=1),
+#     adj=c(0, 0), cex=1.0)
+#   abline(h=y[1], lwd=1, lty=2, col="grey70")
+#   pbrack(1, 3, yvals[1], h=H, CEX=1.0,
+#     pval=paste0("Total effect = ", 
+#       fmt(toteq$est*100, 1), ",\n 95% CI (", 
+#       fmt(toteq$lb*100, 1), ", ", 
+#       fmt(toteq$ub*100, 1), "), ", 
+#       pfmt(toteq$pval)))
+#   pbrack(2, 3, yvals[2], h=H, CEX=1.0,
+#     pval=paste0("Content effect = ", 
+#       fmt(trteq$est*100, 1), ",\n 95% CI (", 
+#       fmt(trteq$lb*100, 1), ", ", 
+#       fmt(trteq$ub*100, 1), "), ", 
+#       pfmt(trteq$pval)))
+# }
 
 
