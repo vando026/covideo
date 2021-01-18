@@ -280,6 +280,7 @@ getData <- function(name) {
   dat
 }
 
+
 #' @title bwrap
 #' 
 #' @description  Function to wrap behav statements
@@ -360,15 +361,38 @@ getBehavData <- function(dat=load_covideo()) {
   mutate(dat, VideoArm = as.factor(VideoArm))
 }
 
-######################################################################
-######################### Plots ######################################
-######################################################################
+# Plots ######################################
+
+#' @title pbrack
+#' 
+#' @description Makes p-value brackets 
+#' 
+#' @param 
+#' @return NULL
+#'
+#' @export 
 pbrack <- function(x0, x1, y, h=0.01, pval="p < 0.05", CEX=1, ...) {
   segments(x0, y, x1, y, ...)
   segments(x0, y-h, x0, y, ...)
   segments(x1, y-h, x1, y, ...)
   text((x0 + x1)/2, y + (h*1.2), pval, cex=CEX)
 }
+
+#' @title set_pvl
+#'
+#' @description  Make the pval string for diffPlot
+#'
+#' @param dat Dataset
+#' @return Null
+#'
+#' @export 
+set_pval <- function(dat) {
+  paste0("Diff = ", 
+    fmt(dat$est*100, 1), ",\n 95% CI (", 
+    fmt(dat$lb*100, 1), ", ", 
+    fmt(dat$ub*100, 1), "), ", 
+    pfmt(dat$pval))
+  }
 
 #' @title pfmt
 #' 
@@ -384,6 +408,13 @@ pfmt <- function(x) {
   ifelse(x=="0.001", "p < 0.001", paste0("p = ", x))
 }
 
+#' @title fmt
+#' 
+#' @description  Format text
+#' @param 
+#' @return 
+#'
+#' @export 
 fmt <- function(x, y=2) formatC(x, format="f", digits=y)
 
 
@@ -417,7 +448,7 @@ doRegDirect <- function(LHS, dat) {
 #'
 #' @export 
 
-plotKnow <- function(LHS, Title="", yLim, ppos, H=0.01, plt=TRUE, write=TRUE, ...) {
+plotKnow <- function(LHS, Title="", yLim, ppos, H=0.01, ...) {
   dat <- load_covideo()
   cmod <- lm(as.formula(paste(LHS, " ~ -1 + VideoArm")), data=dat)
   cpair <- pairwise.t.test(dat[[LHS]], dat[["VideoArm"]],
@@ -431,32 +462,24 @@ plotKnow <- function(LHS, Title="", yLim, ppos, H=0.01, plt=TRUE, write=TRUE, ..
   uis <- cis[, 2] - y
   se <- summary(cmod)$coefficients[, "Std. Error"]
   #
-  if (plt) {
-    if (write) {
-      png(file.path(output, paste0(LHS, ".png")),
-        units="in", width=5, height=5.0, pointsize=9, 
-        res=500, type="cairo")
-    }
-    plotCI(1:3, y, liw=lis, uiw=uis, main=Title, 
-      bty="n", ylim=yLim, lwd=3, pch=16, font.lab=2, cex.lab=1.2,
-      xlab="Trial arm", ylab="", xaxt="n", col=set3[c(3, 2, 1)], ...)
-    title(ylab="Mean score", line=3, cex.lab=1.2, font.lab=2)
-    axis(1, 1:3, c("Do-nothing", "APC video", "E-E video"))
-    text(c(1,2,2.75), y, pos=4, labels=formatC(y, format="f", digits=2))
-    pbrack(1, 2, ppos[1], H, CEX=0.9,
-      pval=paste0("Attention Effect = ", fmt(att$diff, 2),
-        ",\n 95% CI (", fmt(att$lb, 2), ", ", fmt(att$ub, 2), "), ", 
-        fmt(att$pval, 2)))
-    pbrack(2, 3, ppos[2], H, CEX=0.9,
-      pval=paste0("Content Effect = ", fmt(cont$diff, 2),
-        ",\n 95% CI (", fmt(cont$lb, 2), ", ", fmt(cont$ub, 2), "), ", 
-        fmt(cont$pval, 2)))
-    pbrack(1, 3, ppos[3], H, CEX=0.9,
-      pval=paste0("Total Effect = ", fmt(tot$diff, 2),
-        ",\n 95% CI (", fmt(tot$lb, 2), ", ", fmt(tot$ub, 2), "), ", 
-        fmt(tot$pval, 2)))
-    if (write) dev.off()
-  }
+  plotrix::plotCI(1:3, y, liw=lis, uiw=uis, main=Title, 
+    bty="n", ylim=yLim, lwd=3, pch=16, font.lab=2, cex.lab=1.2,
+    xlab="Trial arm", ylab="", xaxt="n", col=set3[c(3, 2, 1)], ...)
+  title(ylab="Mean score", line=3, cex.lab=1.2, font.lab=2)
+  axis(1, 1:3, c("Do-nothing", "APC video", "CoVideo"))
+  text(c(1,2,2.75), y, pos=4, labels=formatC(y, format="f", digits=2))
+  pbrack(1, 2, ppos[1], H, CEX=0.9,
+    pval=paste0("Attention Effect = ", fmt(att$est, 2),
+      ",\n 95% CI (", fmt(att$lb, 2), ", ", fmt(att$ub, 2), "), ", 
+      pfmt(att$pval)))
+  pbrack(2, 3, ppos[2], H, CEX=0.9,
+    pval=paste0("Content Effect = ", fmt(cont$est, 2),
+      ",\n 95% CI (", fmt(cont$lb, 2), ", ", fmt(cont$ub, 2), "), ", 
+      pfmt(cont$pval)))
+  pbrack(1, 3, ppos[3], H, CEX=0.9,
+    pval=paste0("Total Effect = ", fmt(tot$est, 2),
+      ",\n 95% CI (", fmt(tot$lb, 2), ", ", fmt(tot$ub, 2), "), ", 
+      pfmt(tot$pval)))
   return(list(means=y, se=se, cis=cis,
     attdiff=att, contdiff=cont, totdiff=tot))
 }
@@ -529,23 +552,6 @@ lincom <- function(EQ, mod) {
     pval=tpval)
 }
 
-eqs <- list(
-  ctrctr = "1*VideoArmControl:TreatList0 = 0",
-  ctrtrt = "1*VideoArmControl:TreatList1 = 0",
-  apcctr = "1*VideoArmPlacebo:TreatList0 = 0",
-  apctrt = "1*VideoArmPlacebo:TreatList1 = 0",
-  trtctr = "1*VideoArmTreatment:TreatList0 = 0",
-  trttrt = "1*VideoArmTreatment:TreatList1 = 0",
-  ctrdif = "1*VideoArmControl:TreatList1 - 1*VideoArmControl:TreatList0 = 0",
-  apcdif = "1*VideoArmPlacebo:TreatList1 - 1*VideoArmPlacebo:TreatList0 = 0",
-  trtdif = "1*VideoArmTreatment:TreatList1 - 1*VideoArmTreatment:TreatList0 = 0",
-  atteq = "1*VideoArmPlacebo:TreatList1 - 1*VideoArmPlacebo:TreatList0  -
-     1*VideoArmControl:TreatList1 + 1*VideoArmControl:TreatList0  = 0",
-  trteq = "1*VideoArmTreatment:TreatList1 - 1*VideoArmTreatment:TreatList0 -
-    1*VideoArmPlacebo:TreatList1 + 1*VideoArmPlacebo:TreatList0 = 0",
-  toteq = "1*VideoArmTreatment:TreatList1 - 1*VideoArmTreatment:TreatList0 -
-    1*VideoArmControl:TreatList1 + 1*VideoArmControl:TreatList0 = 0")
-
 #' @title doDiffReg
 #' 
 #' @description  Does the diff and diff analysis
@@ -556,7 +562,7 @@ eqs <- list(
 #' @return data.frame
 #'
 #' @export 
-doDiffReg <- function(LHS, dat) {
+doDiffReg <- function(LHS, dat, eqs) {
   dat <- mutate(dat, 
     VideoArm = as.factor(VideoArm),
     TreatList = as.factor(TreatList))
@@ -585,7 +591,7 @@ diffPlot <- function(dat, LHS="", yLim, yvals=NULL, H=1) {
     bty="n", ylim=yLim, xaxt="n", xlab="", ylab="Prevalence ",
     lwd=3, pch=16, col=set3, font.lab=2, cex.axis=1.15)
   title(paste("This week I will", bwrap(nm, 34)), cex.main=1.3)
-  axis(1, at=1:3, label=c("Do-nothing", "APC video", "E-E video"), cex.axis=1.2, font=2)
+  axis(1, at=1:3, label=c("Do-nothing", "APC video", "CoVideo"), cex.axis=1.2, font=2)
   text(x = c(1, 2, 2.80) + 0.025, y=y + 0.5, 
     label=formatC(y, format="f", digits=1),
     adj=c(0, 0), cex=1.0)
@@ -603,4 +609,5 @@ diffPlot <- function(dat, LHS="", yLim, yvals=NULL, H=1) {
       fmt(trteq$ub*100, 1), "), ", 
       pfmt(trteq$pval)))
 }
+
 
