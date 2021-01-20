@@ -367,7 +367,8 @@ getBehavData <- function(dat=load_covideo()) {
 #' 
 #' @description Makes p-value brackets 
 #' 
-#' @param 
+#' @param x0
+#' @param x1
 #' @return NULL
 #'
 #' @export 
@@ -383,14 +384,16 @@ pbrack <- function(x0, x1, y, h=0.01, pval="p < 0.05", CEX=1, ...) {
 #' @description  Make the pval string for diffPlot
 #'
 #' @param dat Dataset
+#' @param pdigit Number of digits to round to
+#' @param transform_func Function to transform values
 #' @return Null
 #'
 #' @export 
-set_pval <- function(dat) {
+set_pval <- function(dat, pdigit=1, transform_func=identity) {
   paste0("Diff = ", 
-    fmt(dat$est*100, 1), ",\n 95% CI (", 
-    fmt(dat$lb*100, 1), ", ", 
-    fmt(dat$ub*100, 1), "), ", 
+    fmt(transform_func(dat$est), pdigit), ",\n 95% CI (", 
+    fmt(transform_func(dat$lb), pdigit), ", ", 
+    fmt(transform_func(dat$ub), pdigit), "), ", 
     pfmt(dat$pval))
   }
 
@@ -403,10 +406,9 @@ set_pval <- function(dat) {
 #' @return string
 #'
 #' @export 
-pfmt <- function(x) {
-  x <- formatC(x, format="f", digits=3)
-  ifelse(x=="0.001", "p < 0.001", paste0("p = ", x))
-}
+pfmt <- function(x)
+  if (x < 0.001) "p < 0.001" else paste0("p = ", round(x, 3))
+
 
 #' @title fmt
 #' 
@@ -540,6 +542,16 @@ doRegKnow <- function(var, donorm = FALSE) {
 ######################################################################
 ######################### Diff and Diff ##############################
 ######################################################################
+
+#' @title lincom
+#'
+#' @description Function for getting linear combinations  
+#' @param EQ The equations
+#' @param mod The model for linear regression
+#' @return  data.frame
+#'
+#' @export 
+
 lincom <- function(EQ, mod) {
   lcom <- car::linearHypothesis(mod, EQ)
   t1 <- attributes(lcom)
@@ -577,34 +589,56 @@ doDiffReg <- function(LHS, dat, eqs) {
 #' @param  dat
 #' @param  difname 
 #' @param  eqname 
-#' @param  ylim
+#' @param  axis_labels
+#' @param  title_names
+#' @param  yLim
+#' @param  yvals
+#' @param  H
+#' @param  transform_func functon to transform values
 #' 
 #' @return  NULL
 #'
 #' @export 
 
 diffPlot <- function(dat, difname, eqname, axis_labels,
-    yLim=c(0, 40), yvals=NULL, H=1) {
+    title_names, yLim=c(0, 40), yvals=NULL, H=1,
+    transform_func=identity, pdigit=1, ylabel="Mean") {
   if(class(dat)!="list") stop("Data must be of class list")
   lname <- names(dat)
   dat <- dat[[1]] 
-  y <- unlist(dat["est", difname]) * 100
-  se <- unlist(dat["se", difname]) * 100
+  y <- transform_func(unlist(dat["est", difname]))
+  se <- transform_func(unlist(dat["se", difname]))
   plotrix::plotCI(1:3, y, se, cex.lab=1.2,
-    bty="n", ylim=yLim, xaxt="n", xlab="", ylab="Prevalence (%)",
+    bty="n", ylim=yLim, xaxt="n", xlab="", ylab=ylabel,
     lwd=3, pch=16, col=set3, font.lab=2, cex.axis=1.15)
-  title(lnames[lname][[1]], cex.main=1.3)
+  title(title_names[lname][[1]], cex.main=1.3)
   axis(1, at=1:3, label=axis_labels, cex.axis=1.2, font=2)
-  text(x = c(1, 2, 2.80) + 0.025, y=y + 0.5, 
-    label=formatC(y, format="f", digits=1), adj=c(0, 0), cex=1.0)
+  text(x = c(1, 2, 3) + 0.028, y=y, xpd=TRUE,
+    label=formatC(y, format="f", digits=pdigit), adj=c(0, 0), cex=1.0)
   # abline(h=y[1], lwd=1, lty=2, col="grey70")
-  pbrack(1, 3, yvals[3], h=H, pval=set_pval(dat[[eqname[1]]]))
-  pbrack(2, 3, yvals[2], h=H, pval=set_pval(dat[[eqname[2]]]))
+  pbrack(1, 3, yvals[3], h=H, 
+    pval=set_pval(dat[[eqname[1]]], pdigit, transform_func))
+  pbrack(2, 3, yvals[2], h=H,
+    pval=set_pval(dat[[eqname[2]]], pdigit, transform_func))
   if (length(eqname) == 3)
-    pbrack(1, 2, yvals[1], h=H, pval=set_pval(dat[[eqname[3]]]))
+    pbrack(1, 2, yvals[1], h=H, 
+      pval=set_pval(dat[[eqname[3]]], pdigit, transform_func))
 }
 
+
+#' @title mk100
+#'
+#' @description Transform vals out of 100  
+#' @param x
+#' @return 
+#'
+#' @export 
+mk100 <- function(x)  x * 100
+
+
+
 # diffPlot <- function(dat, LHS="", yLim, yvals=NULL, H=1) {
+
 #   nm <- names(dat); dat <- dat[[1]]
 #   y <- unlist(dat["est", c("ctrdif", "apcdif", "trtdif")]) * 100
 #   se <- unlist(dat["se", c("ctrdif", "apcdif", "trtdif")]) * 100
