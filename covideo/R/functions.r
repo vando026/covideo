@@ -390,7 +390,7 @@ pbrack <- function(x0, x1, y, h=0.01, pval="p < 0.05", CEX=1, ...) {
 #'
 #' @export 
 set_pval <- function(dat, label = "Diff = ", pdigit=1, transform_func=identity) {
-  paste0(Label, 
+  paste0(label, 
     fmt(transform_func(dat$est), pdigit), ",\n 95% CI (", 
     fmt(transform_func(dat$lb), pdigit), ", ", 
     fmt(transform_func(dat$ub), pdigit), "), ", 
