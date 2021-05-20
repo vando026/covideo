@@ -389,8 +389,8 @@ pbrack <- function(x0, x1, y, h=0.01, pval="p < 0.05", CEX=1, ...) {
 #' @return Null
 #'
 #' @export 
-set_pval <- function(dat, pdigit=1, transform_func=identity) {
-  paste0("Diff = ", 
+set_pval <- function(dat, label = "Diff = ", pdigit=1, transform_func=identity) {
+  paste0(Label, 
     fmt(transform_func(dat$est), pdigit), ",\n 95% CI (", 
     fmt(transform_func(dat$lb), pdigit), ", ", 
     fmt(transform_func(dat$ub), pdigit), "), ", 
@@ -595,6 +595,7 @@ doDiffReg <- function(LHS, dat, eqs) {
 #' @param  yvals
 #' @param  H
 #' @param  transform_func functon to transform values
+#' @param  blabel Label for the brackets, defailt \code{Diff = }
 #' 
 #' @return  NULL
 #'
@@ -602,10 +603,11 @@ doDiffReg <- function(LHS, dat, eqs) {
 
 diffPlot <- function(dat, difname, eqname, axis_labels,
     title_names, yLim=c(0, 40), yvals=NULL, H=1,
-    transform_func=identity, pdigit=1, ylabel="Mean") {
-  if(class(dat)!="list") stop("Data must be of class list")
+    transform_func=identity, pdigit=1, ylabel="Mean",
+    blabel = rep("Diff = ", 3)) {
+  if(class(dat) != "list") stop("Data must be of class list")
   lname <- names(dat)
-  dat <- dat[[1]] 
+  dat <- dat[[1]]
   y <- transform_func(unlist(dat["est", difname]))
   se <- transform_func(unlist(dat["se", difname]))
   plotrix::plotCI(1:3, y, se, cex.lab=1.2,
@@ -615,14 +617,13 @@ diffPlot <- function(dat, difname, eqname, axis_labels,
   axis(1, at=1:3, label=axis_labels, cex.axis=1.2, font=2)
   text(x = c(1, 2, 3) + 0.028, y=y, xpd=TRUE,
     label=formatC(y, format="f", digits=pdigit), adj=c(0, 0), cex=1.0)
-  # abline(h=y[1], lwd=1, lty=2, col="grey70")
   pbrack(1, 3, yvals[3], h=H, 
-    pval=set_pval(dat[[eqname[1]]], pdigit, transform_func))
+    pval=set_pval(dat[[eqname[1]]], blabel[3], pdigit, transform_func))
   pbrack(2, 3, yvals[2], h=H,
-    pval=set_pval(dat[[eqname[2]]], pdigit, transform_func))
+    pval=set_pval(dat[[eqname[2]]], blabel[2], pdigit, transform_func))
   if (length(eqname) == 3)
     pbrack(1, 2, yvals[1], h=H, 
-      pval=set_pval(dat[[eqname[3]]], pdigit, transform_func))
+      pval=set_pval(dat[[eqname[3]]], blabel[1], pdigit, transform_func))
 }
 
 
@@ -635,36 +636,5 @@ diffPlot <- function(dat, difname, eqname, axis_labels,
 #' @export 
 mk100 <- function(x)  x * 100
 
-
-
-# diffPlot <- function(dat, LHS="", yLim, yvals=NULL, H=1) {
-
-#   nm <- names(dat); dat <- dat[[1]]
-#   y <- unlist(dat["est", c("ctrdif", "apcdif", "trtdif")]) * 100
-#   se <- unlist(dat["se", c("ctrdif", "apcdif", "trtdif")]) * 100
-#   toteq <- dat[["toteq"]]
-#   trteq <- dat[["trteq"]]
-#   plotrix::plotCI(1:3, y, se, cex.lab=1.2,
-#     bty="n", ylim=yLim, xaxt="n", xlab="", ylab="Prevalence ",
-#     lwd=3, pch=16, col=set3, font.lab=2, cex.axis=1.15)
-#   title(paste("This week I will", bwrap(nm, 34)), cex.main=1.3)
-#   axis(1, at=1:3, label=c("Do-nothing", "APC video", "CoVideo"), cex.axis=1.2, font=2)
-#   text(x = c(1, 2, 2.80) + 0.025, y=y + 0.5, 
-#     label=formatC(y, format="f", digits=1),
-#     adj=c(0, 0), cex=1.0)
-#   abline(h=y[1], lwd=1, lty=2, col="grey70")
-#   pbrack(1, 3, yvals[1], h=H, CEX=1.0,
-#     pval=paste0("Total effect = ", 
-#       fmt(toteq$est*100, 1), ",\n 95% CI (", 
-#       fmt(toteq$lb*100, 1), ", ", 
-#       fmt(toteq$ub*100, 1), "), ", 
-#       pfmt(toteq$pval)))
-#   pbrack(2, 3, yvals[2], h=H, CEX=1.0,
-#     pval=paste0("Content effect = ", 
-#       fmt(trteq$est*100, 1), ",\n 95% CI (", 
-#       fmt(trteq$lb*100, 1), ", ", 
-#       fmt(trteq$ub*100, 1), "), ", 
-#       pfmt(trteq$pval)))
-# }
 
 
