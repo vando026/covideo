@@ -440,24 +440,22 @@ doRegDirect <- function(LHS, dat) {
 }
 
 #' @title plotKnow
-#' 
 #' @description  Plot knowledge
-#' 
 #' @param  LHS
 #' @param  Title
-#' 
-#' @return 
-#'
-#' @export 
+#' @return
+#' @export
 
 plotKnow <- function(LHS, Title="", yLim, ppos, H=0.01, ...) {
   dat <- load_covideo()
-  cmod <- lm(as.formula(paste(LHS, " ~ -1 + VideoArm")), data=dat)
-  cpair <- pairwise.t.test(dat[[LHS]], dat[["VideoArm"]],
-     p.adj = "none")
-  att <- lincom("1*VideoArmPlacebo - 1*VideoArmControl = 0", cmod)
-  cont <- lincom("1*VideoArmTreatment - 1*VideoArmPlacebo = 0", cmod)
-  tot <- lincom("1*VideoArmTreatment - 1*VideoArmControl = 0", cmod)
+  cmod <- lm(as.formula(paste(LHS, " ~ -1 + VideoArm")), data = dat)
+  hsd <- aov(as.formula(paste(LHS, " ~ VideoArm")), data = dat)
+  hsd <- TukeyHSD(hsd)$VideoArm
+  hsd <- data.frame(hsd)
+  names(hsd) <- c("est", "lb", "ub", "pval")
+  att <- hsd[1, ]
+  cont <- hsd[3, ]
+  tot <- hsd[2, ]
   y <- cmod$coefficients
   cis <- confint(cmod)
   lis <- y - cis[, 1] 
